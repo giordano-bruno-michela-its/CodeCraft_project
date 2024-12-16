@@ -1,5 +1,6 @@
 package com.codecraft.agora_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@JsonIgnoreProperties({"denominazione", "descrizione"})
 public class TipoAttivita {
     
     @Id
@@ -17,4 +19,5 @@ public class TipoAttivita {
     private Long id;
     
     private String denominazione;
+    private String descrizione;
 }

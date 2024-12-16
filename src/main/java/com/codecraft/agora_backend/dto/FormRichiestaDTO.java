@@ -2,6 +2,7 @@ package com.codecraft.agora_backend.dto;
 
 import com.codecraft.agora_backend.model.FasciaEta;
 import com.codecraft.agora_backend.model.TipoRichiesta;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties({"id"})
 public class FormRichiestaDTO {
     private Long id;
     private String email;

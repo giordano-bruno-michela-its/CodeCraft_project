@@ -1,7 +1,10 @@
 package com.codecraft.agora_backend.service;
 
+import com.codecraft.agora_backend.dto.FormPrenotazioneDTO;
 import com.codecraft.agora_backend.dto.FormRichiestaDTO;
+import com.codecraft.agora_backend.model.FormPrenotazione;
 import com.codecraft.agora_backend.model.FormRichiesta;
+import com.codecraft.agora_backend.model.TipoRichiesta;
 import com.codecraft.agora_backend.repository.FormRichiestaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +27,12 @@ public class FormRichiestaService {
     }
 
     public FormRichiesta createFormRichiesta(FormRichiestaDTO formRichiestaDTO) {
-        FormRichiesta formRichiesta = new FormRichiesta();
+        FormRichiesta formRichiesta;
+        if (formRichiestaDTO.getTipoRichiesta() == TipoRichiesta.RICHIESTA_PRENOTAZIONE) {
+            formRichiesta = new FormPrenotazione();
+        } else {
+            formRichiesta = new FormRichiesta();
+        }
 
         formRichiesta.setEmail(formRichiestaDTO.getEmail());
         formRichiesta.setNome(formRichiestaDTO.getNome());
@@ -35,7 +43,29 @@ public class FormRichiestaService {
         formRichiesta.setDescrizione(formRichiestaDTO.getDescrizione());
         formRichiesta.setFasciaEta(formRichiestaDTO.getFasciaEta());
         formRichiesta.setTipoRichiesta(formRichiestaDTO.getTipoRichiesta());
+
         return formRichiestaRepository.save(formRichiesta);
+    }
+
+    public FormPrenotazione createFormPrenotazione(FormPrenotazioneDTO formPrenotazioneDTO) {
+        FormPrenotazione formPrenotazione = new FormPrenotazione();
+
+        formPrenotazione.setEmail(formPrenotazioneDTO.getEmail());
+        formPrenotazione.setNome(formPrenotazioneDTO.getNome());
+        formPrenotazione.setCognome(formPrenotazioneDTO.getCognome());
+        formPrenotazione.setEnte(formPrenotazioneDTO.getEnte());
+        formPrenotazione.setTelefono(formPrenotazioneDTO.getTelefono());
+        formPrenotazione.setDataContatto(formPrenotazioneDTO.getDataContatto());
+        formPrenotazione.setDescrizione(formPrenotazioneDTO.getDescrizione());
+        formPrenotazione.setFasciaEta(formPrenotazioneDTO.getFasciaEta());
+        formPrenotazione.setTipoRichiesta(formPrenotazioneDTO.getTipoRichiesta());
+        formPrenotazione.setDataInizio(formPrenotazioneDTO.getDataInizio());
+        formPrenotazione.setDataFine(formPrenotazioneDTO.getDataFine());
+        formPrenotazione.setNumPartecipanti(formPrenotazioneDTO.getNumPartecipanti());
+        formPrenotazione.setNumInsegnanti(formPrenotazioneDTO.getNumInsegnanti());
+        formPrenotazione.setTipoAttivita(formPrenotazioneDTO.getTipoAttivita());
+
+        return formRichiestaRepository.save(formPrenotazione);
     }
 
     public FormRichiesta updateFormRichiesta(Long id, FormRichiestaDTO formRichiestaDTO) {
@@ -52,6 +82,7 @@ public class FormRichiestaService {
             formRichiesta.setDescrizione(formRichiestaDTO.getDescrizione());
             formRichiesta.setFasciaEta(formRichiestaDTO.getFasciaEta());
             formRichiesta.setTipoRichiesta(formRichiestaDTO.getTipoRichiesta());
+
             return formRichiestaRepository.save(formRichiesta);
         }
         return null;

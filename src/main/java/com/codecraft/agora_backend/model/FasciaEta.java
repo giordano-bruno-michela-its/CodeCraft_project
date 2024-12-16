@@ -1,5 +1,6 @@
 package com.codecraft.agora_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@JsonIgnoreProperties({"denominazione", "descrizione", "etaMin", "etaMax"})
 public class FasciaEta {
     
     @Id
