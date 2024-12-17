@@ -19,8 +19,11 @@ import java.util.Optional;
 @RequestMapping("/api/formreq")
 public class FormRichiestaController {
 
-    @Autowired
-    private FormRichiestaService formRichiestaService;
+    private final FormRichiestaService formRichiestaService;
+
+    public FormRichiestaController(FormRichiestaService formRichiestaService) {
+        this.formRichiestaService = formRichiestaService;
+    }
 
     @GetMapping("/all")
     @JsonView(View.GetView.class)
