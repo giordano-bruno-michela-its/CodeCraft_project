@@ -32,10 +32,20 @@ public class FasciaEtaService {
         Optional<FasciaEta> optionalFasciaEta = fasciaEtaRepository.findById(id);
         if (optionalFasciaEta.isPresent()) {
             FasciaEta existingFasciaEta = optionalFasciaEta.get();
-            existingFasciaEta.setDenominazione(fasciaEta.getDenominazione());
-            existingFasciaEta.setDescrizione(fasciaEta.getDescrizione());
-            existingFasciaEta.setEtaMin(fasciaEta.getEtaMin());
-            existingFasciaEta.setEtaMax(fasciaEta.getEtaMax());
+
+            if (fasciaEta.getDenominazione() != null) {
+                existingFasciaEta.setDenominazione(fasciaEta.getDenominazione());
+            }
+            if (fasciaEta.getDescrizione() != null) {
+                existingFasciaEta.setDescrizione(fasciaEta.getDescrizione());
+            }
+            if (fasciaEta.getEtaMin() != 0) {
+                existingFasciaEta.setEtaMin(fasciaEta.getEtaMin());
+            }
+            if (fasciaEta.getEtaMax() != 0) {
+                existingFasciaEta.setEtaMax(fasciaEta.getEtaMax());
+            }
+            
             return fasciaEtaRepository.save(existingFasciaEta);
         }
         return null;

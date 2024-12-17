@@ -76,15 +76,33 @@ public class FormRichiestaService {
         if (optionalFormRichiesta.isPresent()) {
             FormRichiesta formRichiesta = optionalFormRichiesta.get();
 
-            formRichiesta.setEmail(formRichiestaDTO.getEmail());
-            formRichiesta.setNome(formRichiestaDTO.getNome());
-            formRichiesta.setCognome(formRichiestaDTO.getCognome());
-            formRichiesta.setEnte(formRichiestaDTO.getEnte());
-            formRichiesta.setTelefono(formRichiestaDTO.getTelefono());
-            formRichiesta.setDataContatto(formRichiestaDTO.getDataContatto());
-            formRichiesta.setDescrizione(formRichiestaDTO.getDescrizione());
-            formRichiesta.setFasciaEta(formRichiestaDTO.getFasciaEta());
-            formRichiesta.setTipoRichiesta(formRichiestaDTO.getTipoRichiesta());
+            if (formRichiestaDTO.getEmail() != null) {
+                formRichiesta.setEmail(formRichiestaDTO.getEmail());
+            }
+            if (formRichiestaDTO.getNome() != null) {
+                formRichiesta.setNome(formRichiestaDTO.getNome());
+            }
+            if (formRichiestaDTO.getCognome() != null) {
+                formRichiesta.setCognome(formRichiestaDTO.getCognome());
+            }
+            if (formRichiestaDTO.getEnte() != null) {
+                formRichiesta.setEnte(formRichiestaDTO.getEnte());
+            }
+            if (formRichiestaDTO.getTelefono() != null) {
+                formRichiesta.setTelefono(formRichiestaDTO.getTelefono());
+            }
+            if (formRichiestaDTO.getDataContatto() != null) {
+                formRichiesta.setDataContatto(formRichiestaDTO.getDataContatto());
+            }
+            if (formRichiestaDTO.getDescrizione() != null) {
+                formRichiesta.setDescrizione(formRichiestaDTO.getDescrizione());
+            }
+            if (formRichiestaDTO.getFasciaEta() != null) {
+                formRichiesta.setFasciaEta(formRichiestaDTO.getFasciaEta());
+            }
+            if (formRichiestaDTO.getTipoRichiesta() != null) {
+                formRichiesta.setTipoRichiesta(formRichiestaDTO.getTipoRichiesta());
+            }
 
             return formRichiestaRepository.save(formRichiesta);
         }

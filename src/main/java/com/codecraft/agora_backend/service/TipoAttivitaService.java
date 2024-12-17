@@ -32,8 +32,14 @@ public class TipoAttivitaService {
         Optional<TipoAttivita> optionalTipoAttivita = tipoAttivitaRepository.findById(id);
         if (optionalTipoAttivita.isPresent()) {
             TipoAttivita existingTipoAttivita = optionalTipoAttivita.get();
-            existingTipoAttivita.setDenominazione(tipoAttivita.getDenominazione());
-            existingTipoAttivita.setDescrizione(tipoAttivita.getDescrizione());
+
+            if (tipoAttivita.getDenominazione() != null) {
+                existingTipoAttivita.setDenominazione(tipoAttivita.getDenominazione());
+            }
+            if (tipoAttivita.getDescrizione() != null) {
+                existingTipoAttivita.setDescrizione(tipoAttivita.getDescrizione());
+            }
+            
             return tipoAttivitaRepository.save(existingTipoAttivita);
         }
         return null;
