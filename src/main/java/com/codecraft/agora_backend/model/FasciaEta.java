@@ -18,18 +18,18 @@ public class FasciaEta {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView({View.GetView.class, View.PostView.class})
+    @JsonView({View.GetView.class})
     private Long id;
 
-    @JsonView({View.GetView.class})
+    @JsonView({View.GetView.class, View.PostView.class})
     private String denominazione;
-    
-    @JsonView({View.GetView.class})
+
+    @JsonView({View.GetView.class, View.PostView.class})
     private String descrizione;
-    
-    @JsonView({View.GetView.class})
+
+    @JsonView({View.GetView.class, View.PostView.class})
     private int etaMin;
-    
-    @JsonView({View.GetView.class})
+
+    @JsonView({View.GetView.class, View.PostView.class})
     private int etaMax;
 }

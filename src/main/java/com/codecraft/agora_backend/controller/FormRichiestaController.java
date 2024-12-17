@@ -45,15 +45,15 @@ public class FormRichiestaController {
         return ResponseEntity.ok(formRichiesta);
     }
 
-    @JsonView(View.PostView.class)
     @PostMapping("/createprenot")
+    @JsonView(View.PostView.class)
     public ResponseEntity<FormPrenotazione> createFormPrenotazione(@RequestBody FormPrenotazioneDTO formPrenotazioneDTO) {
         FormPrenotazione formPrenotazione = formRichiestaService.createFormPrenotazione(formPrenotazioneDTO);
         return ResponseEntity.ok(formPrenotazione);
     }
 
-    @JsonView(View.PostView.class)
     @PutMapping("/update/{id}")
+    @JsonView(View.PostView.class)
     public ResponseEntity<FormRichiesta> updateFormRichiesta(@PathVariable Long id, @RequestBody FormRichiestaDTO formRichiestaDTO) {
         FormRichiesta updatedFormRichiesta = formRichiestaService.updateFormRichiesta(id, formRichiestaDTO);
         if (updatedFormRichiesta != null) {
