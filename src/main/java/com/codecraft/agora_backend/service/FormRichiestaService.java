@@ -15,8 +15,11 @@ import java.util.Optional;
 @Service
 public class FormRichiestaService {
 
-    @Autowired
-    private FormRichiestaRepository formRichiestaRepository;
+    private final FormRichiestaRepository formRichiestaRepository;
+
+    public FormRichiestaService(FormRichiestaRepository formRichiestaRepository) {
+        this.formRichiestaRepository = formRichiestaRepository;
+    }
 
     public List<FormRichiesta> getAllFormRichieste() {
         return formRichiestaRepository.findAll();
