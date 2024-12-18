@@ -1,6 +1,6 @@
 package com.codecraft.agora_backend.controller;
 
-import com.codecraft.agora_backend.model.TipoAttivita;
+import com.codecraft.agora_backend.dto.TipoAttivitaDTO;
 import com.codecraft.agora_backend.model.View;
 import com.codecraft.agora_backend.service.TipoAttivitaService;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -22,28 +22,28 @@ public class TipoAttivitaController {
 
     @GetMapping("/all")
     @JsonView(View.GetView.class)
-    public List<TipoAttivita> getAllTipoAttivita() {
+    public List<TipoAttivitaDTO> getAllTipoAttivita() {
         return tipoAttivitaService.getAllTipoAttivita();
     }
 
     @GetMapping("/{id}")
     @JsonView(View.GetView.class)
-    public ResponseEntity<TipoAttivita> getTipoAttivitaById(@PathVariable Long id) {
-        Optional<TipoAttivita> tipoAttivita = tipoAttivitaService.getTipoAttivitaById(id);
+    public ResponseEntity<TipoAttivitaDTO> getTipoAttivitaById(@PathVariable Long id) {
+        Optional<TipoAttivitaDTO> tipoAttivita = tipoAttivitaService.getTipoAttivitaById(id);
         return tipoAttivita.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/create")
     @JsonView(View.PostView.class)
-    public ResponseEntity<TipoAttivita> createTipoAttivita(@RequestBody TipoAttivita tipoAttivita) {
-        TipoAttivita createdTipoAttivita = tipoAttivitaService.createTipoAttivita(tipoAttivita);
+    public ResponseEntity<TipoAttivitaDTO> createTipoAttivita(@RequestBody TipoAttivitaDTO tipoAttivitaDTO) {
+        TipoAttivitaDTO createdTipoAttivita = tipoAttivitaService.createTipoAttivita(tipoAttivitaDTO);
         return ResponseEntity.ok(createdTipoAttivita);
     }
 
     @PutMapping("/update/{id}")
     @JsonView(View.PostView.class)
-    public ResponseEntity<TipoAttivita> updateTipoAttivita(@PathVariable Long id, @RequestBody TipoAttivita tipoAttivita) {
-        TipoAttivita updatedTipoAttivita = tipoAttivitaService.updateTipoAttivita(id, tipoAttivita);
+    public ResponseEntity<TipoAttivitaDTO> updateTipoAttivita(@PathVariable Long id, @RequestBody TipoAttivitaDTO tipoAttivitaDTO) {
+        TipoAttivitaDTO updatedTipoAttivita = tipoAttivitaService.updateTipoAttivita(id, tipoAttivitaDTO);
         if (updatedTipoAttivita != null) {
             return ResponseEntity.ok(updatedTipoAttivita);
         } else {

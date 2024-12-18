@@ -14,7 +14,6 @@ import java.sql.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-@JsonIgnoreProperties({"id"})
 public class FormRichiestaDTO {
     @JsonView(View.GetView.class)
     private Long id;

@@ -1,11 +1,13 @@
 package com.codecraft.agora_backend.service;
 
+import com.codecraft.agora_backend.dto.TipoAttivitaDTO;
 import com.codecraft.agora_backend.model.TipoAttivita;
 import com.codecraft.agora_backend.repository.TipoAttivitaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TipoAttivitaService {
@@ -16,36 +18,53 @@ public class TipoAttivitaService {
         this.tipoAttivitaRepository = tipoAttivitaRepository;
     }
 
-    public List<TipoAttivita> getAllTipoAttivita() {
-        return tipoAttivitaRepository.findAll();
+    public List<TipoAttivitaDTO> getAllTipoAttivita() {
+        return tipoAttivitaRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
-    public Optional<TipoAttivita> getTipoAttivitaById(Long id) {
-        return tipoAttivitaRepository.findById(id);
+    public Optional<TipoAttivitaDTO> getTipoAttivitaById(Long id) {
+        return tipoAttivitaRepository.findById(id).map(this::convertToDTO);
     }
 
-    public TipoAttivita createTipoAttivita(TipoAttivita tipoAttivita) {
-        return tipoAttivitaRepository.save(tipoAttivita);
+    public TipoAttivitaDTO createTipoAttivita(TipoAttivitaDTO tipoAttivitaDTO) {
+        TipoAttivita tipoAttivita = convertToEntity(tipoAttivitaDTO);
+        return convertToDTO(tipoAttivitaRepository.save(tipoAttivita));
     }
 
-    public TipoAttivita updateTipoAttivita(Long id, TipoAttivita tipoAttivita) {
+    public TipoAttivitaDTO updateTipoAttivita(Long id, TipoAttivitaDTO tipoAttivitaDTO) {
         Optional<TipoAttivita> optionalTipoAttivita = tipoAttivitaRepository.findById(id);
         if (optionalTipoAttivita.isPresent()) {
             TipoAttivita existingTipoAttivita = optionalTipoAttivita.get();
 
-            if (tipoAttivita.getDenominazione() != null) {
-                existingTipoAttivita.setDenominazione(tipoAttivita.getDenominazione());
+            if (tipoAttivitaDTO.getDenominazione() != null) {
+                existingTipoAttivita.setDenominazione(tipoAttivitaDTO.getDenominazione());
             }
-            if (tipoAttivita.getDescrizione() != null) {
-                existingTipoAttivita.setDescrizione(tipoAttivita.getDescrizione());
+            if (tipoAttivitaDTO.getDescrizione() != null) {
+                existingTipoAttivita.setDescrizione(tipoAttivitaDTO.getDescrizione());
             }
-            
-            return tipoAttivitaRepository.save(existingTipoAttivita);
+
+            return convertToDTO(tipoAttivitaRepository.save(existingTipoAttivita));
         }
         return null;
     }
 
     public void deleteTipoAttivita(Long id) {
         tipoAttivitaRepository.deleteById(id);
+    }
+
+    private TipoAttivitaDTO convertToDTO(TipoAttivita tipoAttivita) {
+        TipoAttivitaDTO tipoAttivitaDTO = new TipoAttivitaDTO();
+        tipoAttivitaDTO.setId(tipoAttivita.getId());
+        tipoAttivitaDTO.setDenominazione(tipoAttivita.getDenominazione());
+        tipoAttivitaDTO.setDescrizione(tipoAttivita.getDescrizione());
+        return tipoAttivitaDTO;
+    }
+
+    private TipoAttivita convertToEntity(TipoAttivitaDTO tipoAttivitaDTO) {
+        TipoAttivita tipoAttivita = new TipoAttivita();
+        tipoAttivita.setId(tipoAttivitaDTO.getId());
+        tipoAttivita.setDenominazione(tipoAttivitaDTO.getDenominazione());
+        tipoAttivita.setDescrizione(tipoAttivitaDTO.getDescrizione());
+        return tipoAttivita;
     }
 }

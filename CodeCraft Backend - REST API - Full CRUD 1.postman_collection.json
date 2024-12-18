@@ -70,6 +70,13 @@
 						"type": "text/javascript",
 						"packages": {}
 					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
 				}
 			],
 			"request": {
@@ -77,7 +84,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"email\": \"string\",\n  \"nome\": \"string\",\n  \"cognome\": \"string\",\n  \"ente\": \"string\",\n  \"telefono\": \"string\",\n  \"dataContatto\": \"2024-12-17T11:33:18.292Z\",\n  \"descrizione\": \"string\",\n  \"fasciaEta\": {\n    \"id\": 1\n  },\n  \"tipoRichiesta\": \"RICHIESTA_INFORMAZIONI\"\n}",
+					"raw": "{\n  \"email\": \"string\",\n  \"nome\": \"string\",\n  \"cognome\": \"string\",\n  \"ente\": \"string\",\n  \"telefono\": \"string\",\n  \"dataContatto\": \"{{currentTimestamp}}\",\n  \"descrizione\": \"string\",\n  \"fasciaEta\": {\n    \"id\": 1\n  },\n  \"tipoRichiesta\": \"RICHIESTA_INFORMAZIONI\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -98,7 +105,16 @@
 						"exec": [
 							"pm.test(\"Successful POST request\", function () {",
 							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-							"});",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
 							""
 						],
 						"type": "text/javascript",
@@ -111,7 +127,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"email\": \"string\",\n  \"nome\": \"string\",\n  \"cognome\": \"string\",\n  \"ente\": \"string\",\n  \"telefono\": \"string\",\n  \"dataContatto\": \"2024-12-17T11:34:40.268Z\",\n  \"descrizione\": \"string\",\n  \"fasciaEta\": {\n    \"id\": 1\n  },\n  \"tipoRichiesta\": \"RICHIESTA_INFORMAZIONI\",\n  \"dataInizio\": \"2024-12-17T11:34:40.268Z\",\n  \"dataFine\": \"2024-12-17T11:34:40.268Z\",\n  \"numPartecipanti\": 0,\n  \"numInsegnanti\": 0,\n  \"tipoAttivita\": {\n    \"id\": 1\n  }\n}",
+					"raw": "{\n  \"email\": \"string\",\n  \"nome\": \"string\",\n  \"cognome\": \"string\",\n  \"ente\": \"string\",\n  \"telefono\": \"string\",\n  \"dataContatto\": \"{{currentTimestamp}}\",\n  \"descrizione\": \"string\",\n  \"fasciaEta\": {\n    \"id\": 1\n  },\n  \"tipoRichiesta\": \"RICHIESTA_PRENOTAZIONE\",\n  \"dataInizio\": \"2024-12-18T09:08:58.214Z\",\n  \"dataFine\": \"2024-12-18T09:08:58.214Z\",\n  \"numPartecipanti\": 0,\n  \"numInsegnanti\": 0,\n  \"tipoAttivita\": {\n    \"id\": 1\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -186,7 +202,7 @@
 						}
 					}
 				},
-				"url": "{{base_url}}/formreq/delete/16",
+				"url": "{{base_url}}/formreq/delete/19",
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
 			},
 			"response": []
@@ -498,7 +514,11 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					""
+					"// Get the current timestamp in ISO 8601 format\r",
+					"const currentTimestamp = new Date().toISOString();\r",
+					"\r",
+					"// Set the timestamp as an environment variable\r",
+					"pm.environment.set(\"currentTimestamp\", currentTimestamp);"
 				]
 			}
 		},

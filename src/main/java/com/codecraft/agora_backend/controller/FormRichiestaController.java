@@ -4,11 +4,9 @@ import com.codecraft.agora_backend.dto.FormPrenotazioneDTO;
 import com.codecraft.agora_backend.dto.FormRichiestaDTO;
 import com.codecraft.agora_backend.model.FormPrenotazione;
 import com.codecraft.agora_backend.model.FormRichiesta;
-import com.codecraft.agora_backend.model.TipoRichiesta;
 import com.codecraft.agora_backend.model.View;
 import com.codecraft.agora_backend.service.FormRichiestaService;
 import com.fasterxml.jackson.annotation.JsonView;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,37 +25,37 @@ public class FormRichiestaController {
 
     @GetMapping("/all")
     @JsonView(View.GetView.class)
-    public List<FormRichiesta> getAllFormRichieste() {
-        return formRichiestaService.getAllFormRichieste();
+    public List<FormRichiestaDTO> getAllFormRichieste() {
+        return formRichiestaService.getAllFormRichieste().stream().map(formRichiestaService::convertToDTO).toList();
     }
 
     @GetMapping("/{id}")
     @JsonView(View.GetView.class)
-    public ResponseEntity<FormRichiesta> getFormRichiestaById(@PathVariable Long id) {
+    public ResponseEntity<FormRichiestaDTO> getFormRichiestaById(@PathVariable Long id) {
         Optional<FormRichiesta> formRichiesta = formRichiestaService.getFormRichiestaById(id);
-        return formRichiesta.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return formRichiesta.map(value -> ResponseEntity.ok(formRichiestaService.convertToDTO(value))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/create")
     @JsonView(View.PostView.class)
-    public ResponseEntity<FormRichiesta> createFormRichiesta(@RequestBody FormRichiestaDTO formRichiestaDTO) {
+    public ResponseEntity<FormRichiestaDTO> createFormRichiesta(@RequestBody FormRichiestaDTO formRichiestaDTO) {
         FormRichiesta formRichiesta = formRichiestaService.createFormRichiesta(formRichiestaDTO);
-        return ResponseEntity.ok(formRichiesta);
+        return ResponseEntity.ok(formRichiestaService.convertToDTO(formRichiesta));
     }
 
     @PostMapping("/createprenot")
     @JsonView(View.PostView.class)
-    public ResponseEntity<FormPrenotazione> createFormPrenotazione(@RequestBody FormPrenotazioneDTO formPrenotazioneDTO) {
+    public ResponseEntity<FormPrenotazioneDTO> createFormPrenotazione(@RequestBody FormPrenotazioneDTO formPrenotazioneDTO) {
         FormPrenotazione formPrenotazione = formRichiestaService.createFormPrenotazione(formPrenotazioneDTO);
-        return ResponseEntity.ok(formPrenotazione);
+        return ResponseEntity.ok((FormPrenotazioneDTO) formRichiestaService.convertToDTO(formPrenotazione));
     }
 
     @PutMapping("/update/{id}")
     @JsonView(View.PostView.class)
-    public ResponseEntity<FormRichiesta> updateFormRichiesta(@PathVariable Long id, @RequestBody FormRichiestaDTO formRichiestaDTO) {
+    public ResponseEntity<FormRichiestaDTO> updateFormRichiesta(@PathVariable Long id, @RequestBody FormRichiestaDTO formRichiestaDTO) {
         FormRichiesta updatedFormRichiesta = formRichiestaService.updateFormRichiesta(id, formRichiestaDTO);
         if (updatedFormRichiesta != null) {
-            return ResponseEntity.ok(updatedFormRichiesta);
+            return ResponseEntity.ok(formRichiestaService.convertToDTO(updatedFormRichiesta));
         } else {
             return ResponseEntity.notFound().build();
         }

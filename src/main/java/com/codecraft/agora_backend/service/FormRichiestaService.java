@@ -6,7 +6,6 @@ import com.codecraft.agora_backend.model.FormPrenotazione;
 import com.codecraft.agora_backend.model.FormRichiesta;
 import com.codecraft.agora_backend.model.TipoRichiesta;
 import com.codecraft.agora_backend.repository.FormRichiestaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,44 +29,12 @@ public class FormRichiestaService {
     }
 
     public FormRichiesta createFormRichiesta(FormRichiestaDTO formRichiestaDTO) {
-        FormRichiesta formRichiesta;
-        if (formRichiestaDTO.getTipoRichiesta() == TipoRichiesta.RICHIESTA_PRENOTAZIONE) {
-            formRichiesta = new FormPrenotazione();
-        } else {
-            formRichiesta = new FormRichiesta();
-        }
-
-        formRichiesta.setEmail(formRichiestaDTO.getEmail());
-        formRichiesta.setNome(formRichiestaDTO.getNome());
-        formRichiesta.setCognome(formRichiestaDTO.getCognome());
-        formRichiesta.setEnte(formRichiestaDTO.getEnte());
-        formRichiesta.setTelefono(formRichiestaDTO.getTelefono());
-        formRichiesta.setDataContatto(formRichiestaDTO.getDataContatto());
-        formRichiesta.setDescrizione(formRichiestaDTO.getDescrizione());
-        formRichiesta.setFasciaEta(formRichiestaDTO.getFasciaEta());
-        formRichiesta.setTipoRichiesta(formRichiestaDTO.getTipoRichiesta());
-
+        FormRichiesta formRichiesta = convertToEntity(formRichiestaDTO);
         return formRichiestaRepository.save(formRichiesta);
     }
 
     public FormPrenotazione createFormPrenotazione(FormPrenotazioneDTO formPrenotazioneDTO) {
-        FormPrenotazione formPrenotazione = new FormPrenotazione();
-
-        formPrenotazione.setEmail(formPrenotazioneDTO.getEmail());
-        formPrenotazione.setNome(formPrenotazioneDTO.getNome());
-        formPrenotazione.setCognome(formPrenotazioneDTO.getCognome());
-        formPrenotazione.setEnte(formPrenotazioneDTO.getEnte());
-        formPrenotazione.setTelefono(formPrenotazioneDTO.getTelefono());
-        formPrenotazione.setDataContatto(formPrenotazioneDTO.getDataContatto());
-        formPrenotazione.setDescrizione(formPrenotazioneDTO.getDescrizione());
-        formPrenotazione.setFasciaEta(formPrenotazioneDTO.getFasciaEta());
-        formPrenotazione.setTipoRichiesta(formPrenotazioneDTO.getTipoRichiesta());
-        formPrenotazione.setDataInizio(formPrenotazioneDTO.getDataInizio());
-        formPrenotazione.setDataFine(formPrenotazioneDTO.getDataFine());
-        formPrenotazione.setNumPartecipanti(formPrenotazioneDTO.getNumPartecipanti());
-        formPrenotazione.setNumInsegnanti(formPrenotazioneDTO.getNumInsegnanti());
-        formPrenotazione.setTipoAttivita(formPrenotazioneDTO.getTipoAttivita());
-
+        FormPrenotazione formPrenotazione = (FormPrenotazione) convertToEntity(formPrenotazioneDTO);
         return formRichiestaRepository.save(formPrenotazione);
     }
 
@@ -111,5 +78,72 @@ public class FormRichiestaService {
 
     public void deleteFormRichiesta(Long id) {
         formRichiestaRepository.deleteById(id);
+    }
+
+    public FormRichiestaDTO convertToDTO(FormRichiesta formRichiesta) {
+        if (formRichiesta instanceof FormPrenotazione) {
+            FormPrenotazione formPrenotazione = (FormPrenotazione) formRichiesta;
+            FormPrenotazioneDTO formPrenotazioneDTO = new FormPrenotazioneDTO();
+            formPrenotazioneDTO.setId(formPrenotazione.getId());
+            formPrenotazioneDTO.setEmail(formPrenotazione.getEmail());
+            formPrenotazioneDTO.setNome(formPrenotazione.getNome());
+            formPrenotazioneDTO.setCognome(formPrenotazione.getCognome());
+            formPrenotazioneDTO.setEnte(formPrenotazione.getEnte());
+            formPrenotazioneDTO.setTelefono(formPrenotazione.getTelefono());
+            formPrenotazioneDTO.setDataContatto(formPrenotazione.getDataContatto());
+            formPrenotazioneDTO.setDescrizione(formPrenotazione.getDescrizione());
+            formPrenotazioneDTO.setFasciaEta(formPrenotazione.getFasciaEta());
+            formPrenotazioneDTO.setTipoRichiesta(formPrenotazione.getTipoRichiesta());
+            formPrenotazioneDTO.setDataInizio(formPrenotazione.getDataInizio());
+            formPrenotazioneDTO.setDataFine(formPrenotazione.getDataFine());
+            formPrenotazioneDTO.setNumPartecipanti(formPrenotazione.getNumPartecipanti());
+            formPrenotazioneDTO.setNumInsegnanti(formPrenotazione.getNumInsegnanti());
+            formPrenotazioneDTO.setTipoAttivita(formPrenotazione.getTipoAttivita());
+            return formPrenotazioneDTO;
+        } else {
+            FormRichiestaDTO formRichiestaDTO = new FormRichiestaDTO();
+            formRichiestaDTO.setId(formRichiesta.getId());
+            formRichiestaDTO.setEmail(formRichiesta.getEmail());
+            formRichiestaDTO.setNome(formRichiesta.getNome());
+            formRichiestaDTO.setCognome(formRichiesta.getCognome());
+            formRichiestaDTO.setEnte(formRichiesta.getEnte());
+            formRichiestaDTO.setTelefono(formRichiesta.getTelefono());
+            formRichiestaDTO.setDataContatto(formRichiesta.getDataContatto());
+            formRichiestaDTO.setDescrizione(formRichiesta.getDescrizione());
+            formRichiestaDTO.setFasciaEta(formRichiesta.getFasciaEta());
+            formRichiestaDTO.setTipoRichiesta(formRichiesta.getTipoRichiesta());
+            return formRichiestaDTO;
+        }
+    }
+
+    private FormRichiesta convertToEntity(FormRichiestaDTO formRichiestaDTO) {
+        FormRichiesta formRichiesta;
+        if (formRichiestaDTO.getTipoRichiesta() == TipoRichiesta.RICHIESTA_PRENOTAZIONE) {
+            formRichiesta = new FormPrenotazione();
+        } else {
+            formRichiesta = new FormRichiesta();
+        }
+
+        formRichiesta.setEmail(formRichiestaDTO.getEmail());
+        formRichiesta.setNome(formRichiestaDTO.getNome());
+        formRichiesta.setCognome(formRichiestaDTO.getCognome());
+        formRichiesta.setEnte(formRichiestaDTO.getEnte());
+        formRichiesta.setTelefono(formRichiestaDTO.getTelefono());
+        formRichiesta.setDataContatto(formRichiestaDTO.getDataContatto());
+        formRichiesta.setDescrizione(formRichiestaDTO.getDescrizione());
+        formRichiesta.setFasciaEta(formRichiestaDTO.getFasciaEta());
+        formRichiesta.setTipoRichiesta(formRichiestaDTO.getTipoRichiesta());
+
+        if (formRichiesta instanceof FormPrenotazione) {
+            FormPrenotazione formPrenotazione = (FormPrenotazione) formRichiesta;
+            FormPrenotazioneDTO formPrenotazioneDTO = (FormPrenotazioneDTO) formRichiestaDTO;
+            formPrenotazione.setDataInizio(formPrenotazioneDTO.getDataInizio());
+            formPrenotazione.setDataFine(formPrenotazioneDTO.getDataFine());
+            formPrenotazione.setNumPartecipanti(formPrenotazioneDTO.getNumPartecipanti());
+            formPrenotazione.setNumInsegnanti(formPrenotazioneDTO.getNumInsegnanti());
+            formPrenotazione.setTipoAttivita(formPrenotazioneDTO.getTipoAttivita());
+        }
+
+        return formRichiesta;
     }
 }
