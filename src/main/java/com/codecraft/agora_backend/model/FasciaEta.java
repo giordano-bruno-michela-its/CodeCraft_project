@@ -1,5 +1,7 @@
 package com.codecraft.agora_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,10 +18,18 @@ public class FasciaEta {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView({View.GetView.class})
     private Long id;
-    
+
+    @JsonView({View.GetView.class, View.PostView.class})
     private String denominazione;
+
+    @JsonView({View.GetView.class, View.PostView.class})
     private String descrizione;
+
+    @JsonView({View.GetView.class, View.PostView.class})
     private int etaMin;
+
+    @JsonView({View.GetView.class, View.PostView.class})
     private int etaMax;
 }
