@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -26,5 +27,5 @@ public class FormPrenotazioneDTO extends FormRichiestaDTO {
     private int numInsegnanti;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private TipoAttivita tipoAttivita;
+    private Set<TipoAttivitaDTO> tipoAttivita;
 }
