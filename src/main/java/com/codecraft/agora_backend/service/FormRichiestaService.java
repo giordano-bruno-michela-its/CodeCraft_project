@@ -10,10 +10,7 @@ import com.codecraft.agora_backend.model.TipoRichiesta;
 import com.codecraft.agora_backend.repository.FormRichiestaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -149,7 +146,7 @@ public class FormRichiestaService {
             formPrenotazione.setNumInsegnanti(formPrenotazioneDTO.getNumInsegnanti());
             Set<TipoAttivita> tipoAttivitaSet = formPrenotazioneDTO.getTipoAttivita().stream()
                     .map(this::convertToEntity)
-                    .collect(Collectors.toSet());
+                    .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(TipoAttivita::getId))));
             formPrenotazione.setTipoAttivita(tipoAttivitaSet);
         }
 
