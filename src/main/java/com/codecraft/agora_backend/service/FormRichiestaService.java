@@ -44,38 +44,72 @@ public class FormRichiestaService {
         Optional<FormRichiesta> optionalFormRichiesta = formRichiestaRepository.findById(id);
         if (optionalFormRichiesta.isPresent()) {
             FormRichiesta formRichiesta = optionalFormRichiesta.get();
-
-            if (formRichiestaDTO.getEmail() != null) {
-                formRichiesta.setEmail(formRichiestaDTO.getEmail());
-            }
-            if (formRichiestaDTO.getNome() != null) {
-                formRichiesta.setNome(formRichiestaDTO.getNome());
-            }
-            if (formRichiestaDTO.getCognome() != null) {
-                formRichiesta.setCognome(formRichiestaDTO.getCognome());
-            }
-            if (formRichiestaDTO.getEnte() != null) {
-                formRichiesta.setEnte(formRichiestaDTO.getEnte());
-            }
-            if (formRichiestaDTO.getTelefono() != null) {
-                formRichiesta.setTelefono(formRichiestaDTO.getTelefono());
-            }
-            if (formRichiestaDTO.getDataContatto() != null) {
-                formRichiesta.setDataContatto(formRichiestaDTO.getDataContatto());
-            }
-            if (formRichiestaDTO.getDescrizione() != null) {
-                formRichiesta.setDescrizione(formRichiestaDTO.getDescrizione());
-            }
-            if (formRichiestaDTO.getFasciaEta() != null) {
-                formRichiesta.setFasciaEta(formRichiestaDTO.getFasciaEta());
-            }
-            if (formRichiestaDTO.getTipoRichiesta() != null) {
-                formRichiesta.setTipoRichiesta(formRichiestaDTO.getTipoRichiesta());
-            }
-
+            updateCommonFields(formRichiesta, formRichiestaDTO);
             return formRichiestaRepository.save(formRichiesta);
         }
         return null;
+    }
+
+    public FormPrenotazione updateFormPrenotazione(Long id, FormPrenotazioneDTO formPrenotazioneDTO) {
+        Optional<FormRichiesta> optionalFormRichiesta = formRichiestaRepository.findById(id);
+        if (optionalFormRichiesta.isPresent() && optionalFormRichiesta.get() instanceof FormPrenotazione) {
+            FormPrenotazione formPrenotazione = (FormPrenotazione) optionalFormRichiesta.get();
+            updateCommonFields(formPrenotazione, formPrenotazioneDTO);
+            updateFormPrenotazioneFields(formPrenotazione, formPrenotazioneDTO);
+            return formRichiestaRepository.save(formPrenotazione);
+        }
+        return null;
+    }
+
+    private void updateCommonFields(FormRichiesta formRichiesta, FormRichiestaDTO formRichiestaDTO) {
+        if (formRichiestaDTO.getEmail() != null) {
+            formRichiesta.setEmail(formRichiestaDTO.getEmail());
+        }
+        if (formRichiestaDTO.getNome() != null) {
+            formRichiesta.setNome(formRichiestaDTO.getNome());
+        }
+        if (formRichiestaDTO.getCognome() != null) {
+            formRichiesta.setCognome(formRichiestaDTO.getCognome());
+        }
+        if (formRichiestaDTO.getEnte() != null) {
+            formRichiesta.setEnte(formRichiestaDTO.getEnte());
+        }
+        if (formRichiestaDTO.getTelefono() != null) {
+            formRichiesta.setTelefono(formRichiestaDTO.getTelefono());
+        }
+        if (formRichiestaDTO.getDataContatto() != null) {
+            formRichiesta.setDataContatto(formRichiestaDTO.getDataContatto());
+        }
+        if (formRichiestaDTO.getDescrizione() != null) {
+            formRichiesta.setDescrizione(formRichiestaDTO.getDescrizione());
+        }
+        if (formRichiestaDTO.getFasciaEta() != null) {
+            formRichiesta.setFasciaEta(formRichiestaDTO.getFasciaEta());
+        }
+        if (formRichiestaDTO.getTipoRichiesta() != null) {
+            formRichiesta.setTipoRichiesta(formRichiestaDTO.getTipoRichiesta());
+        }
+    }
+
+    private void updateFormPrenotazioneFields(FormPrenotazione formPrenotazione, FormPrenotazioneDTO formPrenotazioneDTO) {
+        if (formPrenotazioneDTO.getDataInizio() != null) {
+            formPrenotazione.setDataInizio(formPrenotazioneDTO.getDataInizio());
+        }
+        if (formPrenotazioneDTO.getDataFine() != null) {
+            formPrenotazione.setDataFine(formPrenotazioneDTO.getDataFine());
+        }
+        if (formPrenotazioneDTO.getNumPartecipanti() != 0) {
+            formPrenotazione.setNumPartecipanti(formPrenotazioneDTO.getNumPartecipanti());
+        }
+        if (formPrenotazioneDTO.getNumInsegnanti() != 0) {
+            formPrenotazione.setNumInsegnanti(formPrenotazioneDTO.getNumInsegnanti());
+        }
+        if (formPrenotazioneDTO.getTipoAttivita() != null) {
+            Set<TipoAttivita> tipoAttivitaSet = formPrenotazioneDTO.getTipoAttivita().stream()
+                    .map(this::convertToEntity)
+                    .collect(Collectors.toSet());
+            formPrenotazione.setTipoAttivita(tipoAttivitaSet);
+        }
     }
 
     public void deleteFormRichiesta(Long id) {
