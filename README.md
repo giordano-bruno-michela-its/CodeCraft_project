@@ -84,6 +84,7 @@ Credenziali email testing: testcascinacaccia@gmail.com,
 PASS: testcaccia 
 Per il testing della mail utilizzare le chiamate di create delle richieste, e non inviare troppe email consecutivamente perchè gmail può dare problemi
 
+Se serve fare test consecutivi di create senza email commentare le righe con sendEmailService dentro i due metodi di createForm nel file FormRichiestaService
 ## Per chiudere WSL
 
 Per chiudere WSL, aprire un terminale PowerShell e lanciare il comando:
