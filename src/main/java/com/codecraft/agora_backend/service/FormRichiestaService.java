@@ -6,6 +6,7 @@ import com.codecraft.agora_backend.model.FormPrenotazione;
 import com.codecraft.agora_backend.model.FormRichiesta;
 import com.codecraft.agora_backend.model.TipoRichiesta;
 import com.codecraft.agora_backend.repository.FormRichiestaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,9 @@ import java.util.Optional;
 public class FormRichiestaService {
 
     private final FormRichiestaRepository formRichiestaRepository;
+
+    @Autowired
+    private SendEmailService sendEmailService;
 
     public FormRichiestaService(FormRichiestaRepository formRichiestaRepository) {
         this.formRichiestaRepository = formRichiestaRepository;
@@ -30,11 +34,13 @@ public class FormRichiestaService {
 
     public FormRichiesta createFormRichiesta(FormRichiestaDTO formRichiestaDTO) {
         FormRichiesta formRichiesta = convertToEntity(formRichiestaDTO);
+        sendEmailService.sendEmailInformation(formRichiesta);
         return formRichiestaRepository.save(formRichiesta);
     }
 
     public FormPrenotazione createFormPrenotazione(FormPrenotazioneDTO formPrenotazioneDTO) {
         FormPrenotazione formPrenotazione = (FormPrenotazione) convertToEntity(formPrenotazioneDTO);
+        sendEmailService.sendEmailBooking(formPrenotazione);
         return formRichiestaRepository.save(formPrenotazione);
     }
 
