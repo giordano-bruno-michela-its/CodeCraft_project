@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/formreq")
+@CrossOrigin(origins = "http://localhost:3000")
 public class FormRichiestaController {
 
     private final FormRichiestaService formRichiestaService;
