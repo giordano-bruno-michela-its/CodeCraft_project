@@ -62,6 +62,17 @@ public class FormRichiestaController {
         }
     }
 
+    @PutMapping("/updateprenot/{id}")
+    @JsonView(View.PostView.class)
+    public ResponseEntity<FormPrenotazioneDTO> updateFormPrenotazione(@PathVariable Long id, @RequestBody FormPrenotazioneDTO formPrenotazioneDTO) {
+        FormPrenotazione updatedFormPrenotazione = formRichiestaService.updateFormPrenotazione(id, formPrenotazioneDTO);
+        if (updatedFormPrenotazione != null) {
+            return ResponseEntity.ok((FormPrenotazioneDTO) formRichiestaService.convertToDTO(updatedFormPrenotazione));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteFormRichiesta(@PathVariable Long id) {
         formRichiestaService.deleteFormRichiesta(id);
