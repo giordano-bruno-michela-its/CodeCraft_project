@@ -1,31 +1,27 @@
 package com.codecraft.agora_backend.dto;
 
-import com.codecraft.agora_backend.model.TipoAttivita;
 import com.codecraft.agora_backend.model.View;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
-import java.util.Set;
-
 @NoArgsConstructor
 @Getter
 @Setter
-public class FormPrenotazioneDTO extends FormRichiestaDTO {
+public class FasciaEtaDTO {
+    @JsonView(View.GetView.class)
+    private Long id;
+
     @JsonView({View.GetView.class, View.PostView.class})
-    private Date dataInizio;
-    
+    private String denominazione;
+
     @JsonView({View.GetView.class, View.PostView.class})
-    private Date dataFine;
-    
+    private String descrizione;
+
     @JsonView({View.GetView.class, View.PostView.class})
-    private int numPartecipanti;
-    
+    private int etaMin;
+
     @JsonView({View.GetView.class, View.PostView.class})
-    private int numInsegnanti;
-    
-    @JsonView({View.GetView.class, View.PostView.class})
-    private Set<TipoAttivitaDTO> tipoAttivita;
+    private int etaMax;
 }

@@ -1,8 +1,7 @@
-package com.codecraft.agora_backend.model;
+package com.codecraft.agora_backend.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.codecraft.agora_backend.model.View;
 import com.fasterxml.jackson.annotation.JsonView;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,13 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
-public class TipoAttivita {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    @JsonView({View.GetView.class})
+public class TipoAttivitaDTO {
+    @JsonView(View.GetView.class)
     private Long id;
 
     @JsonView({View.GetView.class, View.PostView.class})
