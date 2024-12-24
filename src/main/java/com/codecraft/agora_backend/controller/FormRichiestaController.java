@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/formreq")
+@CrossOrigin(origins = "http://localhost:3000")
 public class FormRichiestaController {
 
     private final FormRichiestaService formRichiestaService;
@@ -56,6 +57,17 @@ public class FormRichiestaController {
         FormRichiesta updatedFormRichiesta = formRichiestaService.updateFormRichiesta(id, formRichiestaDTO);
         if (updatedFormRichiesta != null) {
             return ResponseEntity.ok(formRichiestaService.convertToDTO(updatedFormRichiesta));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/updateprenot/{id}")
+    @JsonView(View.PostView.class)
+    public ResponseEntity<FormPrenotazioneDTO> updateFormPrenotazione(@PathVariable Long id, @RequestBody FormPrenotazioneDTO formPrenotazioneDTO) {
+        FormPrenotazione updatedFormPrenotazione = formRichiestaService.updateFormPrenotazione(id, formPrenotazioneDTO);
+        if (updatedFormPrenotazione != null) {
+            return ResponseEntity.ok((FormPrenotazioneDTO) formRichiestaService.convertToDTO(updatedFormPrenotazione));
         } else {
             return ResponseEntity.notFound().build();
         }
