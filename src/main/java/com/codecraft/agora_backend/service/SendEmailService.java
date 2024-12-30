@@ -1,7 +1,9 @@
 package com.codecraft.agora_backend.service;
 
-import com.codecraft.agora_backend.model.FormPrenotazione;
-import com.codecraft.agora_backend.model.FormRichiesta;
+import com.codecraft.agora_backend.model.FormBooking;
+import com.codecraft.agora_backend.model.FormInfo;
+import com.codecraft.agora_backend.model.FormBooking;
+import com.codecraft.agora_backend.model.FormInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -18,23 +20,23 @@ public class SendEmailService {
     private String fromEmail;
 
     //This method sends an email to request more information
-    public void sendEmailInformation(FormRichiesta formInfo) {
+    public void sendEmailInformation(FormInfo formInfo) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromEmail);
         message.setTo(formInfo.getEmail());
         message.setText("Email enviado com sucesso!");
-        message.setSubject("Richiesta di contatto da "+formInfo.getCognome());
+        message.setSubject("Richiesta di contatto da "+formInfo.getSurname());
 
         mailSender.send(message);
     }
 
     //This method sends an email to request a booking
-    public void sendEmailBooking(FormPrenotazione formBooking) {
+    public void sendEmailBooking(FormBooking formBooking) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromEmail);
         message.setTo(formBooking.getEmail());
         message.setText("Email enviado com sucesso!");
-        message.setSubject("Richiesta di prenotazione da "+formBooking.getCognome());
+        message.setSubject("Richiesta di prenotazione da "+formBooking.getSurname());
 
         mailSender.send(message);
     }

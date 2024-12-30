@@ -71,6 +71,9 @@ Il riferimento è descritto nel file FormRichiestaController.java in src/main/ja
 Aggiunto anche Swagger per poter testare i servizi REST: http://localhost:8080/swagger-ui/index.html
 Da Swagger ricordarsi di correggere i body delle richieste POST, in quanto mette di default id = 0 e altri dati da non specificare.
 
+
+## Test e-mail
+
 Credenziali email testing: testcascinacaccia@gmail.com,
 PASS: provacaccia 
 Per il testing della mail utilizzare le chiamate di create delle richieste, e non inviare troppe email consecutivamente perchè gmail può dare problemi
