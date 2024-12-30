@@ -11,48 +11,48 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/fasciaeta")
-public class FasciaEtaController {
+@RequestMapping("/api/agegroup")
+public class AgeGroupController {
 
     private final AgeGroupService ageGroupService;
 
-    public FasciaEtaController(AgeGroupService ageGroupService) {
+    public AgeGroupController(AgeGroupService ageGroupService) {
         this.ageGroupService = ageGroupService;
     }
 
     @GetMapping("/all")
     @JsonView(View.GetView.class)
-    public List<AgeGroupDTO> getAllFasciaEta() {
+    public List<AgeGroupDTO> getAllAgeGroup() {
         return ageGroupService.getAllAgeGroup();
     }
 
     @GetMapping("/{id}")
     @JsonView(View.GetView.class)
-    public ResponseEntity<AgeGroupDTO> getFasciaEtaById(@PathVariable Long id) {
-        Optional<AgeGroupDTO> fasciaEta = ageGroupService.getAgeGroupById(id);
-        return fasciaEta.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<AgeGroupDTO> getAgeGroupById(@PathVariable Long id) {
+        Optional<AgeGroupDTO> ageGroup = ageGroupService.getAgeGroupById(id);
+        return ageGroup.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/create")
     @JsonView(View.PostView.class)
-    public ResponseEntity<AgeGroupDTO> createFasciaEta(@RequestBody AgeGroupDTO ageGroupDTO) {
-        AgeGroupDTO createdFasciaEta = ageGroupService.createAgeGroup(ageGroupDTO);
-        return ResponseEntity.ok(createdFasciaEta);
+    public ResponseEntity<AgeGroupDTO> createAgeGroup(@RequestBody AgeGroupDTO ageGroupDTO) {
+        AgeGroupDTO createdAgeGroup = ageGroupService.createAgeGroup(ageGroupDTO);
+        return ResponseEntity.ok(createdAgeGroup);
     }
 
     @PutMapping("/update/{id}")
     @JsonView(View.PostView.class)
-    public ResponseEntity<AgeGroupDTO> updateFasciaEta(@PathVariable Long id, @RequestBody AgeGroupDTO ageGroupDTO) {
-        AgeGroupDTO updatedFasciaEta = ageGroupService.updateAgeGroup(id, ageGroupDTO);
-        if (updatedFasciaEta != null) {
-            return ResponseEntity.ok(updatedFasciaEta);
+    public ResponseEntity<AgeGroupDTO> updateAgeGroup(@PathVariable Long id, @RequestBody AgeGroupDTO ageGroupDTO) {
+        AgeGroupDTO updatedAgeGroup = ageGroupService.updateAgeGroup(id, ageGroupDTO);
+        if (updatedAgeGroup != null) {
+            return ResponseEntity.ok(updatedAgeGroup);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteFasciaEta(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteAgeGroup(@PathVariable Long id) {
         ageGroupService.deleteAgeGroup(id);
         return ResponseEntity.noContent().build();
     }

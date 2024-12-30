@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/tipoattivita")
-public class TipoAttivitaController {
+@RequestMapping("/api/activitytype")
+public class ActivityTypeController {
 
     private final ActivityTypeService activityTypeService;
 
-    public TipoAttivitaController(ActivityTypeService activityTypeService) {
+    public ActivityTypeController(ActivityTypeService activityTypeService) {
         this.activityTypeService = activityTypeService;
     }
 

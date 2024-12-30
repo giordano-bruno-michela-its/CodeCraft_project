@@ -16,44 +16,44 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/formreq")
 @CrossOrigin(origins = "http://localhost:3000")
-public class FormRichiestaController {
+public class FormInfoController {
 
     private final FormInfoService formInfoService;
 
-    public FormRichiestaController(FormInfoService formInfoService) {
+    public FormInfoController(FormInfoService formInfoService) {
         this.formInfoService = formInfoService;
     }
 
     @GetMapping("/all")
     @JsonView(View.GetView.class)
-    public List<FormInfoDTO> getAllFormRichieste() {
+    public List<FormInfoDTO> getAllFormInfo() {
         return formInfoService.getAllFormInfo().stream().map(formInfoService::convertToDTO).toList();
     }
 
     @GetMapping("/{id}")
     @JsonView(View.GetView.class)
-    public ResponseEntity<FormInfoDTO> getFormRichiestaById(@PathVariable Long id) {
+    public ResponseEntity<FormInfoDTO> getFormInfoById(@PathVariable Long id) {
         Optional<FormInfo> formRichiesta = formInfoService.getFormInfoById(id);
         return formRichiesta.map(value -> ResponseEntity.ok(formInfoService.convertToDTO(value))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/create")
     @JsonView(View.PostView.class)
-    public ResponseEntity<FormInfoDTO> createFormRichiesta(@RequestBody FormInfoDTO formInfoDTO) {
+    public ResponseEntity<FormInfoDTO> createFormInfo(@RequestBody FormInfoDTO formInfoDTO) {
         FormInfo formInfo = formInfoService.createFormInfo(formInfoDTO);
         return ResponseEntity.ok(formInfoService.convertToDTO(formInfo));
     }
 
-    @PostMapping("/createprenot")
+    @PostMapping("/createbooking")
     @JsonView(View.PostView.class)
-    public ResponseEntity<FormBookingDTO> createFormPrenotazione(@RequestBody FormBookingDTO formBookingDTO) {
+    public ResponseEntity<FormBookingDTO> createFormBooking(@RequestBody FormBookingDTO formBookingDTO) {
         FormBooking formBooking = formInfoService.createFormBooking(formBookingDTO);
         return ResponseEntity.ok((FormBookingDTO) formInfoService.convertToDTO(formBooking));
     }
 
     @PutMapping("/update/{id}")
     @JsonView(View.PostView.class)
-    public ResponseEntity<FormInfoDTO> updateFormRichiesta(@PathVariable Long id, @RequestBody FormInfoDTO formInfoDTO) {
+    public ResponseEntity<FormInfoDTO> updateFormInfo(@PathVariable Long id, @RequestBody FormInfoDTO formInfoDTO) {
         FormInfo updatedFormInfo = formInfoService.updateFormInfo(id, formInfoDTO);
         if (updatedFormInfo != null) {
             return ResponseEntity.ok(formInfoService.convertToDTO(updatedFormInfo));
@@ -62,9 +62,9 @@ public class FormRichiestaController {
         }
     }
 
-    @PutMapping("/updateprenot/{id}")
+    @PutMapping("/updatebooking/{id}")
     @JsonView(View.PostView.class)
-    public ResponseEntity<FormBookingDTO> updateFormPrenotazione(@PathVariable Long id, @RequestBody FormBookingDTO formBookingDTO) {
+    public ResponseEntity<FormBookingDTO> updateFormBooking(@PathVariable Long id, @RequestBody FormBookingDTO formBookingDTO) {
         FormBooking updatedFormBooking = formInfoService.updateFormBooking(id, formBookingDTO);
         if (updatedFormBooking != null) {
             return ResponseEntity.ok((FormBookingDTO) formInfoService.convertToDTO(updatedFormBooking));
@@ -74,7 +74,7 @@ public class FormRichiestaController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteFormRichiesta(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteFormInfo(@PathVariable Long id) {
         formInfoService.deleteFormInfo(id);
         return ResponseEntity.noContent().build();
     }
