@@ -1,9 +1,8 @@
 package com.codecraft.agora_backend.dto;
 
-import com.codecraft.agora_backend.model.FasciaEta;
-import com.codecraft.agora_backend.model.TipoRichiesta;
+import com.codecraft.agora_backend.model.AgeGroup;
+import com.codecraft.agora_backend.model.FormType;
 import com.codecraft.agora_backend.model.View;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public class FormRichiestaDTO {
+public class FormInfoDTO {
     @JsonView(View.GetView.class)
     private Long id;
     
@@ -22,26 +21,26 @@ public class FormRichiestaDTO {
     private String email;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private String nome;
+    private String name;
     
     @JsonView({View.GetView.class, View.PostView.class})    
-    private String cognome;
+    private String surname;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private String ente;
+    private String association;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private String telefono;
+    private String phoneNumber;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private Date dataContatto;
+    private Date contactDate;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private String descrizione;
+    private String additionalInfo;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private FasciaEta fasciaEta;
+    private AgeGroup ageGroup;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private TipoRichiesta tipoRichiesta;
+    private FormType formType;
 }
