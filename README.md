@@ -58,18 +58,9 @@ Questa variabile è utilizzata nel file application.properties come ${WSL_DB_HOS
 ## Avvio iniziale
 
 Avviare il progetto Spring Boot.
-A questo punto il database è pronto per essere utilizzato, ma non ha ancora i dati di default.
+A questo punto il database è pronto per essere utilizzato.
+Non è più necessario commentare spring.sql.init.mode=always.
 
-
-## Inizializzazione database con dati di default
-
-Aprire il file application.properties (path: src/main/resources/ ) e decommentare la riga:
-
-   ```
-   spring.sql.init.mode=always
-   ```
-
-Riavviare il progetto Spring Boot.
 
 ## Test REST API
 

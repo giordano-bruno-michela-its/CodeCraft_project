@@ -1,7 +1,5 @@
 package com.codecraft.agora_backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,7 +13,7 @@ import java.sql.Date;
 @Setter
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class FormRichiesta {
+public class FormInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,29 +24,29 @@ public class FormRichiesta {
     private String email;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private String nome;
+    private String name;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private String cognome;
+    private String surname;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private String ente;
+    private String association;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private String telefono;
+    private String phoneNumber;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private Date dataContatto;
+    private Date contactDate;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private String descrizione;
+    private String additionalInfo;
 
     @ManyToOne
-    @JoinColumn(name = "fascia_eta_id")
+    @JoinColumn(name = "age_group_id")
     @JsonView({View.GetView.class, View.PostView.class})
-    private FasciaEta fasciaEta;
+    private AgeGroup ageGroup;
 
     @Enumerated(EnumType.STRING)
     @JsonView({View.GetView.class, View.PostView.class})
-    private TipoRichiesta tipoRichiesta;
+    private FormType formType;
 }
