@@ -9,13 +9,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class TipoAttivitaDTO {
+public class ActivityTypeDTO {
     @JsonView(View.GetView.class)
     private Long id;
 
     @JsonView({View.GetView.class, View.PostView.class})
-    private String denominazione;
+    private String name;
 
     @JsonView({View.GetView.class, View.PostView.class})
-    private String descrizione;
+    private String description;
 }

@@ -1,6 +1,5 @@
 package com.codecraft.agora_backend.dto;
 
-import com.codecraft.agora_backend.model.TipoAttivita;
 import com.codecraft.agora_backend.model.View;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
@@ -13,19 +12,19 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class FormPrenotazioneDTO extends FormRichiestaDTO {
+public class FormBookingDTO extends FormInfoDTO {
     @JsonView({View.GetView.class, View.PostView.class})
-    private Date dataInizio;
+    private Date beginTime;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private Date dataFine;
+    private Date endTime;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private int numPartecipanti;
+    private int participantsQuantity;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private int numInsegnanti;
+    private int guidesQuantity;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private Set<TipoAttivitaDTO> tipoAttivita;
+    private Set<ActivityTypeDTO> activityType;
 }

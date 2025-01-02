@@ -13,25 +13,25 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class FormPrenotazione extends FormRichiesta {
+public class FormBooking extends FormInfo {
     @JsonView({View.GetView.class, View.PostView.class})
-    private Date dataInizio;
+    private Date beginTime;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private Date dataFine;
+    private Date endTime;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    private int numPartecipanti;
+    private int participantsQuantity;
     
     @JsonView({View.GetView.class, View.PostView.class})    
-    private int numInsegnanti;
+    private int guidesQuantity;
 
     @ManyToMany
     @JoinTable(
-            name = "form_prenotazione_tipo_attivita",
-            joinColumns = @JoinColumn(name = "form_prenotazione_id"),
-            inverseJoinColumns = @JoinColumn(name = "tipo_attivita_id")
+            name = "form_booking_activity_type",
+            joinColumns = @JoinColumn(name = "form_booking_id"),
+            inverseJoinColumns = @JoinColumn(name = "activity_type_id")
     )
     @JsonView({View.GetView.class, View.PostView.class})
-    private Set<TipoAttivita> tipoAttivita;
+    private Set<ActivityType> activityType;
 }
