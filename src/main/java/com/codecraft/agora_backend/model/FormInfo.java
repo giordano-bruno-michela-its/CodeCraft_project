@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -45,6 +46,15 @@ public class FormInfo {
     @JoinColumn(name = "age_group_id")
     @JsonView({View.GetView.class, View.PostView.class})
     private AgeGroup ageGroup;
+
+    @ManyToMany
+    @JoinTable(
+            name = "form_booking_activity_type",
+            joinColumns = @JoinColumn(name = "form_booking_id"),
+            inverseJoinColumns = @JoinColumn(name = "activity_type_id")
+    )
+    @JsonView({View.GetView.class, View.PostView.class})
+    private Set<ActivityType> activityType;
 
     @Enumerated(EnumType.STRING)
     @JsonView({View.GetView.class, View.PostView.class})

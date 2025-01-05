@@ -24,7 +24,4 @@ public class FormBookingDTO extends FormInfoDTO {
     
     @JsonView({View.GetView.class, View.PostView.class})
     private int guidesQuantity;
-    
-    @JsonView({View.GetView.class, View.PostView.class})
-    private Set<ActivityTypeDTO> activityType;
 }
