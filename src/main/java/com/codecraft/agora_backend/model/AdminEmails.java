@@ -24,5 +24,8 @@ public class AdminEmails {
     private String noReplyEmail;
 
     @JsonView({View.GetView.class, View.PostView.class})
+    private String noReplyPassword;
+
+    @JsonView({View.GetView.class, View.PostView.class})
     private String adminEmail;
 }

@@ -34,3 +34,8 @@ ON DUPLICATE KEY UPDATE begin_time = VALUES(begin_time), end_time = VALUES(end_t
 INSERT INTO form_booking_activity_type (form_booking_id, activity_type_id)
 VALUES (3, 2)
 ON DUPLICATE KEY UPDATE form_booking_id = VALUES(form_booking_id), activity_type_id = VALUES(activity_type_id);
+
+-- Insert sample data for admin_emails
+INSERT INTO  admin_emails (id, no_reply_email, no_reply_password, admin_email)
+VALUES (1, 'email@spero.funga', 'lett a cass', 'admin@spero.funga')
+ON DUPLICATE KEY UPDATE no_reply_email = VALUES(no_reply_email), no_reply_password = VALUES(no_reply_passowrd), admin_email = VALUES(admin_email);

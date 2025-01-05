@@ -12,8 +12,11 @@ import java.util.Optional;
 @Service
 public class AdminEmailsService {
 
-    @Autowired
-    private AdminEmailsRepository adminEmailsRepository;
+    private final AdminEmailsRepository adminEmailsRepository;
+
+    public AdminEmailsService(AdminEmailsRepository adminEmailsRepository) {
+        this.adminEmailsRepository = adminEmailsRepository;
+    }
 
     public AdminEmails createAdminEmails(AdminEmailsDTO adminEmailsDTO) {
         AdminEmails adminEmails = convertToEntity(adminEmailsDTO);
@@ -24,12 +27,26 @@ public class AdminEmailsService {
         return adminEmailsRepository.findAll();
     }
 
-    public Optional<AdminEmails> getAdminEmailsById(int id) {
+    public Optional<AdminEmails> getAdminEmailsById(Long id) {
         return adminEmailsRepository.findById(id);
     }
 
-    public AdminEmails updateAdminEmails(AdminEmails adminEmails) {
-        return adminEmailsRepository.save(adminEmails);
+    public AdminEmails updateAdminEmails(Long id, AdminEmailsDTO adminEmailsDTO) {
+        Optional<AdminEmails> optionalAdminEmails = adminEmailsRepository.findById(id);
+        if(optionalAdminEmails.isPresent()) {
+            AdminEmails adminEmails = (AdminEmails) optionalAdminEmails.get();
+            if(adminEmailsDTO.getNoReplyEmail() != null) {
+                adminEmails.setNoReplyEmail(adminEmailsDTO.getNoReplyEmail());
+            }
+            if (adminEmailsDTO.getNoReplyPassword() != null) {
+                adminEmails.setNoReplyPassword(adminEmailsDTO.getNoReplyPassword());
+            }
+            if (adminEmailsDTO.getAdminEmail() != null) {
+                adminEmails.setAdminEmail(adminEmailsDTO.getAdminEmail());
+            }
+            return adminEmailsRepository.save(adminEmails);
+        }
+        return null;
     }
 
     public void deleteAdminEmails(AdminEmails adminEmails) {

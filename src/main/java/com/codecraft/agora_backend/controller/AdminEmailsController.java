@@ -5,10 +5,8 @@ import com.codecraft.agora_backend.model.AdminEmails;
 import com.codecraft.agora_backend.model.View;
 import com.codecraft.agora_backend.service.AdminEmailsService;
 import com.fasterxml.jackson.annotation.JsonView;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,7 +15,11 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class AdminEmailsController {
 
-    private AdminEmailsService adminEmailsService;
+    private final AdminEmailsService adminEmailsService;
+
+    public AdminEmailsController(AdminEmailsService adminEmailsService) {
+        this.adminEmailsService = adminEmailsService;
+    }
 
     @GetMapping("/all")
     @JsonView(View.GetView.class)
@@ -25,4 +27,13 @@ public class AdminEmailsController {
         return  adminEmailsService.getAdminEmails().stream().map(adminEmailsService::convertToDto).toList();
     }
 
+    @PutMapping("/update/{id}")
+    @JsonView(View.GetView.class)
+    public ResponseEntity<AdminEmailsDTO> updateAdminEmails(@PathVariable Long id, @RequestBody AdminEmailsDTO adminEmails) {
+        AdminEmails updatedAdminEmails = adminEmailsService.updateAdminEmails(id, adminEmails);
+        if(updatedAdminEmails != null) {
+            return  ResponseEntity.ok((AdminEmailsDTO)adminEmailsService.convertToDto(updatedAdminEmails));
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

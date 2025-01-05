@@ -18,5 +18,8 @@ public class AdminEmailsDTO {
     private String noReplyEmail;
 
     @JsonView({View.GetView.class, View.PostView.class})
+    private String noReplyPassword;
+
+    @JsonView({View.GetView.class, View.PostView.class})
     private String adminEmail;
 }
