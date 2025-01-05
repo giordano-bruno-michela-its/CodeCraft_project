@@ -49,8 +49,8 @@ public class FormInfo {
 
     @ManyToMany
     @JoinTable(
-            name = "form_booking_activity_type",
-            joinColumns = @JoinColumn(name = "form_booking_id"),
+            name = "form_info_activity_type",
+            joinColumns = @JoinColumn(name = "form_info_id"),
             inverseJoinColumns = @JoinColumn(name = "activity_type_id")
     )
     @JsonView({View.GetView.class, View.PostView.class})

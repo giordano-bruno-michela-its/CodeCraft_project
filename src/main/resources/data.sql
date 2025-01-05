@@ -31,6 +31,6 @@ VALUES (3, '2023-03-10', '2023-03-15', 15, 3)
 ON DUPLICATE KEY UPDATE begin_time = VALUES(begin_time), end_time = VALUES(end_time), participants_quantity = VALUES(participants_quantity), guides_quantity = VALUES(guides_quantity);
 
 -- Insert sample data for form_booking_activity_type (join table)
-INSERT INTO form_booking_activity_type (form_booking_id, activity_type_id)
+INSERT INTO form_info_activity_type (form_info_id, activity_type_id)
 VALUES (3, 2)
-ON DUPLICATE KEY UPDATE form_booking_id = VALUES(form_booking_id), activity_type_id = VALUES(activity_type_id);
+ON DUPLICATE KEY UPDATE form_info_id = VALUES(form_info_id), activity_type_id = VALUES(activity_type_id);
