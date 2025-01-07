@@ -16,8 +16,8 @@ public class SendEmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Value("$(spring.mail.username)")
-    private String fromEmail;
+    //@Value("$(spring.mail.username)")
+    private final String fromEmail = "testcascina@gmail.com";
 
     //This method sends an email to request more information
     public void sendEmailInformation(FormInfo formInfo) {

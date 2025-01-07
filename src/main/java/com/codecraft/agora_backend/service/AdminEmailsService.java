@@ -18,11 +18,6 @@ public class AdminEmailsService {
         this.adminEmailsRepository = adminEmailsRepository;
     }
 
-    public AdminEmails createAdminEmails(AdminEmailsDTO adminEmailsDTO) {
-        AdminEmails adminEmails = convertToEntity(adminEmailsDTO);
-        return adminEmailsRepository.save(adminEmails);
-    }
-
     public List<AdminEmails> getAdminEmails() {
         return adminEmailsRepository.findAll();
     }
@@ -47,10 +42,6 @@ public class AdminEmailsService {
             return adminEmailsRepository.save(adminEmails);
         }
         return null;
-    }
-
-    public void deleteAdminEmails(AdminEmails adminEmails) {
-        adminEmailsRepository.delete(adminEmails);
     }
 
     public AdminEmailsDTO convertToDto(AdminEmails adminEmails) {
