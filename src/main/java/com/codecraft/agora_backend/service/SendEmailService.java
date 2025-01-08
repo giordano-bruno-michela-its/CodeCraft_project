@@ -14,10 +14,17 @@ import org.springframework.stereotype.Service;
 public class SendEmailService {
 
     @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
-    //@Value("$(spring.mail.username)")
-    private final String fromEmail = "testcascina@gmail.com";
+    private final AdminEmailsService adminEmailsService;
+
+    @Value("$(spring.mail.username)")
+    private String fromEmail;
+
+    public SendEmailService(JavaMailSender mailSender, AdminEmailsService adminEmailsService) {
+        this.mailSender = mailSender;
+        this.adminEmailsService = adminEmailsService;
+    }
 
     //This method sends an email to request more information
     public void sendEmailInformation(FormInfo formInfo) {

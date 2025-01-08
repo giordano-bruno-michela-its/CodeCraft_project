@@ -18,8 +18,11 @@ public class FormInfoService {
 
     private final FormInfoRepository formInfoRepository;
 
-    public FormInfoService(FormInfoRepository formInfoRepository) {
+    private final SendEmailService sendEmailService;
+
+    public FormInfoService(FormInfoRepository formInfoRepository, SendEmailService sendEmailService) {
         this.formInfoRepository = formInfoRepository;
+        this.sendEmailService = sendEmailService;
     }
 
     public List<FormInfo> getAllFormInfo() {
@@ -32,11 +35,13 @@ public class FormInfoService {
 
     public FormInfo createFormInfo(FormInfoDTO formInfoDTO) {
         FormInfo formInfo = convertToEntity(formInfoDTO);
+        sendEmailService.sendEmailInformation(formInfo);
         return formInfoRepository.save(formInfo);
     }
 
     public FormBooking createFormBooking(FormBookingDTO formBookingDTO) {
         FormBooking formBooking = (FormBooking) convertToEntity(formBookingDTO);
+        sendEmailService.sendEmailBooking(formBooking);
         return formInfoRepository.save(formBooking);
     }
 

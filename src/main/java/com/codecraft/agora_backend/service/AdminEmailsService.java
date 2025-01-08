@@ -49,6 +49,7 @@ public class AdminEmailsService {
         adminEmailsDTO.setId(adminEmails.getId());
         adminEmailsDTO.setAdminEmail(adminEmails.getAdminEmail());
         adminEmailsDTO.setNoReplyEmail(adminEmails.getNoReplyEmail());
+        adminEmailsDTO.setNoReplyPassword(adminEmails.getNoReplyPassword());
         return adminEmailsDTO;
     }
 
@@ -57,6 +58,7 @@ public class AdminEmailsService {
         adminEmails.setId(adminEmailsDTO.getId());
         adminEmails.setAdminEmail(adminEmailsDTO.getAdminEmail());
         adminEmails.setNoReplyEmail(adminEmailsDTO.getNoReplyEmail());
+        adminEmails.setNoReplyPassword(adminEmailsDTO.getNoReplyPassword());
         return adminEmails;
     }
 }
