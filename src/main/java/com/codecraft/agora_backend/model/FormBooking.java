@@ -25,13 +25,4 @@ public class FormBooking extends FormInfo {
     
     @JsonView({View.GetView.class, View.PostView.class})    
     private int guidesQuantity;
-
-    @ManyToMany
-    @JoinTable(
-            name = "form_booking_activity_type",
-            joinColumns = @JoinColumn(name = "form_booking_id"),
-            inverseJoinColumns = @JoinColumn(name = "activity_type_id")
-    )
-    @JsonView({View.GetView.class, View.PostView.class})
-    private Set<ActivityType> activityType;
 }

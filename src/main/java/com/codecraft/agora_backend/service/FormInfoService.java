@@ -86,6 +86,16 @@ public class FormInfoService {
         if (formInfoDTO.getAgeGroup() != null) {
             formInfo.setAgeGroup(formInfoDTO.getAgeGroup());
         }
+        if (formInfoDTO.getActivityType() != null) {
+            Set<ActivityType> activityTypeSet = formInfoDTO.getActivityType().stream()
+                    .map(activityTypeDTO -> {
+                        ActivityType activityType = new ActivityType();
+                        activityType.setId(activityTypeDTO.getId());
+                        return activityType;
+                    })
+                    .collect(Collectors.toSet());
+            formInfo.setActivityType(activityTypeSet);
+        }
         if (formInfoDTO.getFormType() != null) {
             formInfo.setFormType(formInfoDTO.getFormType());
         }
@@ -103,12 +113,6 @@ public class FormInfoService {
         }
         if (formBookingDTO.getGuidesQuantity() != 0) {
             formBooking.setGuidesQuantity(formBookingDTO.getGuidesQuantity());
-        }
-        if (formBookingDTO.getActivityType() != null) {
-            Set<ActivityType> activityTypeSet = formBookingDTO.getActivityType().stream()
-                    .map(this::convertToEntity)
-                    .collect(Collectors.toSet());
-            formBooking.setActivityType(activityTypeSet);
         }
     }
 
@@ -150,6 +154,9 @@ public class FormInfoService {
             formInfoDTO.setAdditionalInfo(formInfo.getAdditionalInfo());
             formInfoDTO.setAgeGroup(formInfo.getAgeGroup());
             formInfoDTO.setFormType(formInfo.getFormType());
+            formInfoDTO.setActivityType(formInfo.getActivityType().stream()
+                    .map(this::convertToDTO)
+                    .collect(Collectors.toSet()));
             return formInfoDTO;
         }
     }
@@ -171,6 +178,10 @@ public class FormInfoService {
         formInfo.setAdditionalInfo(formInfoDTO.getAdditionalInfo());
         formInfo.setAgeGroup(formInfoDTO.getAgeGroup());
         formInfo.setFormType(formInfoDTO.getFormType());
+        Set<ActivityType> activityTypeSet = formInfoDTO.getActivityType().stream()
+                .map(this::convertToEntity)
+                .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(ActivityType::getId))));
+        formInfo.setActivityType(activityTypeSet);
 
         if (formInfo instanceof FormBooking formBooking) {
             FormBookingDTO formBookingDTO = (FormBookingDTO) formInfoDTO;
@@ -178,10 +189,6 @@ public class FormInfoService {
             formBooking.setEndTime(formBookingDTO.getEndTime());
             formBooking.setParticipantsQuantity(formBookingDTO.getParticipantsQuantity());
             formBooking.setGuidesQuantity(formBookingDTO.getGuidesQuantity());
-            Set<ActivityType> activityTypeSet = formBookingDTO.getActivityType().stream()
-                    .map(this::convertToEntity)
-                    .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(ActivityType::getId))));
-            formBooking.setActivityType(activityTypeSet);
         }
 
         return formInfo;

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -40,6 +41,9 @@ public class FormInfoDTO {
     
     @JsonView({View.GetView.class, View.PostView.class})
     private AgeGroup ageGroup;
+
+    @JsonView({View.GetView.class, View.PostView.class})
+    private Set<ActivityTypeDTO> activityType;
     
     @JsonView({View.GetView.class, View.PostView.class})
     private FormType formType;
