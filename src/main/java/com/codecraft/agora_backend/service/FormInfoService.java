@@ -8,6 +8,7 @@ import com.codecraft.agora_backend.model.FormInfo;
 import com.codecraft.agora_backend.model.ActivityType;
 import com.codecraft.agora_backend.model.FormType;
 import com.codecraft.agora_backend.repository.FormInfoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -16,14 +17,12 @@ import java.util.stream.Collectors;
 @Service
 public class FormInfoService {
 
-    private final FormInfoRepository formInfoRepository;
+    @Autowired
+    private FormInfoRepository formInfoRepository;
 
-    private final SendEmailService sendEmailService;
+    @Autowired
+    private SendEmailService sendEmailService;
 
-    public FormInfoService(FormInfoRepository formInfoRepository, SendEmailService sendEmailService) {
-        this.formInfoRepository = formInfoRepository;
-        this.sendEmailService = sendEmailService;
-    }
 
     public List<FormInfo> getAllFormInfo() {
         return formInfoRepository.findAll();
@@ -36,12 +35,14 @@ public class FormInfoService {
     public FormInfo createFormInfo(FormInfoDTO formInfoDTO) {
         FormInfo formInfo = convertToEntity(formInfoDTO);
         sendEmailService.sendEmailInformation(formInfo);
+        sendEmailService.sendInfoToAdmin(formInfo);
         return formInfoRepository.save(formInfo);
     }
 
     public FormBooking createFormBooking(FormBookingDTO formBookingDTO) {
         FormBooking formBooking = (FormBooking) convertToEntity(formBookingDTO);
         sendEmailService.sendEmailBooking(formBooking);
+        sendEmailService.sendBookingToAdmin(formBooking);
         return formInfoRepository.save(formBooking);
     }
 
