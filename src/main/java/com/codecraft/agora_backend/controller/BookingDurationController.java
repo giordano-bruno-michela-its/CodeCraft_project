@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/bookingduration")
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookingDurationController {
 
     private final BookingDurationService bookingDurationService;

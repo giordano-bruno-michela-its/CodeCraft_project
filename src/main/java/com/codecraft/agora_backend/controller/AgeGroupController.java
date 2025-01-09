@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/agegroup")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AgeGroupController {
 
     private final AgeGroupService ageGroupService;

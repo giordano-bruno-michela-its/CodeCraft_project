@@ -171,7 +171,7 @@
 						}
 					}
 				},
-				"url": "{{base_url}}/formreq/update/5",
+				"url": "{{base_url}}/formreq/update/4",
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
 			},
 			"response": []
@@ -205,7 +205,7 @@
 						}
 					}
 				},
-				"url": "{{base_url}}/formreq/updatebooking/7",
+				"url": "{{base_url}}/formreq/updatebooking/5",
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
 			},
 			"response": []
@@ -241,6 +241,69 @@
 				},
 				"url": "{{base_url}}/formreq/delete/4",
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "Newsletter - GET All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{base_url}}/formnewsletter/all"
+			},
+			"response": []
+		},
+		{
+			"name": "Newsletter - CREATE",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"string\",\r\n  \"name\": \"string\",\r\n  \"surname\": \"string\",\r\n  \"contactDate\": \"{{currentTimestamp}}\",\r\n  \"newsletterCheck\": \"YES\",\r\n  \"formType\": \"FORM_NEWSLETTER\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/formnewsletter/create"
+			},
+			"response": []
+		},
+		{
+			"name": "Newsletter - UPDATE",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"string@strang.meh\",\r\n  \"name\": \"Ajeje\",\r\n  \"surname\": \"Brazorf\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/formnewsletter/update/2"
+			},
+			"response": []
+		},
+		{
+			"name": "Newsletter - DELETE",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"string@strang.meh\",\r\n  \"name\": \"Ajeje\",\r\n  \"surname\": \"Brazorf\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/formnewsletter/delete/1"
 			},
 			"response": []
 		},
