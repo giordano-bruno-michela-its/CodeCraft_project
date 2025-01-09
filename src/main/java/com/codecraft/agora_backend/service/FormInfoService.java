@@ -52,8 +52,7 @@ public class FormInfoService {
 
     public FormBooking updateFormBooking(Long id, FormBookingDTO formBookingDTO) {
         Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
-        if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking) {
-            FormBooking formBooking = (FormBooking) optionalFormInfo.get();
+        if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking formBooking) {
             updateCommonFields(formBooking, formBookingDTO);
             updateFormBookingFields(formBooking, formBookingDTO);
             return formInfoRepository.save(formBooking);
@@ -127,8 +126,7 @@ public class FormInfoService {
     }
 
     public FormInfoDTO convertToDTO(FormInfo formInfo) {
-        if (formInfo instanceof FormBooking) {
-            FormBooking formBooking = (FormBooking) formInfo;
+        if (formInfo instanceof FormBooking formBooking) {
             FormBookingDTO formBookingDTO = new FormBookingDTO();
             formBookingDTO.setId(formBooking.getId());
             formBookingDTO.setEmail(formBooking.getEmail());
