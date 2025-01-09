@@ -42,6 +42,10 @@ public class FormInfo {
     @JsonView({View.GetView.class, View.PostView.class})
     private String additionalInfo;
 
+    @Enumerated(EnumType.STRING)
+    @JsonView({View.GetView.class, View.PostView.class})
+    private NewsletterCheck newsletterCheck;
+
     @ManyToOne
     @JoinColumn(name = "age_group_id")
     @JsonView({View.GetView.class, View.PostView.class})

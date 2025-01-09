@@ -87,7 +87,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"email\": \"string\",\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"association\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"contactDate\": \"{{currentTimestamp}}\",\n  \"additionalInfo\": \"string\",\n  \"ageGroup\": {\n    \"id\": 1\n  },\n  \"activityType\": [\n    {\n      \"id\": 1\n    }\n  ],\n  \"formType\": \"FORM_INFO\"\n}",
+					"raw": "{\n  \"email\": \"string\",\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"association\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"contactDate\": \"{{currentTimestamp}}\",\n  \"additionalInfo\": \"string\",\n  \"newsletterCheck\": \"NO\",\n  \"ageGroup\": {\n    \"id\": 1\n  },\n  \"activityType\": [\n    {\n      \"id\": 1\n    }\n  ],\n  \"formType\": \"FORM_INFO\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -130,7 +130,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"email\": \"string\",\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"association\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"contactDate\": \"{{currentTimestamp}}\",\n  \"additionalInfo\": \"string\",\n  \"ageGroup\": {\n    \"id\": 1\n  },\n    \"activityType\": [\n    {\n      \"id\": 1\n    },\n    {\n      \"id\": 2\n    }\n  ],\n  \"formType\": \"FORM_BOOKING\",\n  \"beginTime\": \"2024-12-30T15:11:12.612Z\",\n  \"endTime\": \"2024-12-30T15:11:12.612Z\",\n  \"participantsQuantity\": 0,\n  \"guidesQuantity\": 0,\n  \"bookingDuration\": {\n        \"id\": 1\n  }\n}",
+					"raw": "{\n  \"email\": \"string\",\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"association\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"contactDate\": \"{{currentTimestamp}}\",\n  \"additionalInfo\": \"string\",\n  \"newsletterCheck\": \"NO\",\n  \"ageGroup\": {\n    \"id\": 1\n  },\n    \"activityType\": [\n    {\n      \"id\": 1\n    },\n    {\n      \"id\": 2\n    }\n  ],\n  \"formType\": \"FORM_BOOKING\",\n  \"beginTime\": \"2024-12-30T15:11:12.612Z\",\n  \"endTime\": \"2024-12-30T15:11:12.612Z\",\n  \"participantsQuantity\": 0,\n  \"guidesQuantity\": 0,\n  \"bookingDuration\": {\n        \"id\": 1\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -239,7 +239,7 @@
 						}
 					}
 				},
-				"url": "{{base_url}}/formreq/delete/5",
+				"url": "{{base_url}}/formreq/delete/4",
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
 			},
 			"response": []
