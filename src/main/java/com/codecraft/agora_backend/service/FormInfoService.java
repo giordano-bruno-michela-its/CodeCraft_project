@@ -114,6 +114,9 @@ public class FormInfoService {
         if (formBookingDTO.getGuidesQuantity() != 0) {
             formBooking.setGuidesQuantity(formBookingDTO.getGuidesQuantity());
         }
+        if (formBookingDTO.getBookingDuration() != null) {
+            formBooking.setBookingDuration(formBookingDTO.getBookingDuration());
+        }
     }
 
     public void deleteFormInfo(Long id) {
@@ -141,6 +144,7 @@ public class FormInfoService {
             formBookingDTO.setActivityType(formBooking.getActivityType().stream()
                     .map(this::convertToDTO)
                     .collect(Collectors.toSet()));
+            formBookingDTO.setBookingDuration(formBooking.getBookingDuration());
             return formBookingDTO;
         } else {
             FormInfoDTO formInfoDTO = new FormInfoDTO();
@@ -189,6 +193,7 @@ public class FormInfoService {
             formBooking.setEndTime(formBookingDTO.getEndTime());
             formBooking.setParticipantsQuantity(formBookingDTO.getParticipantsQuantity());
             formBooking.setGuidesQuantity(formBookingDTO.getGuidesQuantity());
+            formBooking.setBookingDuration(formBookingDTO.getBookingDuration());
         }
 
         return formInfo;

@@ -25,4 +25,9 @@ public class FormBooking extends FormInfo {
     
     @JsonView({View.GetView.class, View.PostView.class})    
     private int guidesQuantity;
+    
+    @ManyToOne
+    @JoinColumn(name = "booking_duration_id")
+    @JsonView({View.GetView.class, View.PostView.class})
+    private BookingDuration bookingDuration;
 }
