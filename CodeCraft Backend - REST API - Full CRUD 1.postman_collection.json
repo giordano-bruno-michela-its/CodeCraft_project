@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "10937524-135f-494f-98f7-017699f993d3",
+		"_postman_id": "d2771ff0-628e-4404-95bc-375b9f84659a",
 		"name": "CodeCraft Backend - REST API - Full CRUD 1",
 		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" width=\"2162\" height=\"1530\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "38389427"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32783519"
 	},
 	"item": [
 		{
@@ -26,7 +26,16 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{base_url}}/formreq/all",
+				"url": {
+					"raw": "{{base_url}}/formreq/all",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"formreq",
+						"all"
+					]
+				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
 			},
 			"response": []
@@ -50,7 +59,16 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{base_url}}/formreq/6",
+				"url": {
+					"raw": "{{base_url}}/formreq/3",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"formreq",
+						"3"
+					]
+				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
 			},
 			"response": []
@@ -74,8 +92,11 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"packages": {},
-						"type": "text/javascript"
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -84,14 +105,23 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"email\": \"string\",\n  \"nome\": \"string\",\n  \"cognome\": \"string\",\n  \"ente\": \"string\",\n  \"telefono\": \"string\",\n  \"dataContatto\": \"{{currentTimestamp}}\",\n  \"descrizione\": \"string\",\n  \"fasciaEta\": {\n    \"id\": 1\n  },\n  \"tipoRichiesta\": \"RICHIESTA_INFORMAZIONI\"\n}",
+					"raw": "{\n  \"email\": \"string\",\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"association\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"contactDate\": \"{{currentTimestamp}}\",\n  \"additionalInfo\": \"string\",\n  \"ageGroup\": {\n    \"id\": 1\n  },\n  \"activityType\": [\n    {\n      \"id\": 1\n    }\n  ],\n  \"formType\": \"FORM_INFO\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "{{base_url}}/formreq/create",
+				"url": {
+					"raw": "{{base_url}}/formreq/create",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"formreq",
+						"create"
+					]
+				},
 				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
 			},
 			"response": []
@@ -127,14 +157,23 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"email\": \"CACCA\",\n  \"nome\": \"string\",\n  \"cognome\": \"string\",\n  \"ente\": \"string\",\n  \"telefono\": \"string\",\n  \"dataContatto\": \"{{currentTimestamp}}\",\n  \"descrizione\": \"string\",\n  \"fasciaEta\": {\n    \"id\": 1\n  },\n  \"tipoRichiesta\": \"RICHIESTA_PRENOTAZIONE\",\n  \"dataInizio\": \"2024-12-18T09:08:58.214Z\",\n  \"dataFine\": \"2024-12-18T09:08:58.214Z\",\n  \"numPartecipanti\": 0,\n  \"numInsegnanti\": 0,\n  \"tipoAttivita\": [\n    {\n      \"id\": 1\n    },\n    {\n      \"id\": 2\n    }\n  ]\n}",
+					"raw": "{\n  \"email\": \"string\",\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"association\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"contactDate\": \"{{currentTimestamp}}\",\n  \"additionalInfo\": \"string\",\n  \"ageGroup\": {\n    \"id\": 1\n  },\n  \"formType\": \"FORM_BOOKING\",\n  \"beginTime\": \"2024-12-30T15:11:12.612Z\",\n  \"endTime\": \"2024-12-30T15:11:12.612Z\",\n  \"participantsQuantity\": 0,\n  \"guidesQuantity\": 0,\n  \"activityType\": [\n    {\n      \"id\": 1\n    },\n    {\n      \"id\": 2\n    }\n  ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "{{base_url}}/formreq/createprenot",
+				"url": {
+					"raw": "{{base_url}}/formreq/createbooking",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"formreq",
+						"createbooking"
+					]
+				},
 				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
 			},
 			"response": []
@@ -161,14 +200,24 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"nome\": \"Pandolfo\",\n  \"cognome\": \"Pancrazio\"\n}",
+					"raw": "{\n    \"name\": \"Ajeje\",\n    \"surname\": \"Brazorf\",\n    \"activityType\": [\n        {\n            \"id\": 1\n        },\n        {\n            \"id\": 2\n        },\n        {\n            \"id\": 3\n        }\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "{{base_url}}/formreq/update/2",
+				"url": {
+					"raw": "{{base_url}}/formreq/update/5",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"formreq",
+						"update",
+						"5"
+					]
+				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
 			},
 			"response": []
@@ -195,14 +244,24 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"nome\": \"Pandolfo\",\n    \"cognome\": \"Pancrazio\"\n}",
+					"raw": "{\n    \"name\": \"Ajeje\",\n    \"surname\": \"Brazorf\",\n    \"activityType\": [\n        {\n            \"id\": 1\n        },\n        {\n            \"id\": 2\n        },\n        {\n            \"id\": 3\n        }\n    ],\n    \"participantsQuantity\": 666,\n    \"guidesQuantity\": 333\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "{{base_url}}/formreq/update/6",
+				"url": {
+					"raw": "{{base_url}}/formreq/updatebooking/6",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"formreq",
+						"updatebooking",
+						"6"
+					]
+				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
 			},
 			"response": []
@@ -236,7 +295,17 @@
 						}
 					}
 				},
-				"url": "{{base_url}}/formreq/delete/7",
+				"url": {
+					"raw": "{{base_url}}/formreq/delete/5",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"formreq",
+						"delete",
+						"5"
+					]
+				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
 			},
 			"response": []
@@ -260,7 +329,16 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{base_url}}/tipoattivita/all",
+				"url": {
+					"raw": "{{base_url}}/activitytype/all",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"activitytype",
+						"all"
+					]
+				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
 			},
 			"response": []
@@ -284,7 +362,16 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{base_url}}/tipoattivita/3",
+				"url": {
+					"raw": "{{base_url}}/activitytype/3",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"activitytype",
+						"3"
+					]
+				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
 			},
 			"response": []
@@ -311,14 +398,23 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"denominazione\": \"cacca\",\n  \"descrizione\": \"pupu\"\n}",
+					"raw": "{\n  \"name\": \"cacca\",\n  \"description\": \"pupu\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "{{base_url}}/tipoattivita/create",
+				"url": {
+					"raw": "{{base_url}}/activitytype/create",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"activitytype",
+						"create"
+					]
+				},
 				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
 			},
 			"response": []
@@ -345,14 +441,24 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"descrizione\": \"borraccia blu\"\n}",
+					"raw": "{\n  \"description\": \"borraccia blu\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "{{base_url}}/tipoattivita/update/4",
+				"url": {
+					"raw": "{{base_url}}/activitytype/update/4",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"activitytype",
+						"update",
+						"4"
+					]
+				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
 			},
 			"response": []
@@ -386,7 +492,17 @@
 						}
 					}
 				},
-				"url": "{{base_url}}/tipoattivita/delete/4",
+				"url": {
+					"raw": "{{base_url}}/activitytype/delete/4",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"activitytype",
+						"delete",
+						"4"
+					]
+				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
 			},
 			"response": []
@@ -410,7 +526,16 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{base_url}}/fasciaeta/all",
+				"url": {
+					"raw": "{{base_url}}/agegroup/all",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"agegroup",
+						"all"
+					]
+				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
 			},
 			"response": []
@@ -434,7 +559,16 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{base_url}}/fasciaeta/1",
+				"url": {
+					"raw": "{{base_url}}/agegroup/3",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"agegroup",
+						"3"
+					]
+				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
 			},
 			"response": []
@@ -461,14 +595,23 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"denominazione\": \"ventordici\",\n  \"descrizione\": \"diciassei\",\n  \"etaMin\": 666,\n  \"etaMax\": 667\n}",
+					"raw": "{\n  \"name\": \"ventordici\",\n  \"description\": \"diciassei\",\n  \"minAge\": 666,\n  \"maxAge\": 667\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "{{base_url}}/fasciaeta/create",
+				"url": {
+					"raw": "{{base_url}}/agegroup/create",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"agegroup",
+						"create"
+					]
+				},
 				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
 			},
 			"response": []
@@ -495,14 +638,24 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"denominazione\": \"16-20 anni\",\n    \"descrizione\": \"Da 16 a 20 anni AAA\",\n    \"etaMin\": 16,\n    \"etaMax\": 20\n}",
+					"raw": "{\n    \"name\": \"16-20 anni\",\n    \"description\": \"Da 16 a 20 anni AAA\",\n    \"minAge\": 16,\n    \"maxAge\": 20\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "{{base_url}}/fasciaeta/update/4",
+				"url": {
+					"raw": "{{base_url}}/agegroup/update/4",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"agegroup",
+						"update",
+						"4"
+					]
+				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
 			},
 			"response": []
@@ -536,8 +689,64 @@
 						}
 					}
 				},
-				"url": "{{base_url}}/fasciaeta/delete/4",
+				"url": {
+					"raw": "{{base_url}}/agegroup/delete/4",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"agegroup",
+						"delete",
+						"4"
+					]
+				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "Admin emails - GET All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/admin/all",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"admin",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin emails - UPDATE",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"noReplyEmail\": \"testcascinacaccia@gmail.com\",\r\n    \"noReplyPassword\": \"vwiwpzvtuypoinuo\", //Mai cambiare è un token autogenerato da google\r\n    \"adminEmail\": \"testcascinacaccia@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/admin/update/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"admin",
+						"update",
+						"1"
+					]
+				}
 			},
 			"response": []
 		}

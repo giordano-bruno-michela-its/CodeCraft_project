@@ -12,20 +12,19 @@ import java.util.Optional;
 @Service
 public class AdminEmailsService {
 
-    private final AdminEmailsRepository adminEmailsRepository;
-
-    public AdminEmailsService(AdminEmailsRepository adminEmailsRepository) {
-        this.adminEmailsRepository = adminEmailsRepository;
-    }
+    @Autowired
+    private AdminEmailsRepository adminEmailsRepository;
 
     public List<AdminEmails> getAdminEmails() {
         return adminEmailsRepository.findAll();
     }
 
+    //Get admin emails with specific id
     public Optional<AdminEmails> getAdminEmailsById(Long id) {
         return adminEmailsRepository.findById(id);
     }
 
+    //Update adminEmails with id, and new data, calls method to update credentials in SendEmailService
     public AdminEmails updateAdminEmails(Long id, AdminEmailsDTO adminEmailsDTO) {
         Optional<AdminEmails> optionalAdminEmails = adminEmailsRepository.findById(id);
         if(optionalAdminEmails.isPresent()) {
@@ -44,6 +43,7 @@ public class AdminEmailsService {
         return null;
     }
 
+    //Converts to dto
     public AdminEmailsDTO convertToDto(AdminEmails adminEmails) {
         AdminEmailsDTO adminEmailsDTO = new AdminEmailsDTO();
         adminEmailsDTO.setId(adminEmails.getId());
@@ -53,6 +53,7 @@ public class AdminEmailsService {
         return adminEmailsDTO;
     }
 
+    //Converts to entity
     public AdminEmails convertToEntity(AdminEmailsDTO adminEmailsDTO) {
         AdminEmails adminEmails = new AdminEmails();
         adminEmails.setId(adminEmailsDTO.getId());
