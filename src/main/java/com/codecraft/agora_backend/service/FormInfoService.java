@@ -52,8 +52,7 @@ public class FormInfoService {
 
     public FormBooking updateFormBooking(Long id, FormBookingDTO formBookingDTO) {
         Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
-        if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking) {
-            FormBooking formBooking = (FormBooking) optionalFormInfo.get();
+        if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking formBooking) {
             updateCommonFields(formBooking, formBookingDTO);
             updateFormBookingFields(formBooking, formBookingDTO);
             return formInfoRepository.save(formBooking);
@@ -82,6 +81,9 @@ public class FormInfoService {
         }
         if (formInfoDTO.getAdditionalInfo() != null) {
             formInfo.setAdditionalInfo(formInfoDTO.getAdditionalInfo());
+        }
+        if (formInfoDTO.getNewsletterCheck() != null) {
+            formInfo.setNewsletterCheck(formInfoDTO.getNewsletterCheck());
         }
         if (formInfoDTO.getAgeGroup() != null) {
             formInfo.setAgeGroup(formInfoDTO.getAgeGroup());
@@ -114,6 +116,9 @@ public class FormInfoService {
         if (formBookingDTO.getGuidesQuantity() != 0) {
             formBooking.setGuidesQuantity(formBookingDTO.getGuidesQuantity());
         }
+        if (formBookingDTO.getBookingDuration() != null) {
+            formBooking.setBookingDuration(formBookingDTO.getBookingDuration());
+        }
     }
 
     public void deleteFormInfo(Long id) {
@@ -121,8 +126,7 @@ public class FormInfoService {
     }
 
     public FormInfoDTO convertToDTO(FormInfo formInfo) {
-        if (formInfo instanceof FormBooking) {
-            FormBooking formBooking = (FormBooking) formInfo;
+        if (formInfo instanceof FormBooking formBooking) {
             FormBookingDTO formBookingDTO = new FormBookingDTO();
             formBookingDTO.setId(formBooking.getId());
             formBookingDTO.setEmail(formBooking.getEmail());
@@ -132,6 +136,7 @@ public class FormInfoService {
             formBookingDTO.setPhoneNumber(formBooking.getPhoneNumber());
             formBookingDTO.setContactDate(formBooking.getContactDate());
             formBookingDTO.setAdditionalInfo(formBooking.getAdditionalInfo());
+            formBookingDTO.setNewsletterCheck(formInfo.getNewsletterCheck());
             formBookingDTO.setAgeGroup(formBooking.getAgeGroup());
             formBookingDTO.setFormType(formBooking.getFormType());
             formBookingDTO.setBeginTime(formBooking.getBeginTime());
@@ -141,6 +146,7 @@ public class FormInfoService {
             formBookingDTO.setActivityType(formBooking.getActivityType().stream()
                     .map(this::convertToDTO)
                     .collect(Collectors.toSet()));
+            formBookingDTO.setBookingDuration(formBooking.getBookingDuration());
             return formBookingDTO;
         } else {
             FormInfoDTO formInfoDTO = new FormInfoDTO();
@@ -152,6 +158,7 @@ public class FormInfoService {
             formInfoDTO.setPhoneNumber(formInfo.getPhoneNumber());
             formInfoDTO.setContactDate(formInfo.getContactDate());
             formInfoDTO.setAdditionalInfo(formInfo.getAdditionalInfo());
+            formInfoDTO.setNewsletterCheck(formInfo.getNewsletterCheck());
             formInfoDTO.setAgeGroup(formInfo.getAgeGroup());
             formInfoDTO.setFormType(formInfo.getFormType());
             formInfoDTO.setActivityType(formInfo.getActivityType().stream()
@@ -176,6 +183,7 @@ public class FormInfoService {
         formInfo.setPhoneNumber(formInfoDTO.getPhoneNumber());
         formInfo.setContactDate(formInfoDTO.getContactDate());
         formInfo.setAdditionalInfo(formInfoDTO.getAdditionalInfo());
+        formInfo.setNewsletterCheck(formInfoDTO.getNewsletterCheck());
         formInfo.setAgeGroup(formInfoDTO.getAgeGroup());
         formInfo.setFormType(formInfoDTO.getFormType());
         Set<ActivityType> activityTypeSet = formInfoDTO.getActivityType().stream()
@@ -189,6 +197,7 @@ public class FormInfoService {
             formBooking.setEndTime(formBookingDTO.getEndTime());
             formBooking.setParticipantsQuantity(formBookingDTO.getParticipantsQuantity());
             formBooking.setGuidesQuantity(formBookingDTO.getGuidesQuantity());
+            formBooking.setBookingDuration(formBookingDTO.getBookingDuration());
         }
 
         return formInfo;

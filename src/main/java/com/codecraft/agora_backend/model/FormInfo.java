@@ -2,18 +2,19 @@ package com.codecraft.agora_backend.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.sql.Date;
 import java.util.Set;
 
+@SuperBuilder
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@AllArgsConstructor
 public class FormInfo {
 
     @Id
@@ -42,6 +43,10 @@ public class FormInfo {
     @JsonView({View.GetView.class, View.PostView.class})
     private String additionalInfo;
 
+    @Enumerated(EnumType.STRING)
+    @JsonView({View.GetView.class, View.PostView.class})
+    private NewsletterCheck newsletterCheck;
+
     @ManyToOne
     @JoinColumn(name = "age_group_id")
     @JsonView({View.GetView.class, View.PostView.class})
@@ -57,6 +62,7 @@ public class FormInfo {
     private Set<ActivityType> activityType;
 
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     @JsonView({View.GetView.class, View.PostView.class})
-    private FormType formType;
+    private FormType formType = FormType.FORM_INFO;
 }

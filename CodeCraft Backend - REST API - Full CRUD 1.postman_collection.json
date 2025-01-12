@@ -87,7 +87,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"email\": \"string\",\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"association\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"contactDate\": \"{{currentTimestamp}}\",\n  \"additionalInfo\": \"string\",\n  \"ageGroup\": {\n    \"id\": 1\n  },\n  \"activityType\": [\n    {\n      \"id\": 1\n    }\n  ],\n  \"formType\": \"FORM_INFO\"\n}",
+					"raw": "{\n  \"email\": \"string\",\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"association\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"contactDate\": \"{{currentTimestamp}}\",\n  \"additionalInfo\": \"string\",\n  \"newsletterCheck\": \"NO\",\n  \"ageGroup\": {\n    \"id\": 1\n  },\n  \"activityType\": [\n    {\n      \"id\": 1\n    }\n  ],\n  \"formType\": \"FORM_INFO\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -130,7 +130,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"email\": \"string\",\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"association\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"contactDate\": \"{{currentTimestamp}}\",\n  \"additionalInfo\": \"string\",\n  \"ageGroup\": {\n    \"id\": 1\n  },\n  \"formType\": \"FORM_BOOKING\",\n  \"beginTime\": \"2024-12-30T15:11:12.612Z\",\n  \"endTime\": \"2024-12-30T15:11:12.612Z\",\n  \"participantsQuantity\": 0,\n  \"guidesQuantity\": 0,\n  \"activityType\": [\n    {\n      \"id\": 1\n    },\n    {\n      \"id\": 2\n    }\n  ]\n}",
+					"raw": "{\n  \"email\": \"string\",\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"association\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"contactDate\": \"{{currentTimestamp}}\",\n  \"additionalInfo\": \"string\",\n  \"newsletterCheck\": \"NO\",\n  \"ageGroup\": {\n    \"id\": 1\n  },\n    \"activityType\": [\n    {\n      \"id\": 1\n    },\n    {\n      \"id\": 2\n    }\n  ],\n  \"formType\": \"FORM_BOOKING\",\n  \"beginTime\": \"2024-12-30T15:11:12.612Z\",\n  \"endTime\": \"2024-12-30T15:11:12.612Z\",\n  \"participantsQuantity\": 0,\n  \"guidesQuantity\": 0,\n  \"bookingDuration\": {\n        \"id\": 1\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -171,7 +171,7 @@
 						}
 					}
 				},
-				"url": "{{base_url}}/formreq/update/5",
+				"url": "{{base_url}}/formreq/update/4",
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
 			},
 			"response": []
@@ -198,14 +198,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Ajeje\",\n    \"surname\": \"Brazorf\",\n    \"activityType\": [\n        {\n            \"id\": 1\n        },\n        {\n            \"id\": 2\n        },\n        {\n            \"id\": 3\n        }\n    ],\n    \"participantsQuantity\": 666,\n    \"guidesQuantity\": 333\n}",
+					"raw": "{\n    \"name\": \"Ajeje\",\n    \"surname\": \"Brazorf\",\n    \"activityType\": [\n        {\n            \"id\": 1\n        },\n        {\n            \"id\": 2\n        },\n        {\n            \"id\": 3\n        }\n    ],\n    \"participantsQuantity\": 666,\n    \"guidesQuantity\": 333,\n    \"bookingDuration\": {\n        \"id\": 2\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "{{base_url}}/formreq/updatebooking/6",
+				"url": "{{base_url}}/formreq/updatebooking/5",
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
 			},
 			"response": []
@@ -241,6 +241,69 @@
 				},
 				"url": "{{base_url}}/formreq/delete/5",
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "Newsletter - GET All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{base_url}}/formnewsletter/all"
+			},
+			"response": []
+		},
+		{
+			"name": "Newsletter - CREATE",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"string\",\r\n  \"name\": \"string\",\r\n  \"surname\": \"string\",\r\n  \"contactDate\": \"{{currentTimestamp}}\",\r\n  \"newsletterCheck\": \"YES\",\r\n  \"formType\": \"FORM_NEWSLETTER\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/formnewsletter/create"
+			},
+			"response": []
+		},
+		{
+			"name": "Newsletter - UPDATE",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"string@strang.meh\",\r\n  \"name\": \"Ajeje\",\r\n  \"surname\": \"Brazorf\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/formnewsletter/update/2"
+			},
+			"response": []
+		},
+		{
+			"name": "Newsletter - DELETE",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"string@strang.meh\",\r\n  \"name\": \"Ajeje\",\r\n  \"surname\": \"Brazorf\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/formnewsletter/delete/1"
 			},
 			"response": []
 		},
@@ -540,6 +603,156 @@
 					}
 				},
 				"url": "{{base_url}}/agegroup/delete/4",
+				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "BookingDuration - GET All",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{base_url}}/bookingduration/all",
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
+			"name": "BookingDuration - GET by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{base_url}}/bookingduration/3",
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
+			"name": "BookingDuration - CREATE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"2 giorni\",\n  \"description\": \"2 giorni\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/bookingduration/create",
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "BookingDuration - UPDATE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PUT request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"description\": \"borraccia blu\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/bookingduration/update/5",
+				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "BookingDuration - DELETE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/bookingduration/delete/5",
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
 			},
 			"response": []
