@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/activitytype")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ActivityTypeController {
 
     private final ActivityTypeService activityTypeService;
