@@ -85,7 +85,7 @@ public class SendEmailService {
                             + "\n   • E-mail: "+formInfo.getEmail()
                             + "\n   • Cellulare: "+formInfo.getPhoneNumber()
                             + "\nDettagli della richiesta:"
-                            + "\n   • Attività: DOPO MERGE AGGIUNGERE CHIAMATA A ATTIVITà"
+                            + "\n   • Attività: " + printActivity(formInfo.getActivityType())
                             + "\n   • Messaggio: " + formInfo.getAdditionalInfo()
                             + "\nDettagli invio:"
                             + "\n   • Richiesta effettuata il "+formInfo.getContactDate());
@@ -121,10 +121,10 @@ public class SendEmailService {
     }
 
     public String printActivity (Set<ActivityType> activity) {
-        String activityString = "";
+        StringBuilder activityString = new StringBuilder();
         for (ActivityType activityType : activity) {
-            activityString += activityType.getName() + "    ";
+            activityString.append(activityType.getName()).append("    ");
         }
-        return activityString;
+        return activityString.toString();
     }
 }
