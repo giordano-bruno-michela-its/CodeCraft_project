@@ -9,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class SendEmailService {
@@ -111,11 +112,19 @@ public class SendEmailService {
                             "\n   • Periodo di disponibilità: da "+formBooking.getBeginTime()+ " a "+formBooking.getEndTime()+
                             "\n   • Numero bambini e ragazzi: "+formBooking.getParticipantsQuantity()+
                             "\n   • Numero accompagnatori: "+formBooking.getGuidesQuantity()+
-                            "\n   • Attività scelte: "+formBooking.getActivityType()+
+                            "\n   • Attività scelte: "+printActivity(formBooking.getActivityType())+
                             "\n   • Messaggio: "+formBooking.getAdditionalInfo()+
                             "\nDettagli prenotazione: "+
                             "\n   • Prenotazione effettuata il "+formBooking.getContactDate());
         }
         mailSender.send(message);
+    }
+
+    public String printActivity (Set<ActivityType> activity) {
+        String activityString = "";
+        for (ActivityType activityType : activity) {
+            activityString += activityType.getName() + "    ";
+        }
+        return activityString;
     }
 }
