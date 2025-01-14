@@ -51,10 +51,9 @@ public class AuthServiceImpl implements AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // 03 - Generate the token based on username and secret key
-        String token = jwtTokenProvider.generateToken(authentication);
 
         // 04 - Return the token to controller
-        return token;
+        return jwtTokenProvider.generateToken(authentication);
     }
 
     @Override
