@@ -24,9 +24,7 @@ public class FormInfoController {
     public FormInfoController(FormInfoService formInfoService) {
         this.formInfoService = formInfoService;
     }
-
-//    @PreAuthorize("hasRole('ADMIN')")
-    @PreAuthorize("permitAll()")
+    
     @GetMapping("/all")
     @JsonView(View.GetView.class)
     public List<FormInfoDTO> getAllFormInfo() {
