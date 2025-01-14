@@ -25,7 +25,8 @@ public class FormInfoController {
         this.formInfoService = formInfoService;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("permitAll()")
     @GetMapping("/all")
     @JsonView(View.GetView.class)
     public List<FormInfoDTO> getAllFormInfo() {
@@ -38,7 +39,7 @@ public class FormInfoController {
         Optional<FormInfo> formRichiesta = formInfoService.getFormInfoById(id);
         return formRichiesta.map(value -> ResponseEntity.ok(formInfoService.convertToDTO(value))).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
+    
     @PostMapping("/create")
     @JsonView(View.PostView.class)
     public ResponseEntity<FormInfoDTO> createFormInfo(@RequestBody FormInfoDTO formInfoDTO) {
