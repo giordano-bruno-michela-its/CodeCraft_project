@@ -60,9 +60,15 @@ public class AuthServiceImpl implements AuthService {
         user.setEmail(registerDto.getEmail());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
-        Role userRole = roleRepository.findByName("ROLE_USER")
-                .orElseThrow(() -> new RuntimeException("Role not found"));
-        user.setRoles(Collections.singleton(userRole));
+        Role role;
+        if (userRepository.count() == 0) {
+            role = roleRepository.findByName("ROLE_ADMIN")
+                    .orElseThrow(() -> new RuntimeException("Role not found"));
+        } else {
+            role = roleRepository.findByName("ROLE_USER")
+                    .orElseThrow(() -> new RuntimeException("Role not found"));
+        }
+        user.setRoles(Collections.singleton(role));
 
         userRepository.save(user);
     }
