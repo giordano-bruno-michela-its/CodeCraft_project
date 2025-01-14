@@ -61,6 +61,9 @@ public class FormInfo {
     @JsonView({View.GetView.class, View.PostView.class})
     private Set<ActivityType> activityType;
 
+    @JsonView({View.GetView.class, View.PostView.class})
+    private String uniqueCode;
+
     @Enumerated(EnumType.STRING)
     @Builder.Default
     @JsonView({View.GetView.class, View.PostView.class})

@@ -11,6 +11,7 @@ import com.codecraft.agora_backend.repository.FormInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,8 @@ public class FormInfoService {
     private SendEmailService sendEmailService;
     
     private final FormInfoRepository formInfoRepository;
+
+    private final Random random = new SecureRandom();
 
     public FormInfoService(FormInfoRepository formInfoRepository) {
         this.formInfoRepository = formInfoRepository;
@@ -36,6 +39,7 @@ public class FormInfoService {
 
     public FormInfo createFormInfo(FormInfoDTO formInfoDTO) {
         FormInfo formInfo = convertToEntity(formInfoDTO);
+        formInfo.setUniqueCode(generateUniqueCode(8)); // Set the length of the unique code
         sendEmailService.sendEmailInformation(formInfo);
         sendEmailService.sendInfoToAdmin(formInfo);
         return formInfoRepository.save(formInfo);
@@ -43,6 +47,7 @@ public class FormInfoService {
 
     public FormBooking createFormBooking(FormBookingDTO formBookingDTO) {
         FormBooking formBooking = (FormBooking) convertToEntity(formBookingDTO);
+        formBooking.setUniqueCode(generateUniqueCode(8)); // Set the length of the unique code
         sendEmailService.sendEmailBooking(formBooking);
         sendEmailService.sendBookingToAdmin(formBooking);
         return formInfoRepository.save(formBooking);
@@ -229,5 +234,18 @@ public class FormInfoService {
         activityTypeDTO.setName(activityType.getName());
         activityTypeDTO.setDescription(activityType.getDescription());
         return activityTypeDTO;
+    }
+
+    private String generateUniqueCode(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String code;
+        do {
+            StringBuilder codeBuilder = new StringBuilder(length);
+            for (int i = 0; i < length; i++) {
+                codeBuilder.append(characters.charAt(random.nextInt(characters.length())));
+            }
+            code = codeBuilder.toString();
+        } while (formInfoRepository.existsByUniqueCode(code));
+        return code;
     }
 }
