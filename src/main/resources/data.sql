@@ -79,3 +79,8 @@ ON DUPLICATE KEY UPDATE name = VALUES(name);
 
 INSERT INTO roles (id, name) VALUES (2, 'ROLE_USER')
 ON DUPLICATE KEY UPDATE name = VALUES(name);
+
+-- Insert sample data for admin_emails
+INSERT INTO  admin_emails (id, no_reply_email, no_reply_password, admin_email)
+VALUES (1, 'testcascinacaccia@gmail.com', 'vwiwpzvtuypoinuo', 'testcascinacaccia@gmail.com')
+ON DUPLICATE KEY UPDATE no_reply_email = VALUES(no_reply_email), no_reply_password = VALUES(no_reply_password), admin_email = VALUES(admin_email);

@@ -71,6 +71,15 @@ Il riferimento è descritto nel file FormRichiestaController.java in src/main/ja
 Aggiunto anche Swagger per poter testare i servizi REST: http://localhost:8080/swagger-ui/index.html
 Da Swagger ricordarsi di correggere i body delle richieste POST, in quanto mette di default id = 0 e altri dati da non specificare.
 
+
+## Test e-mail
+
+Credenziali email testing: testcascinacaccia@gmail.com,
+PASS: provacaccia 
+Per il testing della mail utilizzare le chiamate di create delle richieste, e non inviare troppe email consecutivamente perchè gmail può dare problemi
+
+Se serve fare test consecutivi di create senza email commentare le righe con sendEmailService dentro i due metodi di createForm nel file FormRichiestaService
+
 ## Per chiudere WSL
 
 Per chiudere WSL, aprire un terminale PowerShell e lanciare il comando:
