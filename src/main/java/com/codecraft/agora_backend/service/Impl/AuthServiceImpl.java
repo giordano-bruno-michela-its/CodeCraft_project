@@ -21,25 +21,30 @@ import java.util.Collections;
 @Service
 public class AuthServiceImpl implements AuthService {
 
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public AuthServiceImpl(AuthenticationManager authenticationManager, 
+                           JwtTokenProvider jwtTokenProvider, 
+                           UserRepository userRepository, 
+                           RoleRepository roleRepository, 
+                           PasswordEncoder passwordEncoder) {
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public String login(LoginDto loginDto) {
 
         // 01 - AuthenticationManager is used to authenticate the user
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                loginDto.getUsername(),
-                loginDto.getPassword()
-        ));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
 
         /* 02 - SecurityContextHolder is used to allows the rest of the application to know
         that the user is authenticated and can use user data from Authentication object */
@@ -62,11 +67,9 @@ public class AuthServiceImpl implements AuthService {
 
         Role role;
         if (userRepository.count() == 0) {
-            role = roleRepository.findByName("ROLE_ADMIN")
-                    .orElseThrow(() -> new RuntimeException("Role not found"));
+            role = roleRepository.findByName("ROLE_ADMIN").orElseThrow(() -> new RuntimeException("Role not found"));
         } else {
-            role = roleRepository.findByName("ROLE_USER")
-                    .orElseThrow(() -> new RuntimeException("Role not found"));
+            role = roleRepository.findByName("ROLE_USER").orElseThrow(() -> new RuntimeException("Role not found"));
         }
         user.setRoles(Collections.singleton(role));
 
