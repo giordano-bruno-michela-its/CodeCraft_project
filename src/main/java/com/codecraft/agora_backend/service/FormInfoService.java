@@ -8,6 +8,7 @@ import com.codecraft.agora_backend.model.FormInfo;
 import com.codecraft.agora_backend.model.ActivityType;
 import com.codecraft.agora_backend.model.FormType;
 import com.codecraft.agora_backend.repository.FormInfoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -16,6 +17,9 @@ import java.util.stream.Collectors;
 @Service
 public class FormInfoService {
 
+    @Autowired
+    private SendEmailService sendEmailService;
+    
     private final FormInfoRepository formInfoRepository;
 
     public FormInfoService(FormInfoRepository formInfoRepository) {
@@ -32,11 +36,15 @@ public class FormInfoService {
 
     public FormInfo createFormInfo(FormInfoDTO formInfoDTO) {
         FormInfo formInfo = convertToEntity(formInfoDTO);
+        sendEmailService.sendEmailInformation(formInfo);
+        sendEmailService.sendInfoToAdmin(formInfo);
         return formInfoRepository.save(formInfo);
     }
 
     public FormBooking createFormBooking(FormBookingDTO formBookingDTO) {
         FormBooking formBooking = (FormBooking) convertToEntity(formBookingDTO);
+        sendEmailService.sendEmailBooking(formBooking);
+        sendEmailService.sendBookingToAdmin(formBooking);
         return formInfoRepository.save(formBooking);
     }
 
@@ -45,6 +53,8 @@ public class FormInfoService {
         if (optionalFormInfo.isPresent()) {
             FormInfo formInfo = optionalFormInfo.get();
             updateCommonFields(formInfo, formInfoDTO);
+            sendEmailService.sendEmailInformation(formInfo);
+            sendEmailService.sendInfoToAdmin(formInfo);
             return formInfoRepository.save(formInfo);
         }
         return null;
@@ -55,6 +65,8 @@ public class FormInfoService {
         if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking formBooking) {
             updateCommonFields(formBooking, formBookingDTO);
             updateFormBookingFields(formBooking, formBookingDTO);
+            sendEmailService.sendEmailBooking(formBooking);
+            sendEmailService.sendBookingToAdmin(formBooking);
             return formInfoRepository.save(formBooking);
         }
         return null;
