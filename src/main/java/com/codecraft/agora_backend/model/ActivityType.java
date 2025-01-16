@@ -15,12 +15,8 @@ public class ActivityType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    @JsonView({View.GetView.class})
     private Long id;
-
-    @JsonView({View.GetView.class, View.PostView.class})
+    
     private String name;
-
-    @JsonView({View.GetView.class, View.PostView.class})
     private String description;
 }

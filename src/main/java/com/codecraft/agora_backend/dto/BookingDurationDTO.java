@@ -2,6 +2,7 @@ package com.codecraft.agora_backend.dto;
 
 import com.codecraft.agora_backend.model.View;
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,12 +11,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BookingDurationDTO {
-    @JsonView(View.GetView.class)
+    @JsonView({View.GetView.class, View.PostView.class})
     private Long id;
 
-    @JsonView({View.GetView.class, View.PostView.class})
+    @JsonView({View.GetView.class, View.SubView.class})
     private String name;
 
-    @JsonView({View.GetView.class, View.PostView.class})
+    @JsonView({View.GetView.class, View.SubView.class})
     private String description;
 }

@@ -14,25 +14,16 @@ import java.sql.Date;
 @Entity
 @AllArgsConstructor
 public class FormBooking extends FormInfo {
-    @JsonView({View.GetView.class, View.PostView.class})
     private Date beginTime;
-    
-    @JsonView({View.GetView.class, View.PostView.class})
     private Date endTime;
-    
-    @JsonView({View.GetView.class, View.PostView.class})
     private int participantsQuantity;
-    
-    @JsonView({View.GetView.class, View.PostView.class})    
     private int guidesQuantity;
     
     @ManyToOne
     @JoinColumn(name = "booking_duration_id")
-    @JsonView({View.GetView.class, View.PostView.class})
     private BookingDuration bookingDuration;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    @JsonView({View.GetView.class, View.PostView.class})
     private FormType formType = FormType.FORM_BOOKING;
 }

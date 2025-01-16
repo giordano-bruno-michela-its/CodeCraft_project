@@ -35,14 +35,14 @@ public class ActivityTypeController {
     }
 
     @PostMapping("/create")
-    @JsonView(View.PostView.class)
+    @JsonView(View.SubView.class)
     public ResponseEntity<ActivityTypeDTO> createTipoAttivita(@RequestBody ActivityTypeDTO activityTypeDTO) {
         ActivityTypeDTO createdTipoAttivita = activityTypeService.createActivityType(activityTypeDTO);
         return ResponseEntity.ok(createdTipoAttivita);
     }
 
     @PutMapping("/update/{id}")
-    @JsonView(View.PostView.class)
+    @JsonView(View.SubView.class)
     public ResponseEntity<ActivityTypeDTO> updateTipoAttivita(@PathVariable Long id, @RequestBody ActivityTypeDTO activityTypeDTO) {
         ActivityTypeDTO updatedTipoAttivita = activityTypeService.updateActivityType(id, activityTypeDTO);
         if (updatedTipoAttivita != null) {

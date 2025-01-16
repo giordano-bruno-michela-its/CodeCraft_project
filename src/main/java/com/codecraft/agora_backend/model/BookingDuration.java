@@ -1,6 +1,7 @@
 package com.codecraft.agora_backend.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,12 +16,8 @@ public class BookingDuration {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    @JsonView({View.GetView.class})
     private Long id;
-
-    @JsonView({View.GetView.class, View.PostView.class})
+    
     private String name;
-
-    @JsonView({View.GetView.class, View.PostView.class})
     private String description;
 }

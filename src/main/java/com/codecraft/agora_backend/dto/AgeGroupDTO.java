@@ -10,18 +10,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AgeGroupDTO {
-    @JsonView(View.GetView.class)
+    @JsonView({View.GetView.class, View.PostView.class})
     private Long id;
 
-    @JsonView({View.GetView.class, View.PostView.class})
+    @JsonView({View.GetView.class, View.SubView.class})
     private String name;
 
-    @JsonView({View.GetView.class, View.PostView.class})
+    @JsonView({View.GetView.class, View.SubView.class})
     private String description;
 
-    @JsonView({View.GetView.class, View.PostView.class})
+    @JsonView({View.GetView.class, View.SubView.class})
     private int minAge;
 
-    @JsonView({View.GetView.class, View.PostView.class})
+    @JsonView({View.GetView.class, View.SubView.class})
     private int maxAge;
 }
