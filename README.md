@@ -68,8 +68,8 @@ Gli endpoint REST sono disponibili nel file Test REST API - Full CRUD 1.postman_
 
 Il riferimento è descritto nel file FormRichiestaController.java in src/main/java/com.codecraft.test_rest_api/controller/
 
-Aggiunto anche Swagger per poter testare i servizi REST: http://localhost:8080/swagger-ui/index.html
-Da Swagger ricordarsi di correggere i body delle richieste POST, in quanto mette di default id = 0 e altri dati da non specificare.
+Disponibile anche Swagger per poter testare i servizi REST: http://localhost:8080/swagger-ui/index.html
+I body di Swagger UI ora funzionano correttamente con valori validi di default.
 
 
 ## Test e-mail
