@@ -1,6 +1,5 @@
 package com.codecraft.agora_backend.model;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.*;
 
