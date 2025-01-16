@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 public class BookingDurationDTO {
     @JsonView({View.GetView.class, View.PostView.class})
+    @Schema(defaultValue = "1")
     private Long id;
 
     @JsonView({View.GetView.class, View.SubView.class})
