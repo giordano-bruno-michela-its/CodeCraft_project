@@ -18,15 +18,9 @@ public class AdminEmails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(View.GetView.class)
     private Long id;
-
-    @JsonView({View.GetView.class, View.PostView.class})
+    
     private String noReplyEmail;
-
-    @JsonView({View.GetView.class, View.PostView.class})
     private String noReplyPassword;
-
-    @JsonView({View.GetView.class, View.PostView.class})
     private String adminEmail;
 }

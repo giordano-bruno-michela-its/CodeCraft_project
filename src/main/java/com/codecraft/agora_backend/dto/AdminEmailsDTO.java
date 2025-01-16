@@ -14,12 +14,12 @@ public class AdminEmailsDTO {
     @JsonView(View.GetView.class)
     private Long id;
 
-    @JsonView({View.GetView.class, View.PostView.class})
+    @JsonView({View.GetView.class, View.SubView.class})
     private String noReplyEmail;
 
-    @JsonView({View.GetView.class, View.PostView.class})
+    @JsonView({View.GetView.class, View.SubView.class})
     private String noReplyPassword;
 
-    @JsonView({View.GetView.class, View.PostView.class})
+    @JsonView({View.GetView.class, View.SubView.class})
     private String adminEmail;
 }

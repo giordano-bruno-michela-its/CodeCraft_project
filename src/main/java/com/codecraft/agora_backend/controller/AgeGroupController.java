@@ -35,14 +35,14 @@ public class AgeGroupController {
     }
 
     @PostMapping("/create")
-    @JsonView(View.PostView.class)
+    @JsonView(View.SubView.class)
     public ResponseEntity<AgeGroupDTO> createAgeGroup(@RequestBody AgeGroupDTO ageGroupDTO) {
         AgeGroupDTO createdAgeGroup = ageGroupService.createAgeGroup(ageGroupDTO);
         return ResponseEntity.ok(createdAgeGroup);
     }
 
     @PutMapping("/update/{id}")
-    @JsonView(View.PostView.class)
+    @JsonView(View.SubView.class)
     public ResponseEntity<AgeGroupDTO> updateAgeGroup(@PathVariable Long id, @RequestBody AgeGroupDTO ageGroupDTO) {
         AgeGroupDTO updatedAgeGroup = ageGroupService.updateAgeGroup(id, ageGroupDTO);
         if (updatedAgeGroup != null) {
