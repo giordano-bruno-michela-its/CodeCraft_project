@@ -3,9 +3,9 @@ package com.codecraft.agora_backend.dto;
 import lombok.Data;
 
 @Data
-public class RegisterDto {
-    private String name;
+public class LoginDTO {
+
     private String username;
-    private String email;
     private String password;
+
 }

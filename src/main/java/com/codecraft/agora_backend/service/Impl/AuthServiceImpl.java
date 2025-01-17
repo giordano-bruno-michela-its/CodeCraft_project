@@ -1,8 +1,9 @@
 package com.codecraft.agora_backend.service.Impl;
 
 import com.codecraft.agora_backend.Config.JwtTokenProvider;
-import com.codecraft.agora_backend.dto.LoginDto;
-import com.codecraft.agora_backend.dto.RegisterDto;
+import com.codecraft.agora_backend.dto.LoginDTO;
+import com.codecraft.agora_backend.dto.RegisterDTO;
+import com.codecraft.agora_backend.dto.UpdatePasswordDTO;
 import com.codecraft.agora_backend.model.Role;
 import com.codecraft.agora_backend.model.User;
 import com.codecraft.agora_backend.repository.RoleRepository;
@@ -41,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(LoginDto loginDto) {
+    public String login(LoginDTO loginDto) {
 
         // 01 - AuthenticationManager is used to authenticate the user
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
@@ -57,7 +58,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void register(RegisterDto registerDto) {
+    public void register(RegisterDTO registerDto) {
         User user = new User();
         user.setName(registerDto.getName());
         user.setUsername(registerDto.getUsername());
@@ -72,6 +73,19 @@ public class AuthServiceImpl implements AuthService {
         }
         user.setRoles(Collections.singleton(role));
 
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updatePassword(String username, UpdatePasswordDTO UpdatePasswordDTO) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!passwordEncoder.matches(UpdatePasswordDTO.getOldPassword(), user.getPassword())) {
+            throw new RuntimeException("Old password is incorrect");
+        }
+
+        user.setPassword(passwordEncoder.encode(UpdatePasswordDTO.getNewPassword()));
         userRepository.save(user);
     }
 }
