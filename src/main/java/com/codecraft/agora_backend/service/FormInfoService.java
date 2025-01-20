@@ -60,6 +60,16 @@ public class FormInfoService {
         return null;
     }
 
+    public FormInfo updateFormInfoNoMail(Long id, FormInfoDTO formInfoDTO) {
+        Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
+        if (optionalFormInfo.isPresent()) {
+            FormInfo formInfo = optionalFormInfo.get();
+            updateCommonFields(formInfo, formInfoDTO);
+            return formInfoRepository.save(formInfo);
+        }
+        return null;
+    }
+
     public FormBooking updateFormBooking(Long id, FormBookingDTO formBookingDTO) {
         Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
         if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking formBooking) {
