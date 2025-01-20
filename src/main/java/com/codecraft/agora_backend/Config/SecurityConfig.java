@@ -47,6 +47,7 @@ public class SecurityConfig {
                     authorize.requestMatchers("/api/auth/**").permitAll();
                     authorize.requestMatchers("/api/formreq/create").permitAll();
                     authorize.requestMatchers("/api/formreq/createbooking").permitAll();
+                    authorize.requestMatchers("/api/formnewsletter/create").permitAll();
                     authorize.requestMatchers("/api/**").hasAnyRole("ADMIN", "USER");
                     authorize.anyRequest().authenticated();
                 }).httpBasic(Customizer.withDefaults());

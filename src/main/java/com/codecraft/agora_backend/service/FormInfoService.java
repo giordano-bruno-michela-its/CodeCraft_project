@@ -3,10 +3,7 @@ package com.codecraft.agora_backend.service;
 import com.codecraft.agora_backend.dto.FormBookingDTO;
 import com.codecraft.agora_backend.dto.FormInfoDTO;
 import com.codecraft.agora_backend.dto.ActivityTypeDTO;
-import com.codecraft.agora_backend.model.FormBooking;
-import com.codecraft.agora_backend.model.FormInfo;
-import com.codecraft.agora_backend.model.ActivityType;
-import com.codecraft.agora_backend.model.FormType;
+import com.codecraft.agora_backend.model.*;
 import com.codecraft.agora_backend.repository.FormInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -229,5 +226,12 @@ public class FormInfoService {
         activityTypeDTO.setName(activityType.getName());
         activityTypeDTO.setDescription(activityType.getDescription());
         return activityTypeDTO;
+    }
+
+    public List<String> getEmailsForNewsletter() {
+        return formInfoRepository.findAll().stream()
+                .filter(formInfo -> formInfo.getNewsletterCheck() == NewsletterCheck.YES)
+                .map(FormInfo::getEmail)
+                .collect(Collectors.toList());
     }
 }
