@@ -59,7 +59,7 @@ public class SendEmailService {
             message.setTo(formBooking.getEmail());
             message.setSubject("Conferma Prenotazione - Codice "+formBooking.getUniqueCode());
             message.setText("Ciao "+formBooking.getName() + ","
-                            + "\nsiamo lieti di confermare la prenotazione per il tuo gruppo in data da "+formBooking.getBeginTime()+" a "+formBooking.getEndTime()+". Il tuo codice di prenotazione è 235468. Lo potrai inserire nella sezione dedicata per modificare o correggere le informazioni che ci hai comunicato."
+                            + "\nsiamo lieti di confermare la prenotazione per il tuo gruppo in data da "+formBooking.getBeginTime()+" a "+formBooking.getEndTime()+". Il tuo codice di prenotazione è "+formBooking.getUniqueCode()+". Lo potrai inserire nella sezione dedicata per modificare o correggere le informazioni che ci hai comunicato."
                             + "\nNei prossimi giorni uno dei nostri volontari ti contatterà per discutere al meglio i dettagli della tua permanenza in Cascina."
                             + "\nNel frattempo ti consigliamo di dare un'occhiata alla sezione FAQ del nostro sito per rispondere a eventuali dubbi o domande."
                             + "\nPer modificare le informazioni inserite nel form andare al seguente link: [Nome Link]"

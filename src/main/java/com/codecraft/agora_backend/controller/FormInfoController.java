@@ -1,5 +1,6 @@
 package com.codecraft.agora_backend.controller;
 
+import com.codecraft.agora_backend.dto.CodeEmailRequestDTO;
 import com.codecraft.agora_backend.dto.FormBookingDTO;
 import com.codecraft.agora_backend.dto.FormInfoDTO;
 import com.codecraft.agora_backend.model.FormBooking;
@@ -35,6 +36,15 @@ public class FormInfoController {
     public ResponseEntity<FormInfoDTO> getFormInfoById(@PathVariable Long id) {
         Optional<FormInfo> formRichiesta = formInfoService.getFormInfoById(id);
         return formRichiesta.map(value -> ResponseEntity.ok(formInfoService.convertToDTO(value))).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/code")
+    @JsonView(View.GetView.class)
+    public ResponseEntity<FormInfoDTO> getFormInfoByCode(@RequestBody CodeEmailRequestDTO emailDTO) {
+        String email = emailDTO.getEmail();
+        String code = emailDTO.getCode();
+        Optional<FormInfo> formSearch = formInfoService.getFormEmailCode(email, code);
+        return formSearch.map(formInfo -> ResponseEntity.ok(formInfoService.convertToDTO(formInfo))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/create")

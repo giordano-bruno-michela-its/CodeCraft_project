@@ -20,7 +20,7 @@ public class FormInfoService {
 
     @Autowired
     private SendEmailService sendEmailService;
-    
+
     private final FormInfoRepository formInfoRepository;
 
     private final Random random = new SecureRandom();
@@ -37,9 +37,12 @@ public class FormInfoService {
         return formInfoRepository.findById(id);
     }
 
+    public Optional<FormInfo> getFormEmailCode(String email, String code) {
+        return formInfoRepository.findByEmailAndUniqueCode(email, code);
+    }
+
     public FormInfo createFormInfo(FormInfoDTO formInfoDTO) {
         FormInfo formInfo = convertToEntity(formInfoDTO);
-        formInfo.setUniqueCode(generateUniqueCode(8)); // Set the length of the unique code
         sendEmailService.sendEmailInformation(formInfo);
         sendEmailService.sendInfoToAdmin(formInfo);
         return formInfoRepository.save(formInfo);
@@ -47,7 +50,7 @@ public class FormInfoService {
 
     public FormBooking createFormBooking(FormBookingDTO formBookingDTO) {
         FormBooking formBooking = (FormBooking) convertToEntity(formBookingDTO);
-        formBooking.setUniqueCode(generateUniqueCode(8)); // Set the length of the unique code
+        formBooking.setUniqueCode(generateUniqueCode(6)); // Set the length of the unique code
         sendEmailService.sendEmailBooking(formBooking);
         sendEmailService.sendBookingToAdmin(formBooking);
         return formInfoRepository.save(formBooking);
@@ -136,6 +139,9 @@ public class FormInfoService {
         if (formBookingDTO.getBookingDuration() != null) {
             formBooking.setBookingDuration(formBookingDTO.getBookingDuration());
         }
+        if (formBookingDTO.getUniqueCode() != null) {
+            formBooking.setUniqueCode(formBookingDTO.getUniqueCode());
+        }
     }
 
     public void deleteFormInfo(Long id) {
@@ -164,6 +170,7 @@ public class FormInfoService {
                     .map(this::convertToDTO)
                     .collect(Collectors.toSet()));
             formBookingDTO.setBookingDuration(formBooking.getBookingDuration());
+            formBookingDTO.setUniqueCode(formBooking.getUniqueCode());
             return formBookingDTO;
         } else {
             FormInfoDTO formInfoDTO = new FormInfoDTO();
@@ -215,6 +222,7 @@ public class FormInfoService {
             formBooking.setParticipantsQuantity(formBookingDTO.getParticipantsQuantity());
             formBooking.setGuidesQuantity(formBookingDTO.getGuidesQuantity());
             formBooking.setBookingDuration(formBookingDTO.getBookingDuration());
+            formBooking.setUniqueCode(formBookingDTO.getUniqueCode());
         }
 
         return formInfo;
