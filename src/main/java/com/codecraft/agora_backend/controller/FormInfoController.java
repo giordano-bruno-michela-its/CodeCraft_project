@@ -8,6 +8,7 @@ import com.codecraft.agora_backend.model.View;
 import com.codecraft.agora_backend.service.FormInfoService;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class FormInfoController {
     public FormInfoController(FormInfoService formInfoService) {
         this.formInfoService = formInfoService;
     }
-
+    
     @GetMapping("/all")
     @JsonView(View.GetView.class)
     public List<FormInfoDTO> getAllFormInfo() {
@@ -36,7 +37,7 @@ public class FormInfoController {
         Optional<FormInfo> formRichiesta = formInfoService.getFormInfoById(id);
         return formRichiesta.map(value -> ResponseEntity.ok(formInfoService.convertToDTO(value))).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
+    
     @PostMapping("/create")
     @JsonView(View.PostView.class)
     public ResponseEntity<FormInfoDTO> createFormInfo(@RequestBody FormInfoDTO formInfoDTO) {

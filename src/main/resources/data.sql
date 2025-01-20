@@ -73,6 +73,13 @@ INSERT INTO form_booking (id, begin_time, end_time, participants_quantity, guide
 VALUES (3, '2023-03-10', '2023-03-15', 15, 3, 1)
 ON DUPLICATE KEY UPDATE begin_time = VALUES(begin_time), end_time = VALUES(end_time), participants_quantity = VALUES(participants_quantity), guides_quantity = VALUES(guides_quantity), booking_duration_id = VALUES(booking_duration_id);
 
+-- Insert default data for roles
+INSERT INTO roles (id, name) VALUES (1, 'ROLE_ADMIN')
+ON DUPLICATE KEY UPDATE name = VALUES(name);
+
+INSERT INTO roles (id, name) VALUES (2, 'ROLE_USER')
+ON DUPLICATE KEY UPDATE name = VALUES(name);
+
 -- Insert sample data for admin_emails
 INSERT INTO  admin_emails (id, no_reply_email, no_reply_password, admin_email)
 VALUES (1, 'testcascinacaccia@gmail.com', 'vwiwpzvtuypoinuo', 'testcascinacaccia@gmail.com')
