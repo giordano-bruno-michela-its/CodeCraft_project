@@ -1,4 +1,4 @@
-package com.codecraft.agora_backend.configuration;
+package com.codecraft.agora_backend.config;
 
 import com.codecraft.agora_backend.model.AdminEmails;
 import com.codecraft.agora_backend.service.AdminEmailsService;

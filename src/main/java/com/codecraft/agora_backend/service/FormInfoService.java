@@ -72,6 +72,16 @@ public class FormInfoService {
         return null;
     }
 
+    public FormBooking updateFormBookingNoMail(Long id, FormBookingDTO formBookingDTO) {
+        Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
+        if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking formBooking) {
+            updateCommonFields(formBooking, formBookingDTO);
+            updateFormBookingFields(formBooking, formBookingDTO);
+            return formInfoRepository.save(formBooking);
+        }
+        return null;
+    }
+
     private void updateCommonFields(FormInfo formInfo, FormInfoDTO formInfoDTO) {
         if (formInfoDTO.getEmail() != null) {
             formInfo.setEmail(formInfoDTO.getEmail());
@@ -131,6 +141,9 @@ public class FormInfoService {
         if (formBookingDTO.getBookingDuration() != null) {
             formBooking.setBookingDuration(formBookingDTO.getBookingDuration());
         }
+        if (formBookingDTO.getBookingStatus() != null) {
+            formBooking.setBookingStatus(formBookingDTO.getBookingStatus());
+        }
     }
 
     public void deleteFormInfo(Long id) {
@@ -159,6 +172,7 @@ public class FormInfoService {
                     .map(this::convertToDTO)
                     .collect(Collectors.toSet()));
             formBookingDTO.setBookingDuration(formBooking.getBookingDuration());
+            formBookingDTO.setBookingStatus(formBooking.getBookingStatus());
             return formBookingDTO;
         } else {
             FormInfoDTO formInfoDTO = new FormInfoDTO();
@@ -210,6 +224,7 @@ public class FormInfoService {
             formBooking.setParticipantsQuantity(formBookingDTO.getParticipantsQuantity());
             formBooking.setGuidesQuantity(formBookingDTO.getGuidesQuantity());
             formBooking.setBookingDuration(formBookingDTO.getBookingDuration());
+            formBooking.setBookingStatus(formBookingDTO.getBookingStatus());
         }
 
         return formInfo;

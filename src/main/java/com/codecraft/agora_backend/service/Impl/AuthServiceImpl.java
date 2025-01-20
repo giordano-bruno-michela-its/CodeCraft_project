@@ -1,6 +1,6 @@
 package com.codecraft.agora_backend.service.Impl;
 
-import com.codecraft.agora_backend.Config.JwtTokenProvider;
+import com.codecraft.agora_backend.config.JwtTokenProvider;
 import com.codecraft.agora_backend.dto.LoginDTO;
 import com.codecraft.agora_backend.dto.RegisterDTO;
 import com.codecraft.agora_backend.dto.UpdatePasswordDTO;

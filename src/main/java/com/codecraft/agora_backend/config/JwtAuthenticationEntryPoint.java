@@ -1,4 +1,4 @@
-package com.codecraft.agora_backend.Config;
+package com.codecraft.agora_backend.config;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,6 +1,7 @@
 package com.codecraft.agora_backend.dto;
 
 import com.codecraft.agora_backend.model.BookingDuration;
+import com.codecraft.agora_backend.model.BookingStatus;
 import com.codecraft.agora_backend.model.View;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
@@ -27,4 +28,7 @@ public class FormBookingDTO extends FormInfoDTO {
     
     @JsonView({View.GetView.class, View.PostView.class})
     private BookingDuration bookingDuration;
+    
+    @JsonView({View.GetView.class, View.PostView.class})
+    private BookingStatus bookingStatus;
 }

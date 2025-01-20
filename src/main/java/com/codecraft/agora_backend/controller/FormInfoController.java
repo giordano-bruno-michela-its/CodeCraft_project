@@ -74,6 +74,17 @@ public class FormInfoController {
         }
     }
 
+    @PutMapping("/updatebookingnomail/{id}")
+    @JsonView(View.PostView.class)
+    public ResponseEntity<FormBookingDTO> updateFormBookingNoMail(@PathVariable Long id, @RequestBody FormBookingDTO formBookingDTO) {
+        FormBooking updatedFormBooking = formInfoService.updateFormBookingNoMail(id, formBookingDTO);
+        if (updatedFormBooking != null) {
+            return ResponseEntity.ok((FormBookingDTO) formInfoService.convertToDTO(updatedFormBooking));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteFormInfo(@PathVariable Long id) {
         formInfoService.deleteFormInfo(id);
