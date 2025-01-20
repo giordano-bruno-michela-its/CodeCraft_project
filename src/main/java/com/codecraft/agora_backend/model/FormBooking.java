@@ -35,4 +35,9 @@ public class FormBooking extends FormInfo {
     @Builder.Default
     @JsonView({View.GetView.class, View.PostView.class})
     private FormType formType = FormType.FORM_BOOKING;
+    
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    @JsonView({View.GetView.class, View.PostView.class})
+    private BookingStatus bookingStatus = BookingStatus.PENDING;
 }

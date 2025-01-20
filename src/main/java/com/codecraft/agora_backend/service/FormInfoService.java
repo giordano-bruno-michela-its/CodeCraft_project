@@ -60,6 +60,16 @@ public class FormInfoService {
         return null;
     }
 
+    public FormInfo updateFormInfoNoMail(Long id, FormInfoDTO formInfoDTO) {
+        Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
+        if (optionalFormInfo.isPresent()) {
+            FormInfo formInfo = optionalFormInfo.get();
+            updateCommonFields(formInfo, formInfoDTO);
+            return formInfoRepository.save(formInfo);
+        }
+        return null;
+    }
+
     public FormBooking updateFormBooking(Long id, FormBookingDTO formBookingDTO) {
         Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
         if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking formBooking) {
@@ -67,6 +77,16 @@ public class FormInfoService {
             updateFormBookingFields(formBooking, formBookingDTO);
             sendEmailService.sendEmailBooking(formBooking);
             sendEmailService.sendBookingToAdmin(formBooking);
+            return formInfoRepository.save(formBooking);
+        }
+        return null;
+    }
+
+    public FormBooking updateFormBookingNoMail(Long id, FormBookingDTO formBookingDTO) {
+        Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
+        if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking formBooking) {
+            updateCommonFields(formBooking, formBookingDTO);
+            updateFormBookingFields(formBooking, formBookingDTO);
             return formInfoRepository.save(formBooking);
         }
         return null;
@@ -131,6 +151,9 @@ public class FormInfoService {
         if (formBookingDTO.getBookingDuration() != null) {
             formBooking.setBookingDuration(formBookingDTO.getBookingDuration());
         }
+        if (formBookingDTO.getBookingStatus() != null) {
+            formBooking.setBookingStatus(formBookingDTO.getBookingStatus());
+        }
     }
 
     public void deleteFormInfo(Long id) {
@@ -159,6 +182,7 @@ public class FormInfoService {
                     .map(this::convertToDTO)
                     .collect(Collectors.toSet()));
             formBookingDTO.setBookingDuration(formBooking.getBookingDuration());
+            formBookingDTO.setBookingStatus(formBooking.getBookingStatus());
             return formBookingDTO;
         } else {
             FormInfoDTO formInfoDTO = new FormInfoDTO();
@@ -210,6 +234,7 @@ public class FormInfoService {
             formBooking.setParticipantsQuantity(formBookingDTO.getParticipantsQuantity());
             formBooking.setGuidesQuantity(formBookingDTO.getGuidesQuantity());
             formBooking.setBookingDuration(formBookingDTO.getBookingDuration());
+            formBooking.setBookingStatus(formBookingDTO.getBookingStatus());
         }
 
         return formInfo;

@@ -74,7 +74,7 @@
 			"response": []
 		},
 		{
-			"name": "Form richiesta - CREATE",
+			"name": "Form Info  - CREATE",
 			"event": [
 				{
 					"listen": "test",
@@ -104,7 +104,7 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "{{jwt_token}}"
+						"token": ""
 					}
 				},
 				"method": "POST",
@@ -153,14 +153,14 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "{{jwt_token}}"
+						"token": ""
 					}
 				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"email\": \"string\",\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"association\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"contactDate\": \"{{currentTimestamp}}\",\n  \"additionalInfo\": \"string\",\n  \"newsletterCheck\": \"NO\",\n  \"ageGroup\": {\n    \"id\": 1\n  },\n    \"activityType\": [\n    {\n      \"id\": 1\n    },\n    {\n      \"id\": 2\n    }\n  ],\n  \"formType\": \"FORM_BOOKING\",\n  \"beginTime\": \"2024-12-30T15:11:12.612Z\",\n  \"endTime\": \"2024-12-30T15:11:12.612Z\",\n  \"participantsQuantity\": 0,\n  \"guidesQuantity\": 0,\n  \"bookingDuration\": {\n        \"id\": 1\n  }\n}",
+					"raw": "{\n  \"email\": \"test@test.it\",\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"association\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"contactDate\": \"{{currentTimestamp}}\",\n  \"additionalInfo\": \"string\",\n  \"newsletterCheck\": \"NO\",\n  \"ageGroup\": {\n    \"id\": 1\n  },\n    \"activityType\": [\n    {\n      \"id\": 1\n    },\n    {\n      \"id\": 2\n    }\n  ],\n  \"formType\": \"FORM_BOOKING\",\n  \"beginTime\": \"2024-12-30T15:11:12.612Z\",\n  \"endTime\": \"2024-12-30T15:11:12.612Z\",\n  \"participantsQuantity\": 0,\n  \"guidesQuantity\": 0,\n  \"bookingDuration\": {\n        \"id\": 1\n  },\n  \"bookingStatus\": \"PENDING\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -173,7 +173,7 @@
 			"response": []
 		},
 		{
-			"name": "Form richiesta - UPDATE",
+			"name": "Form Info - UPDATE",
 			"event": [
 				{
 					"listen": "test",
@@ -208,6 +208,46 @@
 					}
 				},
 				"url": "{{base_url}}/formreq/update/4",
+				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "Form Info - UPDATE NO_MAIL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PUT request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{jwt_token}}"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Ajeje\",\n    \"surname\": \"Brazorf\",\n    \"activityType\": [\n        {\n            \"id\": 1\n        },\n        {\n            \"id\": 2\n        },\n        {\n            \"id\": 3\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/formreq/updateinfonomail/4",
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
 			},
 			"response": []
@@ -248,6 +288,46 @@
 					}
 				},
 				"url": "{{base_url}}/formreq/updatebooking/5",
+				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "Form prenotazione - UPDATE NO_MAIL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PUT request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{jwt_token}}"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"bookingStatus\": \"CONFIRMED\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/formreq/updatebookingnomail/4",
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
 			},
 			"response": []
@@ -313,7 +393,7 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "{{jwt_token}}"
+						"token": ""
 					}
 				},
 				"method": "POST",
@@ -1154,7 +1234,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"username\": \"pippo\",\n  \"password\": \"password\"\n}",
+					"raw": "{\n  \"username\": \"pandolfo\",\n  \"password\": \"password\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1191,8 +1271,11 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"packages": {},
-						"type": "text/javascript"
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -1201,7 +1284,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"username\": \"pandolfo\",\n  \"password\": \"password\"\n}",
+					"raw": "{\n  \"username\": \"pippo\",\n  \"password\": \"password\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
