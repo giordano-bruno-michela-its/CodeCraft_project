@@ -2,6 +2,7 @@ package com.codecraft.agora_backend.service;
 
 import com.codecraft.agora_backend.dto.FormNewsletterDTO;
 import com.codecraft.agora_backend.model.FormNewsletter;
+import com.codecraft.agora_backend.model.NewsletterCheck;
 import com.codecraft.agora_backend.repository.FormNewsletterRepository;
 import org.springframework.stereotype.Service;
 
@@ -91,5 +92,12 @@ public class FormNewsletterService {
                 .newsletterCheck(formNewsletterDTO.getNewsletterCheck())
                 .formType(formNewsletterDTO.getFormType())
                 .build();
+    }
+
+    public List<String> getEmailsForNewsletter() {
+        return formNewsletterRepository.findAll().stream()
+                .filter(formNewsletter -> formNewsletter.getNewsletterCheck() == NewsletterCheck.YES)
+                .map(FormNewsletter::getEmail)
+                .collect(Collectors.toList());
     }
 }

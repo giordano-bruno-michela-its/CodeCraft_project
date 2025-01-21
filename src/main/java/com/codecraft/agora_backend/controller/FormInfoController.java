@@ -9,6 +9,7 @@ import com.codecraft.agora_backend.model.View;
 import com.codecraft.agora_backend.service.FormInfoService;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -72,10 +73,32 @@ public class FormInfoController {
         }
     }
 
+    @PutMapping("/updateinfonomail/{id}")
+    @JsonView(View.PostView.class)
+    public ResponseEntity<FormInfoDTO> updateFormInfoNoMail(@PathVariable Long id, @RequestBody FormInfoDTO formInfoDTO) {
+        FormInfo updatedFormInfo = formInfoService.updateFormInfoNoMail(id, formInfoDTO);
+        if (updatedFormInfo != null) {
+            return ResponseEntity.ok(formInfoService.convertToDTO(updatedFormInfo));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PutMapping("/updatebooking/{id}")
     @JsonView(View.PostView.class)
     public ResponseEntity<FormBookingDTO> updateFormBooking(@PathVariable Long id, @RequestBody FormBookingDTO formBookingDTO) {
         FormBooking updatedFormBooking = formInfoService.updateFormBooking(id, formBookingDTO);
+        if (updatedFormBooking != null) {
+            return ResponseEntity.ok((FormBookingDTO) formInfoService.convertToDTO(updatedFormBooking));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/updatebookingnomail/{id}")
+    @JsonView(View.PostView.class)
+    public ResponseEntity<FormBookingDTO> updateFormBookingNoMail(@PathVariable Long id, @RequestBody FormBookingDTO formBookingDTO) {
+        FormBooking updatedFormBooking = formInfoService.updateFormBookingNoMail(id, formBookingDTO);
         if (updatedFormBooking != null) {
             return ResponseEntity.ok((FormBookingDTO) formInfoService.convertToDTO(updatedFormBooking));
         } else {

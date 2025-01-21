@@ -3,10 +3,7 @@ package com.codecraft.agora_backend.service;
 import com.codecraft.agora_backend.dto.FormBookingDTO;
 import com.codecraft.agora_backend.dto.FormInfoDTO;
 import com.codecraft.agora_backend.dto.ActivityTypeDTO;
-import com.codecraft.agora_backend.model.FormBooking;
-import com.codecraft.agora_backend.model.FormInfo;
-import com.codecraft.agora_backend.model.ActivityType;
-import com.codecraft.agora_backend.model.FormType;
+import com.codecraft.agora_backend.model.*;
 import com.codecraft.agora_backend.repository.FormInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,6 +65,16 @@ public class FormInfoService {
         return null;
     }
 
+    public FormInfo updateFormInfoNoMail(Long id, FormInfoDTO formInfoDTO) {
+        Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
+        if (optionalFormInfo.isPresent()) {
+            FormInfo formInfo = optionalFormInfo.get();
+            updateCommonFields(formInfo, formInfoDTO);
+            return formInfoRepository.save(formInfo);
+        }
+        return null;
+    }
+
     public FormBooking updateFormBooking(Long id, FormBookingDTO formBookingDTO) {
         Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
         if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking formBooking) {
@@ -75,6 +82,16 @@ public class FormInfoService {
             updateFormBookingFields(formBooking, formBookingDTO);
             sendEmailService.sendEmailBooking(formBooking);
             sendEmailService.sendBookingToAdmin(formBooking);
+            return formInfoRepository.save(formBooking);
+        }
+        return null;
+    }
+
+    public FormBooking updateFormBookingNoMail(Long id, FormBookingDTO formBookingDTO) {
+        Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
+        if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking formBooking) {
+            updateCommonFields(formBooking, formBookingDTO);
+            updateFormBookingFields(formBooking, formBookingDTO);
             return formInfoRepository.save(formBooking);
         }
         return null;
@@ -139,6 +156,9 @@ public class FormInfoService {
         if (formBookingDTO.getBookingDuration() != null) {
             formBooking.setBookingDuration(formBookingDTO.getBookingDuration());
         }
+        if (formBookingDTO.getBookingStatus() != null) {
+            formBooking.setBookingStatus(formBookingDTO.getBookingStatus());
+        }
         if (formBookingDTO.getUniqueCode() != null) {
             formBooking.setUniqueCode(formBookingDTO.getUniqueCode());
         }
@@ -170,6 +190,7 @@ public class FormInfoService {
                     .map(this::convertToDTO)
                     .collect(Collectors.toSet()));
             formBookingDTO.setBookingDuration(formBooking.getBookingDuration());
+            formBookingDTO.setBookingStatus(formBooking.getBookingStatus());
             formBookingDTO.setUniqueCode(formBooking.getUniqueCode());
             return formBookingDTO;
         } else {
@@ -222,6 +243,7 @@ public class FormInfoService {
             formBooking.setParticipantsQuantity(formBookingDTO.getParticipantsQuantity());
             formBooking.setGuidesQuantity(formBookingDTO.getGuidesQuantity());
             formBooking.setBookingDuration(formBookingDTO.getBookingDuration());
+            formBooking.setBookingStatus(formBookingDTO.getBookingStatus());
             formBooking.setUniqueCode(formBookingDTO.getUniqueCode());
         }
 
@@ -242,6 +264,13 @@ public class FormInfoService {
         activityTypeDTO.setName(activityType.getName());
         activityTypeDTO.setDescription(activityType.getDescription());
         return activityTypeDTO;
+    }
+
+    public List<String> getEmailsForNewsletter() {
+        return formInfoRepository.findAll().stream()
+                .filter(formInfo -> formInfo.getNewsletterCheck() == NewsletterCheck.YES)
+                .map(FormInfo::getEmail)
+                .collect(Collectors.toList());
     }
 
     private String generateUniqueCode(int length) {
