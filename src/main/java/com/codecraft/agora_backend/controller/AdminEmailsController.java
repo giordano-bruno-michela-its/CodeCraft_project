@@ -27,10 +27,10 @@ public class AdminEmailsController {
     }
 
     //Put method to update the AdminEmails data
-    @PutMapping("/update/{id}")
+    @PutMapping("/updateMail")
     @JsonView(View.GetView.class)
-    public ResponseEntity<AdminEmailsDTO> updateAdminEmails(@PathVariable Long id, @RequestBody AdminEmailsDTO adminEmails) {
-        AdminEmails updatedAdminEmails = adminEmailsService.updateAdminEmails(id, adminEmails);
+    public ResponseEntity<AdminEmailsDTO> updateAdminEmails(@RequestBody AdminEmailsDTO adminEmails) {
+        AdminEmails updatedAdminEmails = adminEmailsService.updateAdminEmails(1L, adminEmails);
         if(updatedAdminEmails != null) {
             return  ResponseEntity.ok((AdminEmailsDTO)adminEmailsService.convertToDto(updatedAdminEmails));
         }
