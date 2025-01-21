@@ -245,7 +245,7 @@ public class FormInfoService {
     }
 
     private String generateUniqueCode(int length) {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String characters = "0123456789";
         String code;
         do {
             StringBuilder codeBuilder = new StringBuilder(length);
