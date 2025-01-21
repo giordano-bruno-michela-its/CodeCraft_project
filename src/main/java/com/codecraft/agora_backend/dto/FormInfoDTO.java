@@ -48,6 +48,9 @@ public class FormInfoDTO {
 
     @JsonView({View.GetView.class, View.PostView.class})
     private Set<ActivityTypeDTO> activityType;
+
+    @JsonView({View.GetView.class, View.PostView.class})
+    private String uniqueCode;
     
     @JsonView({View.GetView.class, View.PostView.class})
     private FormType formType;
