@@ -8,6 +8,7 @@ import com.codecraft.agora_backend.repository.FormInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -16,8 +17,10 @@ public class FormInfoService {
 
     @Autowired
     private SendEmailService sendEmailService;
-    
+
     private final FormInfoRepository formInfoRepository;
+
+    private final Random random = new SecureRandom();
 
     public FormInfoService(FormInfoRepository formInfoRepository) {
         this.formInfoRepository = formInfoRepository;
@@ -31,6 +34,10 @@ public class FormInfoService {
         return formInfoRepository.findById(id);
     }
 
+    public Optional<FormInfo> getFormEmailCode(String email, String code) {
+        return formInfoRepository.findByEmailAndUniqueCode(email, code);
+    }
+
     public FormInfo createFormInfo(FormInfoDTO formInfoDTO) {
         FormInfo formInfo = convertToEntity(formInfoDTO);
         sendEmailService.sendEmailInformation(formInfo);
@@ -40,6 +47,7 @@ public class FormInfoService {
 
     public FormBooking createFormBooking(FormBookingDTO formBookingDTO) {
         FormBooking formBooking = (FormBooking) convertToEntity(formBookingDTO);
+        formBooking.setUniqueCode(generateUniqueCode(6)); // Set the length of the unique code
         sendEmailService.sendEmailBooking(formBooking);
         sendEmailService.sendBookingToAdmin(formBooking);
         return formInfoRepository.save(formBooking);
@@ -151,6 +159,9 @@ public class FormInfoService {
         if (formBookingDTO.getBookingStatus() != null) {
             formBooking.setBookingStatus(formBookingDTO.getBookingStatus());
         }
+        if (formBookingDTO.getUniqueCode() != null) {
+            formBooking.setUniqueCode(formBookingDTO.getUniqueCode());
+        }
     }
 
     public void deleteFormInfo(Long id) {
@@ -180,6 +191,7 @@ public class FormInfoService {
                     .collect(Collectors.toSet()));
             formBookingDTO.setBookingDuration(formBooking.getBookingDuration());
             formBookingDTO.setBookingStatus(formBooking.getBookingStatus());
+            formBookingDTO.setUniqueCode(formBooking.getUniqueCode());
             return formBookingDTO;
         } else {
             FormInfoDTO formInfoDTO = new FormInfoDTO();
@@ -232,6 +244,7 @@ public class FormInfoService {
             formBooking.setGuidesQuantity(formBookingDTO.getGuidesQuantity());
             formBooking.setBookingDuration(formBookingDTO.getBookingDuration());
             formBooking.setBookingStatus(formBookingDTO.getBookingStatus());
+            formBooking.setUniqueCode(formBookingDTO.getUniqueCode());
         }
 
         return formInfo;
@@ -258,5 +271,18 @@ public class FormInfoService {
                 .filter(formInfo -> formInfo.getNewsletterCheck() == NewsletterCheck.YES)
                 .map(FormInfo::getEmail)
                 .collect(Collectors.toList());
+    }
+
+    private String generateUniqueCode(int length) {
+        String characters = "0123456789";
+        String code;
+        do {
+            StringBuilder codeBuilder = new StringBuilder(length);
+            for (int i = 0; i < length; i++) {
+                codeBuilder.append(characters.charAt(random.nextInt(characters.length())));
+            }
+            code = codeBuilder.toString();
+        } while (formInfoRepository.existsByUniqueCode(code));
+        return code;
     }
 }
