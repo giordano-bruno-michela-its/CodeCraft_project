@@ -1,16 +1,16 @@
 services:
   mysql:
     image: mysql:8.0
-    container_name: mysql-agora-backend
+    container_name: mysql-agora-container
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: testdb
+      MYSQL_DATABASE: agora_db
       MYSQL_USER: testuser
       MYSQL_PASSWORD: testpassword
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql-agora-data:/var/lib/mysql
 
 volumes:
-  mysql-data:
+  mysql-agora-data:
