@@ -64,4 +64,9 @@ public class UserController {
         userService.reactivateUser(id);
         return ResponseEntity.noContent().build();
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
 }

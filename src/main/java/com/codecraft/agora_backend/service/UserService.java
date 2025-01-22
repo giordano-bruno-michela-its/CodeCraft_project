@@ -4,6 +4,7 @@ import com.codecraft.agora_backend.dto.UserDTO;
 import com.codecraft.agora_backend.model.User;
 import com.codecraft.agora_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class UserService {
     }
 
     public Optional<UserDTO> getUserById(Long id) {
-        return userRepository.findById(id).filter(user -> !user.isDeleted()).map(this::convertToDTO);
+        return userRepository.findById(id).map(this::convertToDTO);
     }
 
     public UserDTO updateUser(Long id, UserDTO userDTO) {
@@ -51,15 +52,28 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<User> optionalUser = userRepository.findById(id);
         optionalUser.ifPresent(user -> {
-            user.setDeleted(true);
-            userRepository.save(user);
+            if (!user.getUsername().equals(currentUsername)) {
+                user.setDeleted(true);
+                userRepository.save(user);
+            } else {
+                throw new RuntimeException("You cannot delete yourself.");
+            }
         });
     }
 
     public void hardDeleteUser(Long id) {
-        userRepository.deleteById(id);
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<User> optionalUser = userRepository.findById(id);
+        optionalUser.ifPresent(user -> {
+            if (!user.getUsername().equals(currentUsername)) {
+                userRepository.deleteById(id);
+            } else {
+                throw new RuntimeException("You cannot delete yourself.");
+            }
+        });
     }
 
     public void reactivateUser(Long id) {
