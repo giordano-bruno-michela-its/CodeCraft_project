@@ -88,4 +88,9 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(passwordEncoder.encode(UpdatePasswordDTO.getNewPassword()));
         userRepository.save(user);
     }
+
+    @Override
+    public boolean hasUsers() {
+        return userRepository.count() > 0;
+    }
 }
