@@ -3,6 +3,7 @@ package com.codecraft.agora_backend.config;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -49,8 +50,11 @@ public class SecurityConfig {
                     authorize.requestMatchers("/api/formreq/createbooking").permitAll();
                     authorize.requestMatchers("/api/formnewsletter/create").permitAll();
                     authorize.requestMatchers("/api/formreq/code").permitAll();
+                    authorize.requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("ADMIN", "USER");
+                    authorize.requestMatchers(HttpMethod.PUT, "/api/formreq/**").hasAnyRole("ADMIN", "USER");
+                    authorize.requestMatchers(HttpMethod.POST, "/api/formreq/**").hasAnyRole("ADMIN", "USER");
                     authorize.requestMatchers("/api/users/**", "/api/admin/**").hasRole("ADMIN");
-                    authorize.requestMatchers("/api/**").hasAnyRole("ADMIN", "USER");
+                    authorize.requestMatchers("/api/**").hasRole("ADMIN");
                     authorize.anyRequest().authenticated();
                 }).httpBasic(Customizer.withDefaults());
 
