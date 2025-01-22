@@ -1,7 +1,9 @@
 package com.codecraft.agora_backend.service;
 
 import com.codecraft.agora_backend.dto.UserDTO;
+import com.codecraft.agora_backend.model.Role;
 import com.codecraft.agora_backend.model.User;
+import com.codecraft.agora_backend.repository.RoleRepository;
 import com.codecraft.agora_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,16 +11,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     public List<UserDTO> getAllUsers() {
@@ -45,6 +50,13 @@ public class UserService {
             }
             if (userDTO.getEmail() != null) {
                 user.setEmail(userDTO.getEmail());
+            }
+            if (userDTO.getRoles() != null) {
+                Set<Role> roles = userDTO.getRoles().stream()
+                        .map(roleName -> roleRepository.findByName(roleName)
+                                .orElseThrow(() -> new RuntimeException("Role not found: " + roleName)))
+                        .collect(Collectors.toSet());
+                user.setRoles(roles);
             }
             return convertToDTO(userRepository.save(user));
         }
@@ -91,6 +103,7 @@ public class UserService {
         userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());
         userDTO.setDeleted(user.isDeleted());
+        userDTO.setRoles(user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()));
         return userDTO;
     }
 
