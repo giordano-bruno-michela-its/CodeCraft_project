@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST controller for managing admin emails.
+ */
 @RestController
 @RequestMapping("/api/admin")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -19,14 +22,23 @@ public class AdminEmailsController {
     @Autowired
     private AdminEmailsService adminEmailsService;
 
-    //Get method to request all the AdminEmails data
+    /**
+     * Get all admin emails.
+     *
+     * @return the list of all admin emails
+     */
     @GetMapping("/all")
     @JsonView(View.GetView.class)
     public List<AdminEmailsDTO> getAllAdminEmails() {
         return  adminEmailsService.getAdminEmails().stream().map(adminEmailsService::convertToDto).toList();
     }
 
-    //Put method to update the AdminEmails data
+    /**
+     * Update admin emails.
+     *
+     * @param adminEmails the admin emails data transfer object
+     * @return the updated admin emails data transfer object
+     */
     @PutMapping("/updateMail")
     @JsonView(View.GetView.class)
     public ResponseEntity<AdminEmailsDTO> updateAdminEmails(@RequestBody AdminEmailsDTO adminEmails) {

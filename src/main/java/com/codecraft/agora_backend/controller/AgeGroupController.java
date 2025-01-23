@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * REST controller for managing age groups.
+ */
 @RestController
 @RequestMapping("/api/agegroup")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -17,16 +20,32 @@ public class AgeGroupController {
 
     private final AgeGroupService ageGroupService;
 
+    /**
+     * Constructor for AgeGroupController.
+     *
+     * @param ageGroupService the age group service
+     */
     public AgeGroupController(AgeGroupService ageGroupService) {
         this.ageGroupService = ageGroupService;
     }
 
+    /**
+     * Get all age groups.
+     *
+     * @return the list of all age groups
+     */
     @GetMapping("/all")
     @JsonView(View.GetView.class)
     public List<AgeGroupDTO> getAllAgeGroup() {
         return ageGroupService.getAllAgeGroup();
     }
 
+    /**
+     * Get an age group by ID.
+     *
+     * @param id the age group ID
+     * @return the age group with the given ID
+     */
     @GetMapping("/{id}")
     @JsonView(View.GetView.class)
     public ResponseEntity<AgeGroupDTO> getAgeGroupById(@PathVariable Long id) {
@@ -34,6 +53,12 @@ public class AgeGroupController {
         return ageGroup.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    /**
+     * Create a new age group.
+     *
+     * @param ageGroupDTO the age group to create
+     * @return the created age group
+     */
     @PostMapping("/create")
     @JsonView(View.PostView.class)
     public ResponseEntity<AgeGroupDTO> createAgeGroup(@RequestBody AgeGroupDTO ageGroupDTO) {
@@ -41,6 +66,13 @@ public class AgeGroupController {
         return ResponseEntity.ok(createdAgeGroup);
     }
 
+    /**
+     * Update an existing age group.
+     *
+     * @param id the age group ID
+     * @param ageGroupDTO the age group data to update
+     * @return the updated age group
+     */
     @PutMapping("/update/{id}")
     @JsonView(View.PostView.class)
     public ResponseEntity<AgeGroupDTO> updateAgeGroup(@PathVariable Long id, @RequestBody AgeGroupDTO ageGroupDTO) {
@@ -52,6 +84,12 @@ public class AgeGroupController {
         }
     }
 
+    /**
+     * Delete an age group.
+     *
+     * @param id the age group ID
+     * @return no content response
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteAgeGroup(@PathVariable Long id) {
         ageGroupService.deleteAgeGroup(id);
