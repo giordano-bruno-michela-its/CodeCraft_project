@@ -23,7 +23,7 @@ public class FormNewsletterController {
     /**
      * Constructor for FormNewsletterController.
      *
-     * @param formNewsletterService
+     * @param formNewsletterService Service for handling FormNewsletter entities
      */
     public FormNewsletterController(FormNewsletterService formNewsletterService) {
         this.formNewsletterService = formNewsletterService;

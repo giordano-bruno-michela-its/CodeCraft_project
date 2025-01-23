@@ -13,6 +13,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * REST controller for managing authentication.
+ */
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/auth")
@@ -21,7 +24,12 @@ public class AuthController {
 
     private final AuthService authService;
 
-    // Build Login REST API
+    /**
+     * Login endpoint.
+     *
+     * @param loginDto the login data transfer object
+     * @return the authentication response data transfer object (JWT Bearer token)
+     */
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDto){
 
@@ -36,12 +44,25 @@ public class AuthController {
         return new ResponseEntity<>(authResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Register endpoint.
+     *
+     * @param registerDto the register data transfer object
+     * @return a success message
+     */
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDto) {
         authService.register(registerDto);
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
 
+    /**
+     * Update password endpoint.
+     *
+     * @param userDetails the user details
+     * @param updatePasswordDto the update password data transfer object
+     * @return a success message
+     */
     @PostMapping("/update-password")
     public ResponseEntity<String> updatePassword(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UpdatePasswordDTO updatePasswordDto) {
         authService.updatePassword(userDetails.getUsername(), updatePasswordDto);

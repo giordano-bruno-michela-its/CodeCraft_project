@@ -140,7 +140,7 @@ public class FormInfoController {
      * Modify formBooking by ID.
      *
      * @param id the ID of the formBooking to update
-     * @param formInfoDTO
+     * @param formBookingDTO formBooking to update
      * @return a ResponseEntity containing the updated formBooking if found, otherwise a 404 response
      */
     @PutMapping("/updatebooking/{id}")
@@ -159,7 +159,7 @@ public class FormInfoController {
      * To be used when the form must be updated without sending e-mails like when it's created.
      *
      * @param id the ID of the formBooking to update
-     * @param formInfoDTO
+     * @param formBookingDTO formBooking to update
      * @return a ResponseEntity containing the updated formBooking if found, otherwise a 404 response
      */
     @PutMapping("/updatebookingnomail/{id}")
