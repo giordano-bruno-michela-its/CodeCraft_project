@@ -6,6 +6,8 @@ import com.codecraft.agora_backend.dto.LoginDTO;
 import com.codecraft.agora_backend.dto.RegisterDTO;
 import com.codecraft.agora_backend.dto.UpdatePasswordDTO;
 import com.codecraft.agora_backend.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * REST controller for managing authentication.
  */
+@Tag(name = "AuthController", description = "Controller for managing authentication")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/auth")
@@ -30,6 +33,7 @@ public class AuthController {
      * @param loginDto the login data transfer object
      * @return the authentication response data transfer object (JWT Bearer token)
      */
+    @Operation(summary = "Login", description = "Authenticates a user and return a JWT Bearer token")
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDto){
 
@@ -50,6 +54,7 @@ public class AuthController {
      * @param registerDto the register data transfer object
      * @return a success message
      */
+    @Operation(summary = "Register", description = "Register a new user")
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDto) {
         authService.register(registerDto);
@@ -63,6 +68,7 @@ public class AuthController {
      * @param updatePasswordDto the update password data transfer object
      * @return a success message
      */
+    @Operation(summary = "Update password", description = "Update the password of the current authenticated user")
     @PostMapping("/update-password")
     public ResponseEntity<String> updatePassword(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UpdatePasswordDTO updatePasswordDto) {
         authService.updatePassword(userDetails.getUsername(), updatePasswordDto);
