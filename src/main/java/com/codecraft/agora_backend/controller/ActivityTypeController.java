@@ -4,6 +4,8 @@ import com.codecraft.agora_backend.dto.ActivityTypeDTO;
 import com.codecraft.agora_backend.model.View;
 import com.codecraft.agora_backend.service.ActivityTypeService;
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,7 @@ import java.util.Optional;
 /**
  * REST controller for managing activity types.
  */
+@Tag(name = "ActivityTypeController", description = "Controller for managing activity types")
 @RestController
 @RequestMapping("/api/activitytype")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -34,6 +37,7 @@ public class ActivityTypeController {
      *
      * @return the list of all activity types
      */
+    @Operation(summary = "Get all activity types", description = "Retrieve a list of all activity types")
     @GetMapping("/all")
     @JsonView(View.GetView.class)
     public List<ActivityTypeDTO> getAllTipoAttivita() {
@@ -46,6 +50,7 @@ public class ActivityTypeController {
      * @param id the activity type ID
      * @return the activity type with the given ID
      */
+    @Operation(summary = "Get activity type by ID", description = "Retrieve an activity type by its ID")
     @GetMapping("/{id}")
     @JsonView(View.GetView.class)
     public ResponseEntity<ActivityTypeDTO> getTipoAttivitaById(@PathVariable Long id) {
@@ -59,6 +64,7 @@ public class ActivityTypeController {
      * @param activityTypeDTO the activity type to create
      * @return the created activity type
      */
+    @Operation(summary = "Create new activity type", description = "Create a new activity type")
     @PostMapping("/create")
     @JsonView(View.SubView.class)
     public ResponseEntity<ActivityTypeDTO> createTipoAttivita(@RequestBody ActivityTypeDTO activityTypeDTO) {
@@ -73,6 +79,7 @@ public class ActivityTypeController {
      * @param activityTypeDTO the activity type data to update
      * @return the updated activity type
      */
+    @Operation(summary = "Update activity type by ID", description = "Update an existing activity type by its ID")
     @PutMapping("/update/{id}")
     @JsonView(View.SubView.class)
     public ResponseEntity<ActivityTypeDTO> updateTipoAttivita(@PathVariable Long id, @RequestBody ActivityTypeDTO activityTypeDTO) {
@@ -90,6 +97,7 @@ public class ActivityTypeController {
      * @param id the activity type ID
      * @return no content response
      */
+    @Operation(summary = "Delete activity type by ID", description = "Delete an activity type by its ID")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteTipoAttivita(@PathVariable Long id) {
         activityTypeService.deleteActivityType(id);
