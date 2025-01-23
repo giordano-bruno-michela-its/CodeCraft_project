@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Test controller to check authentication and authorization
+ */
 @RestController
 @RequestMapping("/api/")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -21,18 +24,27 @@ public class SimpleController {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * This endpoint checks if the logged in user has the role of ADMIN
+     */
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin")
     public ResponseEntity<String> helloAdmin(){
         return ResponseEntity.ok("Hello Admin");
     }
 
+    /**
+     * This endpoint checks if the logged in user has the role of USER
+     */
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/user")
     public ResponseEntity<String> helloUser(){
         return ResponseEntity.ok("Hello User");
     }
 
+    /**
+     * This endpoint returns all the users in the database, only accessible if logged in
+     */
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
