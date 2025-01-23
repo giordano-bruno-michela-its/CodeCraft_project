@@ -50,6 +50,7 @@ public class SecurityConfig {
                     authorize.requestMatchers("/api/formreq/createbooking").permitAll();
                     authorize.requestMatchers("/api/formnewsletter/create").permitAll();
                     authorize.requestMatchers("/api/formreq/code").permitAll();
+                    authorize.requestMatchers("/api/emails/**").hasAnyRole("ADMIN", "USER");
                     authorize.requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("ADMIN", "USER");
                     authorize.requestMatchers(HttpMethod.PUT, "/api/formreq/**").hasAnyRole("ADMIN", "USER");
                     authorize.requestMatchers(HttpMethod.POST, "/api/formreq/**").hasAnyRole("ADMIN", "USER");
