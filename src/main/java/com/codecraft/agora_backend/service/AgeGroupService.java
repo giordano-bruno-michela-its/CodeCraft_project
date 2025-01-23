@@ -9,28 +9,60 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for managing age groups.
+ */
 @Service
 public class AgeGroupService {
 
     private final AgeGroupRepository ageGroupRepository;
 
+    /**
+     * Constructor for AgeGroupService.
+     *
+     * @param ageGroupRepository the repository for age groups
+     */
     public AgeGroupService(AgeGroupRepository ageGroupRepository) {
         this.ageGroupRepository = ageGroupRepository;
     }
 
+    /**
+     * Get all age groups.
+     *
+     * @return the list of all age groups
+     */
     public List<AgeGroupDTO> getAllAgeGroup() {
         return ageGroupRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
+    /**
+     * Get age group by ID.
+     *
+     * @param id the age group ID
+     * @return the age group with the given ID
+     */
     public Optional<AgeGroupDTO> getAgeGroupById(Long id) {
         return ageGroupRepository.findById(id).map(this::convertToDTO);
     }
 
+    /**
+     * Create a new age group.
+     *
+     * @param ageGroupDTO the age group data to create
+     * @return the created age group
+     */
     public AgeGroupDTO createAgeGroup(AgeGroupDTO ageGroupDTO) {
         AgeGroup ageGroup = convertToEntity(ageGroupDTO);
         return convertToDTO(ageGroupRepository.save(ageGroup));
     }
 
+    /**
+     * Update an existing age group.
+     *
+     * @param id the age group ID
+     * @param ageGroupDTO the age group data to update
+     * @return the updated age group
+     */
     public AgeGroupDTO updateAgeGroup(Long id, AgeGroupDTO ageGroupDTO) {
         Optional<AgeGroup> optionalAgeGroup = ageGroupRepository.findById(id);
         if (optionalAgeGroup.isPresent()) {
@@ -54,10 +86,21 @@ public class AgeGroupService {
         return null;
     }
 
+    /**
+     * Delete age group by ID.
+     *
+     * @param id the age group ID
+     */
     public void deleteAgeGroup(Long id) {
         ageGroupRepository.deleteById(id);
     }
 
+    /**
+     * Convert an AgeGroup entity to an AgeGroupDTO.
+     *
+     * @param ageGroup the age group entity
+     * @return the age group data transfer object
+     */
     private AgeGroupDTO convertToDTO(AgeGroup ageGroup) {
         AgeGroupDTO ageGroupDTO = new AgeGroupDTO();
         ageGroupDTO.setId(ageGroup.getId());
@@ -68,6 +111,12 @@ public class AgeGroupService {
         return ageGroupDTO;
     }
 
+    /**
+     * Convert an AgeGroupDTO to an AgeGroup entity.
+     *
+     * @param ageGroupDTO the age group data transfer object
+     * @return the age group entity
+     */
     private AgeGroup convertToEntity(AgeGroupDTO ageGroupDTO) {
         AgeGroup ageGroup = new AgeGroup();
         ageGroup.setId(ageGroupDTO.getId());

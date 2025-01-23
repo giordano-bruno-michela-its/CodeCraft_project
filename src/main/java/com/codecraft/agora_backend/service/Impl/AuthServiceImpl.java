@@ -19,6 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
+/**
+ * Service implementation for authentication and authorization operations.
+ */
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -28,6 +31,15 @@ public class AuthServiceImpl implements AuthService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Constructor for AuthServiceImpl.
+     *
+     * @param authenticationManager the authentication manager
+     * @param jwtTokenProvider the JWT token provider
+     * @param userRepository the user repository
+     * @param roleRepository the role repository
+     * @param passwordEncoder the password encoder
+     */
     @Autowired
     public AuthServiceImpl(AuthenticationManager authenticationManager, 
                            JwtTokenProvider jwtTokenProvider, 
@@ -41,6 +53,12 @@ public class AuthServiceImpl implements AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Authenticate a user and generate a JWT token.
+     *
+     * @param loginDto the login data transfer object
+     * @return the generated JWT token
+     */
     @Override
     public String login(LoginDTO loginDto) {
 
@@ -57,6 +75,11 @@ public class AuthServiceImpl implements AuthService {
         return jwtTokenProvider.generateToken(authentication);
     }
 
+    /**
+     * Register a new user.
+     *
+     * @param registerDto the registration data transfer object
+     */
     @Override
     public void register(RegisterDTO registerDto) {
         User user = new User();
@@ -76,16 +99,22 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(user);
     }
 
+    /**
+     * Update the password of an existing user.
+     *
+     * @param username the username of the user
+     * @param updatePasswordDTO the update password data transfer object
+     */
     @Override
-    public void updatePassword(String username, UpdatePasswordDTO UpdatePasswordDTO) {
+    public void updatePassword(String username, UpdatePasswordDTO updatePasswordDTO) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!passwordEncoder.matches(UpdatePasswordDTO.getOldPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(updatePasswordDTO.getOldPassword(), user.getPassword())) {
             throw new RuntimeException("Old password is incorrect");
         }
 
-        user.setPassword(passwordEncoder.encode(UpdatePasswordDTO.getNewPassword()));
+        user.setPassword(passwordEncoder.encode(updatePasswordDTO.getNewPassword()));
         userRepository.save(user);
     }
 }
