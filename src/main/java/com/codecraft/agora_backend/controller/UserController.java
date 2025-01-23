@@ -1,7 +1,9 @@
 package com.codecraft.agora_backend.controller;
 
 import com.codecraft.agora_backend.dto.UserDTO;
+import com.codecraft.agora_backend.model.View;
 import com.codecraft.agora_backend.service.UserService;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +37,7 @@ public class UserController {
      * @return the list of all users. Soft deleted users are not included.
      */
     @GetMapping("/all")
+    @JsonView(View.GetView.class)
     public List<UserDTO> getAllUsers() {
         return userService.getAllUsers();
     }
@@ -45,6 +48,7 @@ public class UserController {
      * @return the list of all users including soft deleted ones
      */
     @GetMapping("/all-including-deleted")
+    @JsonView(View.GetView.class)
     public List<UserDTO> getAllUsersIncludingDeleted() {
         return userService.getAllUsersIncludingDeleted();
     }
@@ -56,6 +60,7 @@ public class UserController {
      * @return the user with the given ID
      */
     @GetMapping("/{id}")
+    @JsonView(View.GetView.class)
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         Optional<UserDTO> user = userService.getUserById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -69,6 +74,7 @@ public class UserController {
      * @return the updated user
      */
     @PutMapping("/update/{id}")
+    @JsonView(View.PostView.class)
     public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
         UserDTO updatedUser = userService.updateUser(id, userDTO);
         if (updatedUser != null) {
