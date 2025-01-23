@@ -57,7 +57,7 @@ public class FormInfoService {
      * Checks if email and unique code are valid and returns the formInfo/formBooking to be updated if found.
      *
      * @param email the email of the form
-     * @param code the unique code of the form
+     * @param code  the unique code of the form
      * @return the form information if the given email and unique code match
      */
     public Optional<FormInfo> getFormEmailCode(String email, String code) {
@@ -94,7 +94,7 @@ public class FormInfoService {
     /**
      * Update an existing form information.
      *
-     * @param id the form information ID
+     * @param id          the form information ID
      * @param formInfoDTO the form information data to update
      * @return the updated form information
      */
@@ -113,7 +113,7 @@ public class FormInfoService {
     /**
      * Update an existing form information without sending emails.
      *
-     * @param id the form information ID
+     * @param id          the form information ID
      * @param formInfoDTO the form information data to update
      * @return the updated form information
      */
@@ -130,7 +130,7 @@ public class FormInfoService {
     /**
      * Update an existing form booking.
      *
-     * @param id the form booking ID
+     * @param id             the form booking ID
      * @param formBookingDTO the form booking data to update
      * @return the updated form booking
      */
@@ -149,7 +149,7 @@ public class FormInfoService {
     /**
      * Update an existing form booking without sending emails.
      *
-     * @param id the form booking ID
+     * @param id             the form booking ID
      * @param formBookingDTO the form booking data to update
      * @return the updated form booking
      */
@@ -166,7 +166,7 @@ public class FormInfoService {
     /**
      * Update common fields of form information and form booking.
      *
-     * @param formInfo the form entity
+     * @param formInfo    the form entity
      * @param formInfoDTO the form data transfer object
      */
     private void updateCommonFields(FormInfo formInfo, FormInfoDTO formInfoDTO) {
@@ -215,7 +215,7 @@ public class FormInfoService {
     /**
      * Update specific fields of form booking.
      *
-     * @param formBooking the form booking entity
+     * @param formBooking    the form booking entity
      * @param formBookingDTO the form booking data transfer object
      */
     private void updateFormBookingFields(FormBooking formBooking, FormBookingDTO formBookingDTO) {

@@ -35,16 +35,16 @@ public class AuthServiceImpl implements AuthService {
      * Constructor for AuthServiceImpl.
      *
      * @param authenticationManager the authentication manager
-     * @param jwtTokenProvider the JWT token provider
-     * @param userRepository the user repository
-     * @param roleRepository the role repository
-     * @param passwordEncoder the password encoder
+     * @param jwtTokenProvider      the JWT token provider
+     * @param userRepository        the user repository
+     * @param roleRepository        the role repository
+     * @param passwordEncoder       the password encoder
      */
     @Autowired
-    public AuthServiceImpl(AuthenticationManager authenticationManager, 
-                           JwtTokenProvider jwtTokenProvider, 
-                           UserRepository userRepository, 
-                           RoleRepository roleRepository, 
+    public AuthServiceImpl(AuthenticationManager authenticationManager,
+                           JwtTokenProvider jwtTokenProvider,
+                           UserRepository userRepository,
+                           RoleRepository roleRepository,
                            PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
@@ -102,7 +102,7 @@ public class AuthServiceImpl implements AuthService {
     /**
      * Update the password of an existing user.
      *
-     * @param username the username of the user
+     * @param username          the username of the user
      * @param updatePasswordDTO the update password data transfer object
      */
     @Override

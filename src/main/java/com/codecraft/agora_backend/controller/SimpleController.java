@@ -33,7 +33,7 @@ public class SimpleController {
     @Operation(summary = "Check if the logged in user is an admin", description = "Returns a greeting message if the logged in user has the role of ADMIN")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin")
-    public ResponseEntity<String> helloAdmin(){
+    public ResponseEntity<String> helloAdmin() {
         return ResponseEntity.ok("Hello Admin");
     }
 
@@ -43,7 +43,7 @@ public class SimpleController {
     @Operation(summary = "Check if the logged in user is a user", description = "Returns a greeting message if the logged in user has the role of USER")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/user")
-    public ResponseEntity<String> helloUser(){
+    public ResponseEntity<String> helloUser() {
         return ResponseEntity.ok("Hello User");
     }
 

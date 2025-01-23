@@ -35,7 +35,7 @@ public class AuthController {
      */
     @Operation(summary = "Login", description = "Authenticates a user and return a JWT Bearer token")
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDto){
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDto) {
 
         //01 - Receive the token from AuthService
         String token = authService.login(loginDto);
@@ -64,7 +64,7 @@ public class AuthController {
     /**
      * Update password endpoint.
      *
-     * @param userDetails the user details
+     * @param userDetails       the user details
      * @param updatePasswordDto the update password data transfer object
      * @return a success message
      */

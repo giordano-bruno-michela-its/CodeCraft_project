@@ -25,7 +25,7 @@ public class CombinedEmailService {
     /**
      * Constructor for CombinedEmailService.
      *
-     * @param formInfoService the service for form information
+     * @param formInfoService       the service for form information
      * @param formNewsletterService the service for form newsletters
      */
     @Autowired

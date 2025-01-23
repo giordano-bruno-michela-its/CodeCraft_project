@@ -66,7 +66,7 @@ public class UserService {
     /**
      * Update an existing user.
      *
-     * @param id the user ID
+     * @param id      the user ID
      * @param userDTO the user data to update
      * @return the updated user
      */

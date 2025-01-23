@@ -59,7 +59,7 @@ public class AgeGroupService {
     /**
      * Update an existing age group.
      *
-     * @param id the age group ID
+     * @param id          the age group ID
      * @param ageGroupDTO the age group data to update
      * @return the updated age group
      */

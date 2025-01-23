@@ -75,7 +75,7 @@ public class BookingDurationController {
     /**
      * Update an existing booking duration.
      *
-     * @param id the booking duration ID
+     * @param id                 the booking duration ID
      * @param bookingDurationDTO the booking duration data to update
      * @return the updated booking duration
      */

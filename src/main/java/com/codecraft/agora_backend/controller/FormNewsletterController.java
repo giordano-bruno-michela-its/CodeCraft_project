@@ -75,7 +75,7 @@ public class FormNewsletterController {
     /**
      * Update an existing FormNewsletter entity.
      *
-     * @param id the ID of the FormNewsletter entity to update
+     * @param id                the ID of the FormNewsletter entity to update
      * @param formNewsletterDTO the FormNewsletter to update
      * @return the ResponseEntity with status 200 (OK) and the updated FormNewsletter
      */

@@ -59,7 +59,7 @@ public class ActivityTypeService {
     /**
      * Update an existing activity type.
      *
-     * @param id the activity type ID
+     * @param id              the activity type ID
      * @param activityTypeDTO the activity type data to update
      * @return the updated activity type
      */

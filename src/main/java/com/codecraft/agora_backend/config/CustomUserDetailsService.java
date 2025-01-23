@@ -13,12 +13,31 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Service for loading user-specific data.
+ */
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    /**
+     * Constructor for CustomUserDetailsService.
+     *
+     * @param userRepository the user repository
+     */
+    @Autowired
+    public CustomUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    /**
+     * Loads the user by username.
+     *
+     * @param username the username
+     * @return the user details
+     * @throws UsernameNotFoundException if the user is not found
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

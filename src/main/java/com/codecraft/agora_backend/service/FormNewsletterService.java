@@ -20,7 +20,7 @@ public class FormNewsletterService {
 
     /**
      * Constructor for FormNewsletterService
-     * 
+     *
      * @param formNewsletterRepository Repository for FormNewsletter
      */
     public FormNewsletterService(FormNewsletterRepository formNewsletterRepository) {
@@ -63,7 +63,7 @@ public class FormNewsletterService {
     /**
      * Update an existing form newsletter.
      *
-     * @param id the form newsletter ID
+     * @param id                the form newsletter ID
      * @param formNewsletterDTO the form newsletter data to update
      * @return the updated form newsletter
      */
@@ -89,7 +89,7 @@ public class FormNewsletterService {
     /**
      * Update the fields of a form newsletter.
      *
-     * @param formNewsletter the form newsletter entity
+     * @param formNewsletter    the form newsletter entity
      * @param formNewsletterDTO the form newsletter data transfer object
      */
     private void updateFields(FormNewsletter formNewsletter, FormNewsletterDTO formNewsletterDTO) {

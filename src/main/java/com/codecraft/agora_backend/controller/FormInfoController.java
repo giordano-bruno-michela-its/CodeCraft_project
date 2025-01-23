@@ -109,7 +109,7 @@ public class FormInfoController {
     /**
      * Modify formInfo by ID.
      *
-     * @param id the ID of the formInfo to update
+     * @param id          the ID of the formInfo to update
      * @param formInfoDTO the form information to update
      * @return a ResponseEntity containing the updated FormInfo if found, otherwise a 404 response
      */
@@ -129,7 +129,7 @@ public class FormInfoController {
      * Modify formInfo by ID, without sending e-mails.
      * To be used when the form must be updated without sending e-mails like when it's created.
      *
-     * @param id the ID of the formInfo to update
+     * @param id          the ID of the formInfo to update
      * @param formInfoDTO the form information to update
      * @return a ResponseEntity containing the updated FormInfo if found, otherwise a 404 response
      */
@@ -148,7 +148,7 @@ public class FormInfoController {
     /**
      * Modify formBooking by ID.
      *
-     * @param id the ID of the formBooking to update
+     * @param id             the ID of the formBooking to update
      * @param formBookingDTO formBooking to update
      * @return a ResponseEntity containing the updated formBooking if found, otherwise a 404 response
      */
@@ -168,7 +168,7 @@ public class FormInfoController {
      * Modify formBooking by ID, without sending e-mails.
      * To be used when the form must be updated without sending e-mails like when it's created.
      *
-     * @param id the ID of the formBooking to update
+     * @param id             the ID of the formBooking to update
      * @param formBookingDTO formBooking to update
      * @return a ResponseEntity containing the updated formBooking if found, otherwise a 404 response
      */
