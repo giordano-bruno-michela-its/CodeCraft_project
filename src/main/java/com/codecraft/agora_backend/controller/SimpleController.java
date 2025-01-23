@@ -46,7 +46,7 @@ public class SimpleController {
      * This endpoint returns all the users in the database, only accessible if logged in
      */
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/users")
+    @GetMapping("/users-old")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userRepository.findAll();
         return ResponseEntity.ok(users);
