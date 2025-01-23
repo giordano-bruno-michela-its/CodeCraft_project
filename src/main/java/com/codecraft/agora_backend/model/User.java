@@ -21,6 +21,7 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String password;
+    private boolean deleted = false;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
