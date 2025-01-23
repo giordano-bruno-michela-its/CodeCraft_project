@@ -5,7 +5,6 @@ import com.codecraft.agora_backend.model.FormType;
 import com.codecraft.agora_backend.model.NewsletterCheck;
 import com.codecraft.agora_backend.model.View;
 import com.fasterxml.jackson.annotation.JsonView;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,7 +20,6 @@ public class FormInfoDTO {
     private Long id;
     
     @JsonView({View.GetView.class, View.PostView.class})
-    @Schema(defaultValue = "test@test.it")
     private String email;
     
     @JsonView({View.GetView.class, View.PostView.class})
@@ -52,6 +50,8 @@ public class FormInfoDTO {
     private Set<ActivityTypeDTO> activityType;
 
     @JsonView({View.GetView.class, View.PostView.class})
-    @Schema(defaultValue = "FORM_INFO")
-    private FormType formType = FormType.FORM_INFO;
+    private String uniqueCode;
+    
+    @JsonView({View.GetView.class, View.PostView.class})
+    private FormType formType;
 }

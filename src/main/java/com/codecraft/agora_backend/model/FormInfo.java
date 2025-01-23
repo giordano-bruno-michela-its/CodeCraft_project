@@ -40,6 +40,9 @@ public class FormInfo {
     @JoinTable(name = "form_info_activity_type", joinColumns = @JoinColumn(name = "form_info_id"), inverseJoinColumns = @JoinColumn(name = "activity_type_id"))
     private Set<ActivityType> activityType;
 
+    @JsonView({View.GetView.class, View.PostView.class})
+    private String uniqueCode;
+
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private FormType formType = FormType.FORM_INFO;
