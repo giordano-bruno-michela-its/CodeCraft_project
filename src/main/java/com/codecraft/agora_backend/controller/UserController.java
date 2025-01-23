@@ -4,6 +4,8 @@ import com.codecraft.agora_backend.dto.UserDTO;
 import com.codecraft.agora_backend.model.View;
 import com.codecraft.agora_backend.service.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,7 @@ import java.util.Optional;
 /**
  * REST controller for managing users.
  */
+@Tag(name = "UserController", description = "Controller for managing users")
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -36,6 +39,7 @@ public class UserController {
      *
      * @return the list of all users. Soft deleted users are not included.
      */
+    @Operation(summary = "Get all users", description = "Retrieve a list of all users excluding soft deleted ones")
     @GetMapping("/all")
     @JsonView(View.GetView.class)
     public List<UserDTO> getAllUsers() {
@@ -47,6 +51,7 @@ public class UserController {
      *
      * @return the list of all users including soft deleted ones
      */
+    @Operation(summary = "Get all users including soft deleted ones", description = "Retrieve a list of all users including soft deleted ones")
     @GetMapping("/all-including-deleted")
     @JsonView(View.GetView.class)
     public List<UserDTO> getAllUsersIncludingDeleted() {
@@ -59,6 +64,7 @@ public class UserController {
      * @param id the user ID
      * @return the user with the given ID
      */
+    @Operation(summary = "Get user by ID", description = "Retrieve a user by its ID")
     @GetMapping("/{id}")
     @JsonView(View.GetView.class)
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
@@ -73,6 +79,7 @@ public class UserController {
      * @param userDTO the user data to update
      * @return the updated user
      */
+    @Operation(summary = "Update user by ID", description = "Update a user by its ID")
     @PutMapping("/update/{id}")
     @JsonView(View.PostView.class)
     public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
@@ -91,6 +98,7 @@ public class UserController {
      * @param id the user ID
      * @return no content response
      */
+    @Operation(summary = "Soft delete user by ID", description = "Soft delete a user. The \"deleted\" field of the user is set to true. The user is not removed from the database, and can be reactivated from /reactivate/{id}.")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
@@ -103,6 +111,7 @@ public class UserController {
      * @param id the user ID
      * @return no content response
      */
+    @Operation(summary = "Hard delete user by ID", description = "Hard delete a user. All user data will not be recoverable.")
     @DeleteMapping("/hard-delete/{id}")
     public ResponseEntity<Void> hardDeleteUser(@PathVariable Long id) {
         userService.hardDeleteUser(id);
@@ -115,6 +124,7 @@ public class UserController {
      * @param id the user ID
      * @return no content response
      */
+    @Operation(summary = "Reactivate user by ID", description = "Reactivate a soft deleted user by its ID")
     @PutMapping("/reactivate/{id}")
     public ResponseEntity<Void> reactivateUser(@PathVariable Long id) {
         userService.reactivateUser(id);
