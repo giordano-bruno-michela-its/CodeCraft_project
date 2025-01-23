@@ -11,15 +11,15 @@ import lombok.Setter;
 @Setter
 public class AdminEmailsDTO {
 
-    @JsonView(View.GetView.class)
+    @JsonView({View.GetView.class, View.PostView.class})
     private Long id;
 
-    @JsonView({View.GetView.class, View.SubView.class})
+    @JsonView({View.GetView.class, View.PostView.class})
     private String noReplyEmail;
 
-    @JsonView({View.GetView.class, View.SubView.class})
+    @JsonView({View.GetView.class, View.PostView.class})
     private String noReplyPassword;
 
-    @JsonView({View.GetView.class, View.SubView.class})
+    @JsonView({View.GetView.class, View.PostView.class})
     private String adminEmail;
 }

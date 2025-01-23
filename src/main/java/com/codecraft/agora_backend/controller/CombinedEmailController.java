@@ -1,6 +1,7 @@
 package com.codecraft.agora_backend.controller;
 
 import com.codecraft.agora_backend.service.CombinedEmailService;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -31,7 +32,7 @@ public class CombinedEmailController {
     }
 
     @PostMapping("/newsletter/file")
-    public ResponseEntity<InputStreamResource> downloadNewsletterEmailsFile(@RequestBody Map<String, String> requestBody) throws IOException {
+    public ResponseEntity<InputStreamResource> downloadNewsletterEmailsFile(@RequestBody @Schema(example = "{\"format\": \"txt\"}") Map<String, String> requestBody) throws IOException {
         String format = requestBody.get("format");
         String file = combinedEmailService.generateFileForNewsletterEmails(format);
         InputStreamResource resource = new InputStreamResource(new FileInputStream(file));

@@ -28,7 +28,7 @@ public class AdminEmailsController {
 
     //Put method to update the AdminEmails data
     @PutMapping("/updateMail")
-    @JsonView(View.GetView.class)
+    @JsonView(View.PostView.class)
     public ResponseEntity<AdminEmailsDTO> updateAdminEmails(@RequestBody AdminEmailsDTO adminEmails) {
         AdminEmails updatedAdminEmails = adminEmailsService.updateAdminEmails(1L, adminEmails);
         if(updatedAdminEmails != null) {
