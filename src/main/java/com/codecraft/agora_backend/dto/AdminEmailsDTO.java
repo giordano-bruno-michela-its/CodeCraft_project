@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class AdminEmailsDTO {
 
-    @JsonView(View.GetView.class)
+    @JsonView({View.GetView.class, View.PostView.class})
     private Long id;
 
     @JsonView({View.GetView.class, View.PostView.class})

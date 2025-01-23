@@ -60,7 +60,7 @@ public class BookingDurationController {
      * @return the created booking duration
      */
     @PostMapping("/create")
-    @JsonView(View.PostView.class)
+    @JsonView(View.SubView.class)
     public ResponseEntity<BookingDurationDTO> createBookingDuration(@RequestBody BookingDurationDTO bookingDurationDTO) {
         BookingDurationDTO createdBookingDuration = bookingDurationService.createBookingDuration(bookingDurationDTO);
         return ResponseEntity.ok(createdBookingDuration);
@@ -74,7 +74,7 @@ public class BookingDurationController {
      * @return the updated booking duration
      */
     @PutMapping("/update/{id}")
-    @JsonView(View.PostView.class)
+    @JsonView(View.SubView.class)
     public ResponseEntity<BookingDurationDTO> updateBookingDuration(@PathVariable Long id, @RequestBody BookingDurationDTO bookingDurationDTO) {
         BookingDurationDTO updatedBookingDuration = bookingDurationService.updateBookingDuration(id, bookingDurationDTO);
         if (updatedBookingDuration != null) {
