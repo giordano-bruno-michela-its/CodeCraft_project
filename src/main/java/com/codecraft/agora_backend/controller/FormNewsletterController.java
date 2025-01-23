@@ -4,6 +4,8 @@ import com.codecraft.agora_backend.dto.FormNewsletterDTO;
 import com.codecraft.agora_backend.model.View;
 import com.codecraft.agora_backend.service.FormNewsletterService;
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,7 @@ import java.util.Optional;
 /**
  * REST controller for handling FormNewsletter entities.
  */
+@Tag(name = "FormNewsletterController", description = "Controller for managing FormNewsletter entities")
 @RestController
 @RequestMapping("/api/formnewsletter")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -30,10 +33,11 @@ public class FormNewsletterController {
     }
 
     /**
-     * GET /all : Get all FormNewsletter entities.
+     * Get all FormNewsletter entities.
      *
      * @return a list of FormNewsletter
      */
+    @Operation(summary = "Get all FormNewsletter entities", description = "Retrieve a list of all FormNewsletter entities")
     @GetMapping("/all")
     @JsonView(View.GetView.class)
     public List<FormNewsletterDTO> getAllFormNewsletters() {
@@ -46,6 +50,7 @@ public class FormNewsletterController {
      * @param id the ID of the FormNewsletter entity
      * @return the ResponseEntity with status 200 (OK) and the FormNewsletter, or status 404 (Not Found)
      */
+    @Operation(summary = "Get FormNewsletter by ID", description = "Retrieve a FormNewsletter entity by its ID")
     @GetMapping("/{id}")
     @JsonView(View.GetView.class)
     public ResponseEntity<FormNewsletterDTO> getFormNewsletterById(@PathVariable Long id) {
@@ -59,6 +64,7 @@ public class FormNewsletterController {
      * @param formNewsletterDTO the FormNewsletter to create
      * @return the ResponseEntity with status 200 (OK) and the created FormNewsletter
      */
+    @Operation(summary = "Create new FormNewsletter", description = "Create a new FormNewsletter entity")
     @PostMapping("/create")
     @JsonView(View.PostView.class)
     public ResponseEntity<FormNewsletterDTO> createFormNewsletter(@RequestBody FormNewsletterDTO formNewsletterDTO) {
@@ -73,6 +79,7 @@ public class FormNewsletterController {
      * @param formNewsletterDTO the FormNewsletter to update
      * @return the ResponseEntity with status 200 (OK) and the updated FormNewsletter
      */
+    @Operation(summary = "Update FormNewsletter by ID", description = "Update an existing FormNewsletter entity by its ID")
     @PutMapping("/update/{id}")
     @JsonView(View.PostView.class)
     public ResponseEntity<FormNewsletterDTO> updateFormNewsletter(@PathVariable Long id, @RequestBody FormNewsletterDTO formNewsletterDTO) {
@@ -90,6 +97,7 @@ public class FormNewsletterController {
      * @param id the ID of the FormNewsletter entity to delete
      * @return the ResponseEntity with status 204 (NO_CONTENT)
      */
+    @Operation(summary = "Delete FormNewsletter by ID", description = "Delete a FormNewsletter entity by its ID")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteFormNewsletter(@PathVariable Long id) {
         formNewsletterService.deleteFormNewsletter(id);
