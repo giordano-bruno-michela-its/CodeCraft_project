@@ -8,6 +8,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
@@ -59,7 +61,7 @@ public class SendEmailService {
             message.setTo(formBooking.getEmail());
             message.setSubject("Conferma Prenotazione - Codice "+formBooking.getUniqueCode());
             message.setText("Ciao "+formBooking.getName() + ","
-                            + "\nsiamo lieti di confermare la prenotazione per il tuo gruppo in data da "+formBooking.getBeginTime()+" a "+formBooking.getEndTime()+". Il tuo codice di prenotazione è "+formBooking.getUniqueCode()+". Lo potrai inserire nella sezione dedicata per modificare o correggere le informazioni che ci hai comunicato."
+                            + "\nsiamo lieti di confermare la prenotazione per il tuo gruppo in data da "+onlyDateFormatter(formBooking.getBeginTime())+" a "+onlyDateFormatter(formBooking.getEndTime())+". Il tuo codice di prenotazione è "+formBooking.getUniqueCode()+". Lo potrai inserire nella sezione dedicata per modificare o correggere le informazioni che ci hai comunicato."
                             + "\nNei prossimi giorni uno dei nostri volontari ti contatterà per discutere al meglio i dettagli della tua permanenza in Cascina."
                             + "\nNel frattempo ti consigliamo di dare un'occhiata alla sezione FAQ del nostro sito per rispondere a eventuali dubbi o domande."
                             + "\nPer modificare le informazioni inserite nel form andare al seguente link: [Nome Link]"
@@ -88,7 +90,7 @@ public class SendEmailService {
                             + "\n   • Attività: " + printActivity(formInfo.getActivityType())
                             + "\n   • Messaggio: " + formInfo.getAdditionalInfo()
                             + "\nDettagli invio:"
-                            + "\n   • Richiesta effettuata il "+formInfo.getContactDate());
+                            + "\n   • Richiesta effettuata il "+fullDateTimeFormatter(formInfo.getContactDate()));
         }
         mailSender.send(message);
     }
@@ -109,16 +111,22 @@ public class SendEmailService {
                             "\n   • E-mail: "+formBooking.getEmail()+
                             "\n   • Cellulare: "+formBooking.getPhoneNumber()+
                             "\nInformazioni sulla visita:"+
-                            "\n   • Periodo di disponibilità: da "+formBooking.getBeginTime()+ " a "+formBooking.getEndTime()+
+                            "\n   • Periodo di disponibilità: da "+onlyDateFormatter(formBooking.getBeginTime())+ " a "+onlyDateFormatter(formBooking.getEndTime())+
                             "\n   • Numero bambini e ragazzi: "+formBooking.getParticipantsQuantity()+
                             "\n   • Numero accompagnatori: "+formBooking.getGuidesQuantity()+
                             "\n   • Attività scelte: "+printActivity(formBooking.getActivityType())+
                             "\n   • Messaggio: "+formBooking.getAdditionalInfo()+
                             "\nDettagli prenotazione: "+
-                            "\n   • Prenotazione effettuata il "+formBooking.getContactDate());
+                            "\n   • Prenotazione effettuata il "+fullDateTimeFormatter(formBooking.getContactDate()));
         }
         mailSender.send(message);
     }
+
+    public void sendUpdateToAdmin(FormBooking formBooking) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        updateAdminEmails();
+    }
+
 
     public String printActivity (Set<ActivityType> activity) {
         StringBuilder activityString = new StringBuilder();
@@ -126,5 +134,15 @@ public class SendEmailService {
             activityString.append(activityType.getName()).append("    ");
         }
         return activityString.toString();
+    }
+
+    public String fullDateTimeFormatter (Date data){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return formatter.format(data);
+    }
+
+    public String onlyDateFormatter (Date data){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.format(data);
     }
 }
