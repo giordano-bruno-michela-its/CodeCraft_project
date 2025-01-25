@@ -10,4 +10,5 @@ public interface AuthService {
     void register(RegisterDTO registerDto);
 
     void updatePassword(String username, UpdatePasswordDTO updatePasswordDTO);
+    boolean hasUsers();
 }

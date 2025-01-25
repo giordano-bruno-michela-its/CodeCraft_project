@@ -74,4 +74,10 @@ public class AuthController {
         authService.updatePassword(userDetails.getUsername(), updatePasswordDto);
         return new ResponseEntity<>("Password updated successfully", HttpStatus.OK);
     }
+
+    @GetMapping("/has-users")
+    public ResponseEntity<Boolean> hasUsers() {
+        boolean hasUsers = authService.hasUsers();
+        return ResponseEntity.ok(hasUsers);
+    }
 }
