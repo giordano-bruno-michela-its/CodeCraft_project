@@ -23,7 +23,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         User user = userRepository.findByUsername(username) .orElseThrow(() ->
-                new UsernameNotFoundException("User not exists by Username or Email"));
+                new UsernameNotFoundException("User doesn't exist by Username or Email"));
+
+
+        if (user.isDeleted()) {
+            throw new UsernameNotFoundException("User is deleted (soft). Contact app administrator.");
+        }
 
         Set<GrantedAuthority> authorities = user.getRoles().stream()
                 .map((role) -> new SimpleGrantedAuthority(role.getName()))
