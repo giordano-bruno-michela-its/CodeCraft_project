@@ -60,7 +60,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests((authorize) -> {
-                    authorize.requestMatchers("/api/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll();
+                    authorize.requestMatchers("/api/auth/**", "/api/formreq/updatefromcode", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll();
                     authorize.requestMatchers("/api/formreq/create").permitAll();
                     authorize.requestMatchers("/api/formreq/createbooking").permitAll();
                     authorize.requestMatchers("/api/formnewsletter/create").permitAll();

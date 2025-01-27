@@ -3,6 +3,7 @@ package com.codecraft.agora_backend.controller;
 import com.codecraft.agora_backend.dto.CodeEmailRequestDTO;
 import com.codecraft.agora_backend.dto.FormBookingDTO;
 import com.codecraft.agora_backend.dto.FormInfoDTO;
+import com.codecraft.agora_backend.dto.UpdateFormBookingRequestDTO;
 import com.codecraft.agora_backend.model.FormBooking;
 import com.codecraft.agora_backend.model.FormInfo;
 import com.codecraft.agora_backend.model.View;
@@ -195,5 +196,24 @@ public class FormInfoController {
     public ResponseEntity<Void> deleteFormInfo(@PathVariable Long id) {
         formInfoService.deleteFormInfo(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Update formBooking by code", description = "Update formBooking by code and email")
+    @PutMapping("/updatefromcode")
+    @JsonView(View.PostView.class)
+    public ResponseEntity<FormBookingDTO> updateFormBookingByCode(@RequestBody UpdateFormBookingRequestDTO requestDTO) {
+        String email = requestDTO.getCodeEmailRequest().getEmail();
+        String code = requestDTO.getCodeEmailRequest().getCode();
+        FormBookingDTO formBookingDTO = requestDTO.getFormBooking();
+
+        Optional<FormInfo> formSearch = formInfoService.getFormEmailCode(email, code);
+        if (formSearch.isPresent() && formSearch.get() instanceof FormBooking formBooking) {
+            formInfoService.updateCommonFields(formBooking, formBookingDTO);
+            formInfoService.updateFormBookingFields(formBooking, formBookingDTO);
+            FormBooking updatedFormBooking = formInfoService.saveFormBooking(formBooking);
+            return ResponseEntity.ok((FormBookingDTO) formInfoService.convertToDTO(updatedFormBooking));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

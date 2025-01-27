@@ -163,13 +163,13 @@ public class FormInfoService {
         return null;
     }
 
+    public void updateCommonFields(FormInfo formInfo, FormInfoDTO formInfoDTO) {
     /**
      * Update common fields of form information and form booking.
      *
      * @param formInfo    the form entity
      * @param formInfoDTO the form data transfer object
      */
-    private void updateCommonFields(FormInfo formInfo, FormInfoDTO formInfoDTO) {
         if (formInfoDTO.getEmail() != null) {
             formInfo.setEmail(formInfoDTO.getEmail());
         }
@@ -218,7 +218,7 @@ public class FormInfoService {
      * @param formBooking    the form booking entity
      * @param formBookingDTO the form booking data transfer object
      */
-    private void updateFormBookingFields(FormBooking formBooking, FormBookingDTO formBookingDTO) {
+    public void updateFormBookingFields(FormBooking formBooking, FormBookingDTO formBookingDTO) {
         if (formBookingDTO.getBeginTime() != null) {
             formBooking.setBeginTime(formBookingDTO.getBeginTime());
         }
@@ -402,5 +402,9 @@ public class FormInfoService {
             code = codeBuilder.toString();
         } while (formInfoRepository.existsByUniqueCode(code));
         return code;
+    }
+
+    public FormBooking saveFormBooking(FormBooking formBooking) {
+        return formInfoRepository.save(formBooking);
     }
 }
