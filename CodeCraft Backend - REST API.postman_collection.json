@@ -1694,7 +1694,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"codeEmailRequest\": {\r\n      \"email\": \"test@test.it\",\r\n      \"code\": \"377002\"\r\n  },\r\n  \"formBooking\": {\r\n    \"name\": \"Updated Booking\",\r\n    \"description\": \"Updated description\",\r\n    \"participantsQuantity\": 10,\r\n    \"guidesQuantity\": 2,\r\n    \"bookingDuration\": {\r\n      \"id\": 1\r\n    },\r\n    \"bookingStatus\": \"CONFIRMED\"\r\n  }\r\n}",
+					"raw": "{\r\n  \"codeEmailRequest\": {\r\n      \"email\": \"test@test.it\",\r\n      \"code\": \"155786\"\r\n  },\r\n  \"formBooking\": {\r\n    \"name\": \"Updated Booking\",\r\n    \"surname\": \"Doe\",\r\n    \"association\": \"Example Association\",\r\n    \"phoneNumber\": \"1234567890\",\r\n    \"contactDate\": \"2024-12-30\",\r\n    \"additionalInfo\": \"Updated description\",\r\n    \"newsletterCheck\": \"YES\",\r\n    \"ageGroup\": {\r\n      \"id\": 1\r\n    },\r\n    \"activityType\": [\r\n      {\r\n        \"id\": 2\r\n      }\r\n    ],\r\n    \"formType\": \"FORM_BOOKING\",\r\n    \"beginTime\": \"2024-12-30T15:11:12.612Z\",\r\n    \"endTime\": \"2024-12-30T17:11:12.612Z\",\r\n    \"participantsQuantity\": 5,\r\n    \"guidesQuantity\": 3,\r\n    \"bookingDuration\": {\r\n      \"id\": 1\r\n    },\r\n    \"bookingStatus\": \"CONFIRMED\"\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
