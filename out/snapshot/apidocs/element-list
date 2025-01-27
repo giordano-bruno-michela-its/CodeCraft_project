@@ -1,8 +1,0 @@
-com.codecraft.agora_backend
-com.codecraft.agora_backend.config
-com.codecraft.agora_backend.controller
-com.codecraft.agora_backend.dto
-com.codecraft.agora_backend.model
-com.codecraft.agora_backend.repository
-com.codecraft.agora_backend.service
-com.codecraft.agora_backend.service.Impl
