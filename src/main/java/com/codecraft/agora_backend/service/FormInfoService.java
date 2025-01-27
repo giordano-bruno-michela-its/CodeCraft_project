@@ -58,8 +58,6 @@ public class FormInfoService {
         if (optionalFormInfo.isPresent()) {
             FormInfo formInfo = optionalFormInfo.get();
             updateCommonFields(formInfo, formInfoDTO);
-            sendEmailService.sendEmailInformation(formInfo);
-            sendEmailService.sendInfoToAdmin(formInfo);
             return formInfoRepository.save(formInfo);
         }
         return null;
@@ -75,13 +73,11 @@ public class FormInfoService {
         return null;
     }
 
-    public FormBooking updateFormBooking(Long id, FormBookingDTO formBookingDTO) {
+    public FormBooking updateFormBooking(Long id, FormBookingDTO formBookingDTO){
         Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
         if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking formBooking) {
             updateCommonFields(formBooking, formBookingDTO);
             updateFormBookingFields(formBooking, formBookingDTO);
-            sendEmailService.sendEmailBooking(formBooking);
-            sendEmailService.sendBookingToAdmin(formBooking);
             return formInfoRepository.save(formBooking);
         }
         return null;
@@ -97,7 +93,7 @@ public class FormInfoService {
         return null;
     }
 
-    private void updateCommonFields(FormInfo formInfo, FormInfoDTO formInfoDTO) {
+    public void updateCommonFields(FormInfo formInfo, FormInfoDTO formInfoDTO) {
         if (formInfoDTO.getEmail() != null) {
             formInfo.setEmail(formInfoDTO.getEmail());
         }
@@ -140,7 +136,7 @@ public class FormInfoService {
         }
     }
 
-    private void updateFormBookingFields(FormBooking formBooking, FormBookingDTO formBookingDTO) {
+    public void updateFormBookingFields(FormBooking formBooking, FormBookingDTO formBookingDTO) {
         if (formBookingDTO.getBeginTime() != null) {
             formBooking.setBeginTime(formBookingDTO.getBeginTime());
         }
@@ -284,5 +280,9 @@ public class FormInfoService {
             code = codeBuilder.toString();
         } while (formInfoRepository.existsByUniqueCode(code));
         return code;
+    }
+
+    public FormBooking saveFormBooking(FormBooking formBooking) {
+        return formInfoRepository.save(formBooking);
     }
 }
