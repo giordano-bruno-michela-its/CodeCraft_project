@@ -23,22 +23,37 @@ import org.springframework.web.filter.CorsFilter;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Spring Security configuration class.
+ */
 @Component
 @EnableMethodSecurity
 @AllArgsConstructor
 public class SecurityConfig {
 
     private UserDetailsService userDetailsService;
-
     private JwtAuthenticationEntryPoint authenticationEntryPoint;
-
     private JwtAuthenticationFilter authenticationFilter;
 
+    /**
+     * Bean for password encoding using BCrypt.
+     *
+     * @return the password encoder
+     */
     @Bean
-    public static PasswordEncoder passwordEncoder(){
+    public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Configures the security filter chain.
+     * All endpoints permissions are defined here.
+     * The filter chain is configured to disable CSRF, enable CORS, and authorize requests based on the endpoint.
+     *
+     * @param http the HttpSecurity object
+     * @return the security filter chain
+     * @throws Exception if an error occurs
+     */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -59,7 +74,7 @@ public class SecurityConfig {
                     authorize.anyRequest().authenticated();
                 }).httpBasic(Customizer.withDefaults());
 
-        http.exceptionHandling( exception -> exception
+        http.exceptionHandling(exception -> exception
                 .authenticationEntryPoint(authenticationEntryPoint));
 
         http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -67,6 +82,11 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Bean for configuring CORS settings.
+     *
+     * @return the CORS filter
+     */
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -79,6 +99,13 @@ public class SecurityConfig {
         return new CorsFilter(source);
     }
 
+    /**
+     * Bean for configuring the authentication manager.
+     *
+     * @param configuration the authentication configuration
+     * @return the authentication manager
+     * @throws Exception if an error occurs
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
