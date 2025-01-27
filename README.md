@@ -40,4 +40,13 @@ Swagger UI URL: http://localhost:8080/swagger-ui/index.html
 
 Collection Postman presente al percorso **/postman/CodeCraft Backend - REST API.postman_collection.json**
 
-Documentazione Javadoc Maven visionabile nel file **apidocs.zip** (decomprimere)
+Documentazione Javadoc Maven visionabile nel file **/javadoc_maven/apidocs.zip** (decomprimere)
+
+### Informazioni tecniche
+
+- Backend: Java 17, Spring Boot 3.4, Maven 3.9
+- Database: MySQL
+- Approccio strutturale: MVC, REST API, db-first (le tabelle vengono generate automaticamente dall'app
+tramite hibernate, se assenti o modificate)
+- Strumenti di sviluppo backend: JetBrains IntelliJ IDEA, Visual Studio Code, Docker
+- Strumenti API: Swagger UI, Postman
