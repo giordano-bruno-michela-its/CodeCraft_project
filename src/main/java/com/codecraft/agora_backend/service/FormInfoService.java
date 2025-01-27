@@ -97,7 +97,7 @@ public class FormInfoService {
         return null;
     }
 
-    private void updateCommonFields(FormInfo formInfo, FormInfoDTO formInfoDTO) {
+    public void updateCommonFields(FormInfo formInfo, FormInfoDTO formInfoDTO) {
         if (formInfoDTO.getEmail() != null) {
             formInfo.setEmail(formInfoDTO.getEmail());
         }
@@ -140,7 +140,7 @@ public class FormInfoService {
         }
     }
 
-    private void updateFormBookingFields(FormBooking formBooking, FormBookingDTO formBookingDTO) {
+    public void updateFormBookingFields(FormBooking formBooking, FormBookingDTO formBookingDTO) {
         if (formBookingDTO.getBeginTime() != null) {
             formBooking.setBeginTime(formBookingDTO.getBeginTime());
         }
@@ -284,5 +284,9 @@ public class FormInfoService {
             code = codeBuilder.toString();
         } while (formInfoRepository.existsByUniqueCode(code));
         return code;
+    }
+
+    public FormBooking saveFormBooking(FormBooking formBooking) {
+        return formInfoRepository.save(formBooking);
     }
 }
