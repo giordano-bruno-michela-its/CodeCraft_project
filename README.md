@@ -32,5 +32,12 @@ L'IP in questo esempio è 172.18.104.83
 Dalla directory principale è sufficiente avviare il docker-compose.yml, che creerà automaticamente 3 container per il db MySQL, l'app Java Spring Boot per il backend, e il frontend.
 
 La landing page sarà poi accessibile da http://localhost <br>
-Le REST API del backend sono accessibili da http://localhost:8080 (fare rifermento a SwaggerUI o alla collection Postman)
+Le REST API del backend sono accessibili da http://localhost:8080/api (fare rifermento a SwaggerUI o alla collection Postman)
 
+### API
+
+Swagger UI URL: http://localhost:8080/swagger-ui/index.html
+
+Collection Postman presente al percorso **/postman/CodeCraft Backend - REST API.postman_collection.json**
+
+Documentazione Javadoc Maven visionabile nella directory **/apidocs**
