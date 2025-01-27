@@ -8,8 +8,10 @@ import com.codecraft.agora_backend.model.FormBooking;
 import com.codecraft.agora_backend.model.FormInfo;
 import com.codecraft.agora_backend.model.View;
 import com.codecraft.agora_backend.service.FormInfoService;
+import com.codecraft.agora_backend.service.SendEmailService;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.beans.factory.annotation.Autowired;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,9 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:3000")
 @Tag(name = "FormInfoController", description = "Controller for managing form information requests")
 public class FormInfoController {
+
+    @Autowired
+    private SendEmailService sendEmailService;
 
     private final FormInfoService formInfoService;
 
@@ -156,7 +161,7 @@ public class FormInfoController {
     @Operation(summary = "Update formBooking by ID", description = "Modify formBooking by ID")
     @PutMapping("/updatebooking/{id}")
     @JsonView(View.PostView.class)
-    public ResponseEntity<FormBookingDTO> updateFormBooking(@PathVariable Long id, @RequestBody FormBookingDTO formBookingDTO) {
+    public ResponseEntity<FormBookingDTO> updateFormBooking(@PathVariable Long id, @RequestBody FormBookingDTO formBookingDTO){
         FormBooking updatedFormBooking = formInfoService.updateFormBooking(id, formBookingDTO);
         if (updatedFormBooking != null) {
             return ResponseEntity.ok((FormBookingDTO) formInfoService.convertToDTO(updatedFormBooking));
@@ -207,13 +212,15 @@ public class FormInfoController {
     @Operation(summary = "Update formBooking by code", description = "Update formBooking by code and email")
     @PutMapping("/updatefromcode")
     @JsonView(View.PostView.class)
-    public ResponseEntity<FormBookingDTO> updateFormBookingByCode(@RequestBody UpdateFormBookingRequestDTO requestDTO) {
+    public ResponseEntity<FormBookingDTO> updateFormBookingByCode(@RequestBody UpdateFormBookingRequestDTO requestDTO){
         String email = requestDTO.getCodeEmailRequest().getEmail();
         String code = requestDTO.getCodeEmailRequest().getCode();
         FormBookingDTO formBookingDTO = requestDTO.getFormBooking();
 
         Optional<FormInfo> formSearch = formInfoService.getFormEmailCode(email, code);
         if (formSearch.isPresent() && formSearch.get() instanceof FormBooking formBooking) {
+            sendEmailService.sendEmailUpdate(formSearch);
+            sendEmailService.sendUpdateToAdmin(formSearch);
             formInfoService.updateCommonFields(formBooking, formBookingDTO);
             formInfoService.updateFormBookingFields(formBooking, formBookingDTO);
             FormBooking updatedFormBooking = formInfoService.saveFormBooking(formBooking);

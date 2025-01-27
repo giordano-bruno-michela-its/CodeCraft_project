@@ -1,5 +1,6 @@
 package com.codecraft.agora_backend.service;
 
+import com.codecraft.agora_backend.dto.FormBookingDTO;
 import com.codecraft.agora_backend.model.*;
 import com.codecraft.agora_backend.model.FormBooking;
 import com.codecraft.agora_backend.model.FormInfo;
@@ -8,6 +9,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
+import java.text.Normalizer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
@@ -35,17 +40,17 @@ public class SendEmailService {
     public void sendEmailInformation(FormInfo formInfo) {
         SimpleMailMessage message = new SimpleMailMessage();
         updateAdminEmails();
-        if (adminEmails.isPresent()) {
+        if(adminEmails.isPresent()) {
             message.setFrom(adminEmails.get().getNoReplyEmail());
             message.setTo(formInfo.getEmail());
             message.setSubject("Cascina Caccia: conferma di ricezione della richiesta di informazioni");
             message.setText("Ciao " + formInfo.getName() + ","
-                    + "\ngrazie per averci contattato e aver mostrato interesse nelle attività di Cascina Caccia dedicate a bambini e ragazzi."
-                    + "\nAbbiamo ricevuto la tua comunicazione di richiesta di informazioni. Risponderemo ai tuoi dubbi e alle tue domande entro 3 giorni lavorativi per permetterti di organizzare al meglio."
-                    + "\nNel frattempo ti invitiamo a iscriverti alla nostra newsletter gratuita per avere aggiornamenti sulle attività di Cascina Caccia e per ricevere materiale di formazione e approfondimento."
-                    + "\nPer iscriverti alla newsletter andare al seguente link: [Nome Link]"
-                    + "\nA presto!"
-                    + "\nI volontari di Cascina Caccia");
+                            + "\ngrazie per averci contattato e aver mostrato interesse nelle attività di Cascina Caccia dedicate a bambini e ragazzi."
+                            + "\nAbbiamo ricevuto la tua comunicazione di richiesta di informazioni. Risponderemo ai tuoi dubbi e alle tue domande entro 3 giorni lavorativi per permetterti di organizzare al meglio."
+                            + "\nNel frattempo ti invitiamo a iscriverti alla nostra newsletter gratuita per avere aggiornamenti sulle attività di Cascina Caccia e per ricevere materiale di formazione e approfondimento."
+                            + "\nPer iscriverti alla newsletter andare al seguente link: [Nome Link]"
+                            + "\nA presto!"
+                            + "\nI volontari di Cascina Caccia");
         }
         mailSender.send(message);
     }
@@ -54,17 +59,38 @@ public class SendEmailService {
     public void sendEmailBooking(FormBooking formBooking) {
         SimpleMailMessage message = new SimpleMailMessage();
         updateAdminEmails();
-        if (adminEmails.isPresent()) {
+        if(adminEmails.isPresent()) {
             message.setFrom(adminEmails.get().getNoReplyEmail());
             message.setTo(formBooking.getEmail());
-            message.setSubject("Conferma Prenotazione - Codice " + formBooking.getUniqueCode());
-            message.setText("Ciao " + formBooking.getName() + ","
-                    + "\nsiamo lieti di confermare la prenotazione per il tuo gruppo in data da " + formBooking.getBeginTime() + " a " + formBooking.getEndTime() + ". Il tuo codice di prenotazione è " + formBooking.getUniqueCode() + ". Lo potrai inserire nella sezione dedicata per modificare o correggere le informazioni che ci hai comunicato."
-                    + "\nNei prossimi giorni uno dei nostri volontari ti contatterà per discutere al meglio i dettagli della tua permanenza in Cascina."
-                    + "\nNel frattempo ti consigliamo di dare un'occhiata alla sezione FAQ del nostro sito per rispondere a eventuali dubbi o domande."
-                    + "\nPer modificare le informazioni inserite nel form andare al seguente link: [Nome Link]"
-                    + "\nTi aspettiamo in Cascina!"
-                    + "\nI volontari di Cascina Caccia");
+            message.setSubject("Conferma Prenotazione - Codice "+formBooking.getUniqueCode());
+            message.setText("Ciao "+formBooking.getName() + ","
+                            + "\nsiamo lieti di confermare la prenotazione per il tuo gruppo in data da "+onlyDateFormatter(formBooking.getBeginTime())+" a "+onlyDateFormatter(formBooking.getEndTime())+". Il tuo codice di prenotazione è "+formBooking.getUniqueCode()+". Lo potrai inserire nella sezione dedicata per modificare o correggere le informazioni che ci hai comunicato."
+                            + "\nNei prossimi giorni uno dei nostri volontari ti contatterà per discutere al meglio i dettagli della tua permanenza in Cascina."
+                            + "\nNel frattempo ti consigliamo di dare un'occhiata alla sezione FAQ del nostro sito per rispondere a eventuali dubbi o domande."
+                            + "\nPer modificare le informazioni inserite nel form andare al seguente link: localhost:3000/src/Pages/retrieveReservation/retrieve-reservation.html"
+                            + "\nTi aspettiamo in Cascina!"
+                            + "\nI volontari di Cascina Caccia");
+        }
+        mailSender.send(message);
+    }
+
+    public void sendEmailUpdate(Optional<FormInfo> formBookingOptional) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        updateAdminEmails();
+        if(adminEmails.isPresent()) {
+            if (formBookingOptional.isPresent()) {
+                FormBooking formBooking = (FormBooking) formBookingOptional.get();
+                message.setFrom(adminEmails.get().getNoReplyEmail());
+                message.setTo(formBooking.getEmail());
+                message.setSubject("Conferma Modifica Prenotazione - Codice "+formBooking.getUniqueCode());
+                message.setText("Ciao "+formBooking.getName() + ","
+                                + "\nvi confermiamo le modifche alla prenotazione, un email di avviso delle modifiche è stata inviata ai gestori delle prenotazioni."
+                                + "\nNei prossimi giorni uno dei nostri volontari ti contatterà per discutere al meglio i dettagli della tua permanenza in Cascina."
+                                + "\nNel frattempo ti consigliamo di dare un'occhiata alla sezione FAQ del nostro sito per rispondere a eventuali dubbi o domande."
+                                + "\nPer modificare le informazioni inserite nel form andare al seguente link: localhost:3000/src/Pages/retrieveReservation/retrieve-reservation.html"
+                                + "\nTi aspettiamo in Cascina!"
+                                + "\nI volontari di Cascina Caccia");
+            }
         }
         mailSender.send(message);
     }
@@ -73,22 +99,22 @@ public class SendEmailService {
     public void sendInfoToAdmin(FormInfo formInfo) {
         SimpleMailMessage message = new SimpleMailMessage();
         updateAdminEmails();
-        if (adminEmails.isPresent()) {
+        if(adminEmails.isPresent()) {
             message.setFrom(adminEmails.get().getNoReplyEmail());
             message.setTo(adminEmails.get().getAdminEmail());
-            message.setSubject("Agorà - Nuova Richiesta Infomazioni (" + formInfo.getAssociation() + ")");
+            message.setSubject("Agorà - Nuova Richiesta Infomazioni (" + formInfo.getAssociation()+")");
             message.setText("Gentili Amministratori,"
-                    + "\nÈ stata inviata una nuova richiesta di informazioni tramite il sito. Di seguito i dettagli:"
-                    + "\nDati del richiedente:"
-                    + "\n   • Nome e Cognome: " + formInfo.getName() + " " + formInfo.getSurname()
-                    + "\n   • Ente: " + formInfo.getAssociation()
-                    + "\n   • E-mail: " + formInfo.getEmail()
-                    + "\n   • Cellulare: " + formInfo.getPhoneNumber()
-                    + "\nDettagli della richiesta:"
-                    + "\n   • Attività: " + printActivity(formInfo.getActivityType())
-                    + "\n   • Messaggio: " + formInfo.getAdditionalInfo()
-                    + "\nDettagli invio:"
-                    + "\n   • Richiesta effettuata il " + formInfo.getContactDate());
+                            + "\nÈ stata inviata una nuova richiesta di informazioni tramite il sito. Di seguito i dettagli:"
+                            + "\nDati del richiedente:"
+                            + "\n   • Nome e Cognome: "+formInfo.getName()+" "+formInfo.getSurname()
+                            + "\n   • Ente: "+formInfo.getAssociation()
+                            + "\n   • E-mail: "+formInfo.getEmail()
+                            + "\n   • Cellulare: "+formInfo.getPhoneNumber()
+                            + "\nDettagli della richiesta:"
+                            + "\n   • Attività: " + printActivity(formInfo.getActivityType())
+                            + "\n   • Messaggio: " + formInfo.getAdditionalInfo()
+                            + "\nDettagli invio:"
+                            + "\n   • Richiesta effettuata il "+fullDateTimeFormatter(formInfo.getContactDate()));
         }
         mailSender.send(message);
     }
@@ -97,34 +123,62 @@ public class SendEmailService {
     public void sendBookingToAdmin(FormBooking formBooking) {
         SimpleMailMessage message = new SimpleMailMessage();
         updateAdminEmails();
-        if (adminEmails.isPresent()) {
+        if(adminEmails.isPresent()) {
             message.setFrom(adminEmails.get().getNoReplyEmail());
             message.setTo(adminEmails.get().getAdminEmail());
-            message.setSubject("Agorà: Nuova Prenotazione - Codice " + formBooking.getUniqueCode());
+            message.setSubject("Agorà: Nuova Prenotazione - Codice "+formBooking.getUniqueCode());
             message.setText("Gentili Amministratori," +
-                    "\nÈ stata effettuata una nuova prenotazione tramite il sito. Di seguito i dettagli:" +
-                    "\nDati del richiedente:" +
-                    "\n   • Nome e Cognome: " + formBooking.getName() + " " + formBooking.getSurname() +
-                    "\n   • Ente: " + formBooking.getAssociation() +
-                    "\n   • E-mail: " + formBooking.getEmail() +
-                    "\n   • Cellulare: " + formBooking.getPhoneNumber() +
-                    "\nInformazioni sulla visita:" +
-                    "\n   • Periodo di disponibilità: da " + formBooking.getBeginTime() + " a " + formBooking.getEndTime() +
-                    "\n   • Numero bambini e ragazzi: " + formBooking.getParticipantsQuantity() +
-                    "\n   • Numero accompagnatori: " + formBooking.getGuidesQuantity() +
-                    "\n   • Attività scelte: " + printActivity(formBooking.getActivityType()) +
-                    "\n   • Messaggio: " + formBooking.getAdditionalInfo() +
-                    "\nDettagli prenotazione: " +
-                    "\n   • Prenotazione effettuata il " + formBooking.getContactDate());
+                            "\nÈ stata effettuata una nuova prenotazione tramite il sito. Di seguito i dettagli:" +
+                            "\nDati del richiedente:" +
+                            "\n   • Nome e Cognome: "+formBooking.getName()+" "+formBooking.getSurname()+
+                            "\n   • Ente: "+formBooking.getAssociation()+
+                            "\n   • E-mail: "+formBooking.getEmail()+
+                            "\n   • Cellulare: "+formBooking.getPhoneNumber()+
+                            "\nInformazioni sulla visita:"+
+                            "\n   • Periodo di disponibilità: da "+onlyDateFormatter(formBooking.getBeginTime())+ " a "+onlyDateFormatter(formBooking.getEndTime())+
+                            "\n   • Numero bambini e ragazzi: "+formBooking.getParticipantsQuantity()+
+                            "\n   • Numero accompagnatori: "+formBooking.getGuidesQuantity()+
+                            "\n   • Attività scelte: "+printActivity(formBooking.getActivityType())+
+                            "\n   • Messaggio: "+formBooking.getAdditionalInfo()+
+                            "\nDettagli prenotazione: "+
+                            "\n   • Prenotazione effettuata il "+fullDateTimeFormatter(formBooking.getContactDate()));
         }
         mailSender.send(message);
     }
 
-    public String printActivity(Set<ActivityType> activity) {
+    public void sendUpdateToAdmin(Optional<FormInfo> formBookingOptional) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        updateAdminEmails();
+        if(adminEmails.isPresent()) {
+            if (formBookingOptional.isPresent()) {
+                FormBooking formBooking = (FormBooking) formBookingOptional.get();
+                message.setFrom(adminEmails.get().getNoReplyEmail());
+                message.setTo(adminEmails.get().getAdminEmail());
+                message.setSubject("Agorà: Modifica Prenotazione - Codice "+formBooking.getUniqueCode());
+                message.setText("Gentili Amministratori," +
+                            "\nsono state effettuate delle modifiche alla prenotazione precedentemente a nome di "+formBooking.getName()+" "+formBooking.getSurname());
+            }
+
+        }
+        mailSender.send(message);
+    }
+
+
+    public String printActivity (Set<ActivityType> activity) {
         StringBuilder activityString = new StringBuilder();
         for (ActivityType activityType : activity) {
             activityString.append(activityType.getName()).append("    ");
         }
         return activityString.toString();
+    }
+
+    public String fullDateTimeFormatter (Date data){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return formatter.format(data);
+    }
+
+    public String onlyDateFormatter (Date data){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.format(data);
     }
 }
