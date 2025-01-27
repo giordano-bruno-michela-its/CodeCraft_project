@@ -1,0 +1,29 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-agora-container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: agora_db
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-agora-data:/var/lib/mysql
+
+  agora-backend:
+    image: openjdk:17-jdk-alpine
+    container_name: agora-backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./Agora_Backend-0.0.1-SNAPSHOT.jar:/app/app.jar
+    env_file:
+      - .env
+    command: ["java", "-jar", "/app/app.jar"]
+    depends_on:
+      - mysql
+
+volumes:
+  mysql-agora-data:
