@@ -65,7 +65,7 @@ public class SendEmailService {
                             + "\nsiamo lieti di confermare la prenotazione per il tuo gruppo in data da "+onlyDateFormatter(formBooking.getBeginTime())+" a "+onlyDateFormatter(formBooking.getEndTime())+". Il tuo codice di prenotazione è "+formBooking.getUniqueCode()+". Lo potrai inserire nella sezione dedicata per modificare o correggere le informazioni che ci hai comunicato."
                             + "\nNei prossimi giorni uno dei nostri volontari ti contatterà per discutere al meglio i dettagli della tua permanenza in Cascina."
                             + "\nNel frattempo ti consigliamo di dare un'occhiata alla sezione FAQ del nostro sito per rispondere a eventuali dubbi o domande."
-                            + "\nPer modificare le informazioni inserite nel form andare al seguente link: [Nome Link]"
+                            + "\nPer modificare le informazioni inserite nel form andare al seguente link: localhost:3000/src/Pages/retrieveReservation/retrieve-reservation.html"
                             + "\nTi aspettiamo in Cascina!"
                             + "\nI volontari di Cascina Caccia");
         }
@@ -80,10 +80,10 @@ public class SendEmailService {
             message.setTo(formBooking.getEmail());
             message.setSubject("Conferma Modifica Prenotazione - Codice "+formBooking.getUniqueCode());
             message.setText("Ciao "+formBooking.getName() + ","
-                            + "\nvi confermiamo le modifche alla prenotazione, ed è stata inviata un email ai gestori per avvisare di tali modifiche"
+                            + "\nvi confermiamo le modifche alla prenotazione, un email di avviso delle modifiche è stata inviata ai gestori delle prenotazioni."
                             + "\nNei prossimi giorni uno dei nostri volontari ti contatterà per discutere al meglio i dettagli della tua permanenza in Cascina."
                             + "\nNel frattempo ti consigliamo di dare un'occhiata alla sezione FAQ del nostro sito per rispondere a eventuali dubbi o domande."
-                            + "\nPer modificare le informazioni inserite nel form andare al seguente link: [Nome Link]"
+                            + "\nPer modificare le informazioni inserite nel form andare al seguente link: localhost:3000/src/Pages/retrieveReservation/retrieve-reservation.html"
                             + "\nTi aspettiamo in Cascina!"
                             + "\nI volontari di Cascina Caccia");
         }
