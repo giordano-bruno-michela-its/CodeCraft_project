@@ -50,3 +50,4 @@ Documentazione Javadoc Maven visionabile nel file **/javadoc_maven/apidocs.zip**
 tramite hibernate, se assenti o modificate)
 - Strumenti di sviluppo backend: JetBrains IntelliJ IDEA, Visual Studio Code, Docker
 - Strumenti API: Swagger UI, Postman
+- Repository GitHub: https://github.com/giordano-bruno-michela-its/CodeCraft_project
