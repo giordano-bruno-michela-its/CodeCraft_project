@@ -1,5 +1,6 @@
 package com.codecraft.agora_backend.service;
 
+import com.codecraft.agora_backend.dto.FormBookingDTO;
 import com.codecraft.agora_backend.model.*;
 import com.codecraft.agora_backend.model.FormBooking;
 import com.codecraft.agora_backend.model.FormInfo;
@@ -9,6 +10,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
@@ -72,21 +74,25 @@ public class SendEmailService {
         mailSender.send(message);
     }
 
-    public void sendEmailUpdate(FormBooking formBooking) {
+    public void sendEmailUpdate(Optional<FormInfo> formBookingOptional) {
         SimpleMailMessage message = new SimpleMailMessage();
         updateAdminEmails();
         if(adminEmails.isPresent()) {
-            message.setFrom(adminEmails.get().getNoReplyEmail());
-            message.setTo(formBooking.getEmail());
-            message.setSubject("Conferma Modifica Prenotazione - Codice "+formBooking.getUniqueCode());
-            message.setText("Ciao "+formBooking.getName() + ","
-                            + "\nvi confermiamo le modifche alla prenotazione, un email di avviso delle modifiche è stata inviata ai gestori delle prenotazioni."
-                            + "\nNei prossimi giorni uno dei nostri volontari ti contatterà per discutere al meglio i dettagli della tua permanenza in Cascina."
-                            + "\nNel frattempo ti consigliamo di dare un'occhiata alla sezione FAQ del nostro sito per rispondere a eventuali dubbi o domande."
-                            + "\nPer modificare le informazioni inserite nel form andare al seguente link: localhost:3000/src/Pages/retrieveReservation/retrieve-reservation.html"
-                            + "\nTi aspettiamo in Cascina!"
-                            + "\nI volontari di Cascina Caccia");
+            if (formBookingOptional.isPresent()) {
+                FormBooking formBooking = (FormBooking) formBookingOptional.get();
+                message.setFrom(adminEmails.get().getNoReplyEmail());
+                message.setTo(formBooking.getEmail());
+                message.setSubject("Conferma Modifica Prenotazione - Codice "+formBooking.getUniqueCode());
+                message.setText("Ciao "+formBooking.getName() + ","
+                                + "\nvi confermiamo le modifche alla prenotazione, un email di avviso delle modifiche è stata inviata ai gestori delle prenotazioni."
+                                + "\nNei prossimi giorni uno dei nostri volontari ti contatterà per discutere al meglio i dettagli della tua permanenza in Cascina."
+                                + "\nNel frattempo ti consigliamo di dare un'occhiata alla sezione FAQ del nostro sito per rispondere a eventuali dubbi o domande."
+                                + "\nPer modificare le informazioni inserite nel form andare al seguente link: localhost:3000/src/Pages/retrieveReservation/retrieve-reservation.html"
+                                + "\nTi aspettiamo in Cascina!"
+                                + "\nI volontari di Cascina Caccia");
+            }
         }
+        mailSender.send(message);
     }
 
     //This method sends an email to the admin to inform about for a new information request
@@ -140,39 +146,23 @@ public class SendEmailService {
         mailSender.send(message);
     }
 
-    public void sendUpdateToAdmin(FormBooking formBookingNew, Optional<FormInfo> formBookingOld) throws IllegalAccessException {
+    public void sendUpdateToAdmin(Optional<FormInfo> formBookingOptional) {
         SimpleMailMessage message = new SimpleMailMessage();
         updateAdminEmails();
         if(adminEmails.isPresent()) {
-            if (formBookingOld.isPresent()) {
+            if (formBookingOptional.isPresent()) {
+                FormBooking formBooking = (FormBooking) formBookingOptional.get();
                 message.setFrom(adminEmails.get().getNoReplyEmail());
                 message.setTo(adminEmails.get().getAdminEmail());
-                message.setSubject("Agorà: Modifica Prenotazione - Codice "+formBookingNew.getUniqueCode());
-                message.setText(updateEmailTextBuilder(formBookingNew, formBookingOld));
+                message.setSubject("Agorà: Modifica Prenotazione - Codice "+formBooking.getUniqueCode());
+                message.setText("Gentili Amministratori," +
+                            "\nsono state effettuate delle modifiche alla prenotazione precedentemente a nome di "+formBooking.getName()+" "+formBooking.getSurname());
             }
+
         }
         mailSender.send(message);
     }
 
-    public String updateEmailTextBuilder(FormBooking formBookingNew, Optional<FormInfo> formBookingOld) throws IllegalAccessException {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Gentili Amministratori, " +
-                "\nÈ stata modificata una prenotazione tramite il sito. Di seguito i dati modificati:");
-
-        Field[] fields = formBookingNew.getClass().getDeclaredFields();
-
-        for (Field field : fields) {
-            field.setAccessible(true);
-            Object newValue = field.get(formBookingNew);
-            Object oldValue = field.get(formBookingOld);
-
-            if (newValue != null && !newValue.equals(oldValue) || newValue == null && oldValue != null) {
-                stringBuilder.append("\nPrecedente "+field.getName()+ ": " + newValue + ", Nuovo "+field.getName()+ ": " + oldValue);
-            }
-            field.setAccessible(false);
-        }
-        return stringBuilder.toString();
-    }
 
     public String printActivity (Set<ActivityType> activity) {
         StringBuilder activityString = new StringBuilder();

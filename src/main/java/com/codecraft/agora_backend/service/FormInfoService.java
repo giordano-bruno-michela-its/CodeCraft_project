@@ -58,8 +58,6 @@ public class FormInfoService {
         if (optionalFormInfo.isPresent()) {
             FormInfo formInfo = optionalFormInfo.get();
             updateCommonFields(formInfo, formInfoDTO);
-            sendEmailService.sendEmailInformation(formInfo);
-            sendEmailService.sendInfoToAdmin(formInfo);
             return formInfoRepository.save(formInfo);
         }
         return null;
@@ -80,8 +78,6 @@ public class FormInfoService {
         if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking formBooking) {
             updateCommonFields(formBooking, formBookingDTO);
             updateFormBookingFields(formBooking, formBookingDTO);
-            sendEmailService.sendEmailUpdate(formBooking);
-            sendEmailService.sendUpdateToAdmin(formBooking, getFormInfoById(formBooking.getId()));
             return formInfoRepository.save(formBooking);
         }
         return null;
