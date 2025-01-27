@@ -1,38 +1,17 @@
-## Installare WSL
+# Agora - Manuale tecnico
 
-Per installare WSL (Windows Subsystem for Linux) seguire la guida ufficiale di Microsoft:
+### Requisiti Linux
+- Docker Compose
 
-   [Installare WSL](https://docs.microsoft.com/it-it/windows/wsl/install)
+L'avvio su Windows può essere effettuato tramite WSL.
 
-Di default installare la distro Ubuntu.
+### Preparazione
 
-## Installazione Docker su WSL
+- Da terminale (su Linux) o da WSL (su Windows) assicurarsi di salvare l'ip locale da inserire nel file .env nella variabile d'ambiente **WSL_DB_HOST**.
 
-Per installare Docker su WSL seguire la guida ufficiale di Docker:
-
-   [Installare Docker su WSL](https://docs.docker.com/engine/install/ubuntu/)
-
-## Docker Compose
-
-Avviare il servizio Docker da terminale WSL:
-
-   ```
-   sudo service docker start
-   ```
-
-Aprire un terminale WSL nella cartella root del progetto (dove c'è il file `docker-compose.yml`) e lanciare il comando:
-
-   ```
-   docker compose up -d
-   ```
-
-## Aggiungere variabile d'ambiente per la connessione al database
-
-Da WSL ottenere l'indirizzo IP con il comando:
-
-   ```
-   ip addr show eth0
-   ```
+```sh
+ip addr show eth0
+```
 
 L'indirizzo IP è nella riga inet.
 
@@ -48,44 +27,27 @@ Esempio:
 
 L'IP in questo esempio è 172.18.104.83
 
-Cercare "variabili d'ambiente" nel menu di ricerca di Windows e aprire la finestra di dialogo.
-Selezionare il pulsante "Variabili d'ambiente".
-Nella sezione "Variabili di sistema" selezionare "Nuova".
+### Avvio
 
-Inserire come nome variabile WSL_DB_HOST e come valore l'indirizzo IP di WSL.
-Questa variabile è utilizzata nel file application.properties come ${WSL_DB_HOST}
+Dalla directory principale è sufficiente avviare il docker-compose.yml, che creerà automaticamente 3 container per il db MySQL, l'app Java Spring Boot per il backend, e il frontend.
 
-## Avvio iniziale
+La landing page sarà poi accessibile da http://localhost <br>
+Le REST API del backend sono accessibili da http://localhost:8080/api (fare rifermento a SwaggerUI o alla collection Postman)
 
-Avviare il progetto Spring Boot.
-A questo punto il database è pronto per essere utilizzato.
-Non è più necessario commentare spring.sql.init.mode=always.
+### API
 
+Swagger UI URL: http://localhost:8080/swagger-ui/index.html
 
-## Test REST API
+Collection Postman presente al percorso **/postman/CodeCraft Backend - REST API.postman_collection.json**
 
-Gli endpoint REST sono disponibili nel file Test REST API - Full CRUD 1.postman_collection.json da aprire con Postman.
+Documentazione Javadoc Maven visionabile nel file **/javadoc_maven/apidocs.zip** (decomprimere)
 
-Il riferimento è descritto nel file FormRichiestaController.java in src/main/java/com.codecraft.test_rest_api/controller/
+### Informazioni tecniche
 
-Aggiunto anche Swagger per poter testare i servizi REST: http://localhost:8080/swagger-ui/index.html
-Da Swagger ricordarsi di correggere i body delle richieste POST, in quanto mette di default id = 0 e altri dati da non specificare.
-
-
-## Test e-mail
-
-Credenziali email testing: testcascinacaccia@gmail.com,
-PASS: provacaccia 
-Per il testing della mail utilizzare le chiamate di create delle richieste, e non inviare troppe email consecutivamente perchè gmail può dare problemi
-
-Se serve fare test consecutivi di create senza email commentare le righe con sendEmailService dentro i due metodi di createForm nel file FormRichiestaService
-
-## Per chiudere WSL
-
-Per chiudere WSL, aprire un terminale PowerShell e lanciare il comando:
-
-   ```
-   wsl --shutdown
-   ```
-
-Verrà chiusa la sessione WSL corrente, compreso Docker e il database.
+- Backend: Java 17, Spring Boot 3.4, Maven 3.9
+- Database: MySQL
+- Approccio strutturale: MVC, REST API, db-first (le tabelle vengono generate automaticamente dall'app
+tramite hibernate, se assenti o modificate)
+- Strumenti di sviluppo backend: JetBrains IntelliJ IDEA, Visual Studio Code, Docker
+- Strumenti API: Swagger UI, Postman
+- Repository GitHub: https://github.com/giordano-bruno-michela-its/CodeCraft_project

@@ -12,6 +12,9 @@ import java.security.SecureRandom;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for managing form information.
+ */
 @Service
 public class FormInfoService {
 
@@ -22,22 +25,51 @@ public class FormInfoService {
 
     private final Random random = new SecureRandom();
 
+    /**
+     * Constructor for FormInfoService.
+     *
+     * @param formInfoRepository the repository for form information
+     */
     public FormInfoService(FormInfoRepository formInfoRepository) {
         this.formInfoRepository = formInfoRepository;
     }
 
+    /**
+     * Get all form information.
+     *
+     * @return the list of all form information
+     */
     public List<FormInfo> getAllFormInfo() {
         return formInfoRepository.findAll();
     }
 
+    /**
+     * Get form information by ID.
+     *
+     * @param id the form information ID
+     * @return the form information with the given ID
+     */
     public Optional<FormInfo> getFormInfoById(Long id) {
         return formInfoRepository.findById(id);
     }
 
+    /**
+     * Checks if email and unique code are valid and returns the formInfo/formBooking to be updated if found.
+     *
+     * @param email the email of the form
+     * @param code  the unique code of the form
+     * @return the form information if the given email and unique code match
+     */
     public Optional<FormInfo> getFormEmailCode(String email, String code) {
         return formInfoRepository.findByEmailAndUniqueCode(email, code);
     }
 
+    /**
+     * Create a new form information.
+     *
+     * @param formInfoDTO the form information data to create
+     * @return the created form information
+     */
     public FormInfo createFormInfo(FormInfoDTO formInfoDTO) {
         FormInfo formInfo = convertToEntity(formInfoDTO);
         sendEmailService.sendEmailInformation(formInfo);
@@ -45,6 +77,12 @@ public class FormInfoService {
         return formInfoRepository.save(formInfo);
     }
 
+    /**
+     * Create a new form booking.
+     *
+     * @param formBookingDTO the form booking data to create
+     * @return the created form booking
+     */
     public FormBooking createFormBooking(FormBookingDTO formBookingDTO) {
         FormBooking formBooking = (FormBooking) convertToEntity(formBookingDTO);
         formBooking.setUniqueCode(generateUniqueCode(6)); // Set the length of the unique code
@@ -53,6 +91,13 @@ public class FormInfoService {
         return formInfoRepository.save(formBooking);
     }
 
+    /**
+     * Update an existing form information.
+     *
+     * @param id          the form information ID
+     * @param formInfoDTO the form information data to update
+     * @return the updated form information
+     */
     public FormInfo updateFormInfo(Long id, FormInfoDTO formInfoDTO) {
         Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
         if (optionalFormInfo.isPresent()) {
@@ -63,6 +108,13 @@ public class FormInfoService {
         return null;
     }
 
+    /**
+     * Update an existing form information without sending emails.
+     *
+     * @param id          the form information ID
+     * @param formInfoDTO the form information data to update
+     * @return the updated form information
+     */
     public FormInfo updateFormInfoNoMail(Long id, FormInfoDTO formInfoDTO) {
         Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
         if (optionalFormInfo.isPresent()) {
@@ -72,8 +124,15 @@ public class FormInfoService {
         }
         return null;
     }
-
-    public FormBooking updateFormBooking(Long id, FormBookingDTO formBookingDTO){
+    
+    /**
+     * Update an existing form booking.
+     *
+     * @param id             the form booking ID
+     * @param formBookingDTO the form booking data to update
+     * @return the updated form booking
+     */
+    public FormBooking updateFormBooking(Long id, FormBookingDTO formBookingDTO) {
         Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
         if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking formBooking) {
             updateCommonFields(formBooking, formBookingDTO);
@@ -83,6 +142,13 @@ public class FormInfoService {
         return null;
     }
 
+    /**
+     * Update an existing form booking without sending emails.
+     *
+     * @param id             the form booking ID
+     * @param formBookingDTO the form booking data to update
+     * @return the updated form booking
+     */
     public FormBooking updateFormBookingNoMail(Long id, FormBookingDTO formBookingDTO) {
         Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
         if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking formBooking) {
@@ -94,6 +160,12 @@ public class FormInfoService {
     }
 
     public void updateCommonFields(FormInfo formInfo, FormInfoDTO formInfoDTO) {
+    /**
+     * Update common fields of form information and form booking.
+     *
+     * @param formInfo    the form entity
+     * @param formInfoDTO the form data transfer object
+     */
         if (formInfoDTO.getEmail() != null) {
             formInfo.setEmail(formInfoDTO.getEmail());
         }
@@ -136,6 +208,12 @@ public class FormInfoService {
         }
     }
 
+    /**
+     * Update specific fields of form booking.
+     *
+     * @param formBooking    the form booking entity
+     * @param formBookingDTO the form booking data transfer object
+     */
     public void updateFormBookingFields(FormBooking formBooking, FormBookingDTO formBookingDTO) {
         if (formBookingDTO.getBeginTime() != null) {
             formBooking.setBeginTime(formBookingDTO.getBeginTime());
@@ -160,10 +238,21 @@ public class FormInfoService {
         }
     }
 
+    /**
+     * Delete form by ID.
+     *
+     * @param id the form ID
+     */
     public void deleteFormInfo(Long id) {
         formInfoRepository.deleteById(id);
     }
 
+    /**
+     * Convert a FormInfo/FormBooking entity to a FormInfoDTO.
+     *
+     * @param formInfo the FormInfo/FormBooking entity
+     * @return the FormInfo/FormBooking data transfer object
+     */
     public FormInfoDTO convertToDTO(FormInfo formInfo) {
         if (formInfo instanceof FormBooking formBooking) {
             FormBookingDTO formBookingDTO = new FormBookingDTO();
@@ -209,6 +298,12 @@ public class FormInfoService {
         }
     }
 
+    /**
+     * Convert a FormInfoDTO to a FormInfo/FormBooking entity.
+     *
+     * @param formInfoDTO the FormInfoDTO data transfer object
+     * @return the FormInfo/FormBooking entity
+     */
     private FormInfo convertToEntity(FormInfoDTO formInfoDTO) {
         FormInfo formInfo;
         if (formInfoDTO.getFormType() == FormType.FORM_BOOKING) {
@@ -245,7 +340,13 @@ public class FormInfoService {
 
         return formInfo;
     }
-    
+
+    /**
+     * Convert an ActivityTypeDTO to an ActivityType entity.
+     *
+     * @param activityTypeDTO the activity type data transfer object
+     * @return the activity type entity
+     */
     private ActivityType convertToEntity(ActivityTypeDTO activityTypeDTO) {
         ActivityType activityType = new ActivityType();
         activityType.setId(activityTypeDTO.getId());
@@ -253,7 +354,13 @@ public class FormInfoService {
         activityType.setDescription(activityTypeDTO.getDescription());
         return activityType;
     }
-    
+
+    /**
+     * Convert an ActivityType entity to an ActivityTypeDTO.
+     *
+     * @param activityType the activity type entity
+     * @return the activity type data transfer object
+     */
     private ActivityTypeDTO convertToDTO(ActivityType activityType) {
         ActivityTypeDTO activityTypeDTO = new ActivityTypeDTO();
         activityTypeDTO.setId(activityType.getId());
@@ -262,6 +369,11 @@ public class FormInfoService {
         return activityTypeDTO;
     }
 
+    /**
+     * Get all emails from all forms with newsletterCheck field set to "YES".
+     *
+     * @return the list of emails for newsletter subscription
+     */
     public List<String> getEmailsForNewsletter() {
         return formInfoRepository.findAll().stream()
                 .filter(formInfo -> formInfo.getNewsletterCheck() == NewsletterCheck.YES)
@@ -269,6 +381,12 @@ public class FormInfoService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Generate a unique code of the specified length.
+     *
+     * @param length the length of the unique code
+     * @return the generated unique code
+     */
     private String generateUniqueCode(int length) {
         String characters = "0123456789";
         String code;

@@ -27,9 +27,9 @@ public class AdminEmailsService {
     //Update adminEmails with id, and new data, calls method to update credentials in SendEmailService
     public AdminEmails updateAdminEmails(Long id, AdminEmailsDTO adminEmailsDTO) {
         Optional<AdminEmails> optionalAdminEmails = adminEmailsRepository.findById(id);
-        if(optionalAdminEmails.isPresent()) {
+        if (optionalAdminEmails.isPresent()) {
             AdminEmails adminEmails = (AdminEmails) optionalAdminEmails.get();
-            if(adminEmailsDTO.getNoReplyEmail() != null) {
+            if (adminEmailsDTO.getNoReplyEmail() != null) {
                 adminEmails.setNoReplyEmail(adminEmailsDTO.getNoReplyEmail());
             }
             if (adminEmailsDTO.getNoReplyPassword() != null) {

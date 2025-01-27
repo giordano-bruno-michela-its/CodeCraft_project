@@ -14,30 +14,62 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for User entity.
+ */
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
+    /**
+     * Constructor for UserService.
+     *
+     * @param userRepository UserRepository
+     * @param roleRepository RoleRepository
+     */
     @Autowired
     public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
 
+    /**
+     * Get all users that are not soft deleted.
+     *
+     * @return the list of all users
+     */
     public List<UserDTO> getAllUsers() {
         return userRepository.findByDeletedFalse().stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
+    /**
+     * Get all users including soft deleted ones.
+     *
+     * @return the list of all users including deleted ones
+     */
     public List<UserDTO> getAllUsersIncludingDeleted() {
         return userRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
+    /**
+     * Get a user by ID.
+     *
+     * @param id the user ID
+     * @return the user with the given ID
+     */
     public Optional<UserDTO> getUserById(Long id) {
         return userRepository.findById(id).map(this::convertToDTO);
     }
 
+    /**
+     * Update an existing user.
+     *
+     * @param id      the user ID
+     * @param userDTO the user data to update
+     * @return the updated user
+     */
     public UserDTO updateUser(Long id, UserDTO userDTO) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
@@ -63,6 +95,11 @@ public class UserService {
         return null;
     }
 
+    /**
+     * Soft delete a user by setting the deleted flag to true.
+     *
+     * @param id the user ID
+     */
     public void deleteUser(Long id) {
         String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<User> optionalUser = userRepository.findById(id);
@@ -76,6 +113,11 @@ public class UserService {
         });
     }
 
+    /**
+     * Hard delete a user by removing the user from the database.
+     *
+     * @param id the user ID
+     */
     public void hardDeleteUser(Long id) {
         String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<User> optionalUser = userRepository.findById(id);
@@ -88,6 +130,11 @@ public class UserService {
         });
     }
 
+    /**
+     * Reactivate a soft deleted user by setting the deleted flag to false.
+     *
+     * @param id the user ID
+     */
     public void reactivateUser(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         optionalUser.ifPresent(user -> {
@@ -96,6 +143,12 @@ public class UserService {
         });
     }
 
+    /**
+     * Convert a User entity to a UserDTO.
+     *
+     * @param user the user entity
+     * @return the user data transfer object
+     */
     private UserDTO convertToDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
@@ -107,6 +160,12 @@ public class UserService {
         return userDTO;
     }
 
+    /**
+     * Convert a UserDTO to a User entity.
+     *
+     * @param userDTO the user data transfer object
+     * @return the user entity
+     */
     private User convertToEntity(UserDTO userDTO) {
         User user = new User();
         user.setName(userDTO.getName());
