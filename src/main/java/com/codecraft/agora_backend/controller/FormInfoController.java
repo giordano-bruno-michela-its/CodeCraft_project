@@ -93,7 +93,7 @@ public class FormInfoController {
 
     @PutMapping("/updatebooking/{id}")
     @JsonView(View.PostView.class)
-    public ResponseEntity<FormBookingDTO> updateFormBooking(@PathVariable Long id, @RequestBody FormBookingDTO formBookingDTO) throws IllegalAccessException {
+    public ResponseEntity<FormBookingDTO> updateFormBooking(@PathVariable Long id, @RequestBody FormBookingDTO formBookingDTO){
         FormBooking updatedFormBooking = formInfoService.updateFormBooking(id, formBookingDTO);
         if (updatedFormBooking != null) {
             return ResponseEntity.ok((FormBookingDTO) formInfoService.convertToDTO(updatedFormBooking));
@@ -122,7 +122,7 @@ public class FormInfoController {
     @Operation(summary = "Update formBooking by code", description = "Update formBooking by code and email")
     @PutMapping("/updatefromcode")
     @JsonView(View.PostView.class)
-    public ResponseEntity<FormBookingDTO> updateFormBookingByCode(@RequestBody UpdateFormBookingRequestDTO requestDTO) throws IllegalAccessException {
+    public ResponseEntity<FormBookingDTO> updateFormBookingByCode(@RequestBody UpdateFormBookingRequestDTO requestDTO){
         String email = requestDTO.getCodeEmailRequest().getEmail();
         String code = requestDTO.getCodeEmailRequest().getCode();
         FormBookingDTO formBookingDTO = requestDTO.getFormBooking();

@@ -73,7 +73,7 @@ public class FormInfoService {
         return null;
     }
 
-    public FormBooking updateFormBooking(Long id, FormBookingDTO formBookingDTO) throws IllegalAccessException {
+    public FormBooking updateFormBooking(Long id, FormBookingDTO formBookingDTO){
         Optional<FormInfo> optionalFormInfo = formInfoRepository.findById(id);
         if (optionalFormInfo.isPresent() && optionalFormInfo.get() instanceof FormBooking formBooking) {
             updateCommonFields(formBooking, formBookingDTO);
