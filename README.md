@@ -40,4 +40,4 @@ Swagger UI URL: http://localhost:8080/swagger-ui/index.html
 
 Collection Postman presente al percorso **/postman/CodeCraft Backend - REST API.postman_collection.json**
 
-Documentazione Javadoc Maven visionabile nella directory **/apidocs**
+Documentazione Javadoc Maven visionabile nel file **apidocs.zip** (decomprimere)
