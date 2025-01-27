@@ -198,6 +198,12 @@ public class FormInfoController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Update formBooking only if the email and code are matching.
+     *
+     * @param requestDTO the request containing the email, code, and formBooking data
+     * @return a ResponseEntity containing the updated FormBookingDTO if found, otherwise a 404 response
+     */
     @Operation(summary = "Update formBooking by code", description = "Update formBooking by code and email")
     @PutMapping("/updatefromcode")
     @JsonView(View.PostView.class)
