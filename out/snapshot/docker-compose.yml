@@ -25,5 +25,15 @@ services:
     depends_on:
       - mysql
 
+  frontend:
+    image: nginx:latest
+    container_name: agora-frontend
+    ports:
+      - "80:80"
+    volumes:
+      - ./dist:/usr/share/nginx/html
+    depends_on:
+      - agora-backend
+
 volumes:
   mysql-agora-data:
